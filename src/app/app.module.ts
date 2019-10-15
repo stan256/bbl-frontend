@@ -7,6 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { ModalWindowComponent } from './modal-window/modal-window.component';
+import { EntryComponent } from './entry/entry.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     RegistrationComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    ModalWindowComponent,
+    EntryComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
