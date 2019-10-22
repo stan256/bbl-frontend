@@ -20,8 +20,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function handleRoute() {
       switch (true) {
-        case url.endsWith('/users/register') && method === 'POST':
-          return register();
+        case url.endsWith('/users/registration') && method === 'POST':
+          return registration();
         case url.endsWith('/users/authenticate') && method === 'POST':
           return authenticate();
         case url.endsWith('/users') && method === 'GET':
@@ -38,7 +38,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     // route functions
 
-    function register() {
+    function registration() {
       const user = body;
 
       if (users.find(x => x.username === user.username)) {
