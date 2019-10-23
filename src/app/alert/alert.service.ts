@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import {Alert, AlertError, AlertSuccess} from '../model/Alert';
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
-  private subject = new Subject<any>();
+  private subject = new Subject<Alert>();
   private keepAfterNavigationChange = false;
 
   constructor(private router: Router) {
@@ -27,16 +28,15 @@ export class AlertService {
 
   success(message: string, keepAfterNavigationChange = false) {
     this.keepAfterNavigationChange = keepAfterNavigationChange;
-    this.subject.next({ type: 'success', text: message });
+    this.subject.next(new AlertSuccess(message));
   }
 
   error(message: string, keepAfterNavigationChange = false) {
     this.keepAfterNavigationChange = keepAfterNavigationChange;
-    this.subject.next({ type: 'error', text: message });
+    this.subject.next(new AlertError(message));
   }
 
   clear() {
-    // clear by calling subject.next() without parameters
     this.subject.next();
   }
 }
