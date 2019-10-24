@@ -23,7 +23,6 @@ export class RegistrationComponent implements OnInit {
     private userService: UserService,
     private alertService: AlertService
   ) {
-    // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
@@ -38,16 +37,12 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  // convenience getter for easy access to form fields
   get f() { return this.registrationForm.controls; }
 
   onSubmit() {
     this.submitted = true;
-
-    // reset alerts on submit
     this.alertService.clear();
 
-    // stop here if form is invalid
     if (this.registrationForm.invalid) {
       return;
     }
@@ -59,6 +54,7 @@ export class RegistrationComponent implements OnInit {
         data => {
           this.alertService.success('Registration successful', true);
           this.router.navigate(['/login']);
+          this.loading = false;
         },
         error => {
           this.alertService.error(error);

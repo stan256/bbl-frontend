@@ -8,7 +8,7 @@ import {AuthenticationService} from '../auth/authentication.service';
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
   currentUser: User;
-  users = [];
+  users: User[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
