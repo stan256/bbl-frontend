@@ -16,6 +16,7 @@ import {ErrorInterceptor} from './interceptor/ErrorInterceptor';
 import {JwtInterceptor} from './interceptor/JwtInterceptor';
 import {RegistrationComponent} from './registration/registration.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { CreateTourComponent } from './create-tour/create-tour.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     ModalWindowComponent,
     EntryComponent,
     AlertComponent,
-    HomeComponent
+    HomeComponent,
+    CreateTourComponent
   ],
   imports: [
     BrowserModule,
