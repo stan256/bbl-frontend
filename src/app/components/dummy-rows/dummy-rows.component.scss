@@ -1,0 +1,12 @@
+@import "mixins/colors";
+@import "mixins/vars";
+
+ul {
+  background-color: $white;
+  border: 1px solid $black;
+
+  > li {
+    font-size: $font-L;
+    background-color: $grey;
+  }
+}

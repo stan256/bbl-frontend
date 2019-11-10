@@ -27,10 +27,16 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src",
+                "src/styles"
+              ]
+            },
             "styles": [
               "src/styles.scss",
               "node_modules/primeng/resources/primeng.css",
-              "node_modules/primeng/resources/themes/bootstrap/theme.css"
+              "node_modules/primeng/resources/themes/luna-amber/theme.css"
             ],
             "scripts": []
           },
@@ -94,8 +100,16 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src",
+                "src/styles"
+              ]
+            },
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeng/resources/primeng.css",
+              "node_modules/primeng/resources/themes/luna-amber/theme.css"
             ],
             "scripts": []
           }

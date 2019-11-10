@@ -1,0 +1,14 @@
+<div>
+  <input type="text" #tagInput data-content="tag-input" (input)="updateHint()">
+  <div data-content="tag-tips-list">
+    <ul *ngIf="!isLoading">
+      <li *ngFor="let tag of tagsInHint">
+        <a href="javascript:void(0);" (click)="addTag(tag)">{{tag}}</a>
+      </li>
+    </ul>
+    <app-dummy-rows *ngIf="isLoading && !inputIsEmpty()"></app-dummy-rows>
+  </div>
+  <ul data-content="selected-tags" *ngIf="selectedTags">
+    <li *ngFor="let tag of selectedTags">{{tag}}</li>
+  </ul>
+</div>

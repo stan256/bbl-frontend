@@ -1,0 +1,13 @@
+@import "mixins/vars";
+@import "mixins/colors";
+
+ul[data-content="selected-tags"] {
+  > li {
+    display: inline-block;
+    margin-right: $M;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
