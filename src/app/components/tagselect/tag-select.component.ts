@@ -28,6 +28,11 @@ export class TagSelectComponent implements OnInit {
   addTag(tag: Tag) {
     this.selectedTags.push(tag);
     this.tagsInHint = this.tagsInHint.filter(t => t != tag);
+    this.clearInput();
+  }
+
+  deleteTag(tag: Tag) {
+    this.selectedTags = this.selectedTags.filter(t => t != tag);
   }
 
   updateHint() {
@@ -48,5 +53,10 @@ export class TagSelectComponent implements OnInit {
 
   inputIsEmpty() {
     return this.tagInput.nativeElement.value === "";
+  }
+
+  clearInput() {
+    this.tagInput.nativeElement.value = "";
+    this.updateHint();
   }
 }

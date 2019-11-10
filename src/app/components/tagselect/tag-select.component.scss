@@ -11,3 +11,9 @@ ul[data-content="selected-tags"] {
     }
   }
 }
+
+[data-content="clear-text"] {
+  color: $grey;
+  position: relative;
+  left: -2em;
+}

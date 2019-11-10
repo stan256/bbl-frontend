@@ -1,0 +1,13 @@
+@import "mixins/vars";
+@import "mixins/colors";
+
+@mixin input-text {
+  input[type="text"] {
+    padding: $S;
+    margin: $M 0;
+    outline: none;
+    border-radius: $M;
+    background-color: $white;
+    border: 1px solid $grey;
+  }
+}

@@ -1,5 +1,8 @@
 <div>
-  <input type="text" #tagInput data-content="tag-input" (input)="updateHint()">
+  <div data-content="tag-menu">
+    <input type="text" #tagInput data-content="tag-input" (input)="updateHint()">
+    <span *ngIf="!inputIsEmpty()" data-content="clear-text" (click)="clearInput()"><i class="fa fa-times-circle"></i></span>
+  </div>
   <div data-content="tag-tips-list">
     <ul *ngIf="!isLoading">
       <li *ngFor="let tag of tagsInHint">
@@ -9,6 +12,9 @@
     <app-dummy-rows *ngIf="isLoading && !inputIsEmpty()"></app-dummy-rows>
   </div>
   <ul data-content="selected-tags" *ngIf="selectedTags">
-    <li *ngFor="let tag of selectedTags">{{tag}}</li>
+    <li *ngFor="let tag of selectedTags">
+      {{tag}}
+      <span data-content="remove-tag" (click)="deleteTag(tag)"><i class="fa fa-times-circle"></i></span>
+    </li>
   </ul>
 </div>
