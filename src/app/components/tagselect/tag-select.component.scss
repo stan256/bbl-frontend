@@ -1,6 +1,15 @@
 @import "mixins/vars";
 @import "mixins/colors";
 
+[data-content="tag-tips-list"] {
+  > ul {
+    > li {
+      padding: $S;
+      font-size: $font-L;
+    }
+  }
+}
+
 ul[data-content="selected-tags"] {
   > li {
     display: inline-block;

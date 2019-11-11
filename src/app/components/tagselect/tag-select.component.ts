@@ -45,7 +45,7 @@ export class TagSelectComponent implements OnInit {
     const value = this.tagInput.nativeElement.value;
     this.isLoading = true;
     this.tagService.getTags(value).pipe(
-      map(a => a.filter(t => this.selectedTags.indexOf(t) === -1)),
+      map(a => a.filter(t => this.selectedTags.indexOf(t) === -1)), // filter tags which are already selected
       tap(v => this.tagsInHint = v),
       finalize(() => this.isLoading = false)
     ).subscribe();

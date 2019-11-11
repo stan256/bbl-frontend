@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RestService} from './rest.service';
 import {Tag, wrapTag} from '../shared/common.types';
-import {delay, tap} from 'rxjs/operators';
+import {delay} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 @Injectable({
@@ -10,8 +10,8 @@ import {Observable, of} from 'rxjs';
 export class TagService {
 
   constructor(
-    private restService : RestService
-  ) { }
+    private restService: RestService
+  ) {}
 
   getTags(tagText: string): Observable<ReadonlyArray<Tag>> {
     // todo to use tag text
@@ -21,9 +21,8 @@ export class TagService {
       wrapTag('hiking'),
       wrapTag('skying'),
       wrapTag('chess')
-      ])
-      .pipe(
-        delay(1000)
-      );
+    ]).pipe(
+      delay(1000)
+    );
   }
 }

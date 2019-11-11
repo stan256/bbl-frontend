@@ -4,16 +4,17 @@
     <span *ngIf="!inputIsEmpty()" data-content="clear-text" (click)="clearInput()"><i class="fa fa-times-circle"></i></span>
   </div>
   <div data-content="tag-tips-list">
-    <ul *ngIf="!isLoading">
+    <ul *ngIf="!isLoading && tagsInHint.length != 0">
       <li *ngFor="let tag of tagsInHint">
         <a href="javascript:void(0);" (click)="addTag(tag)">{{tag}}</a>
       </li>
     </ul>
+    <p *ngIf="!isLoading && !inputIsEmpty() && tagsInHint.length == 0">No tags fit entered text...</p>
     <app-dummy-rows *ngIf="isLoading && !inputIsEmpty()"></app-dummy-rows>
   </div>
   <ul data-content="selected-tags" *ngIf="selectedTags">
     <li *ngFor="let tag of selectedTags">
-      {{tag}}
+      <span>{{tag}}</span>
       <span data-content="remove-tag" (click)="deleteTag(tag)"><i class="fa fa-times-circle"></i></span>
     </li>
   </ul>

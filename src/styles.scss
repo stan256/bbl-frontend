@@ -2,3 +2,9 @@
 @import "mixins/inputs";
 
 @include input-text;
+
+ul, ol {
+  list-style: none;
+  padding-left: 0;
+
+}

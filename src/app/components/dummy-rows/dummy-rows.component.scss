@@ -3,10 +3,10 @@
 
 ul {
   background-color: $white;
-  border: 1px solid $black;
 
   > li {
     font-size: $font-L;
+    margin: $M;
     background-color: $grey;
   }
 }
