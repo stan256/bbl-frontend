@@ -5,8 +5,10 @@ ul {
   background-color: $white;
 
   > li {
-    font-size: $font-L;
     margin: $M;
     background-color: $grey;
+    height: $font-XL;
+    font-size: $font-L;
+    line-height: $font-XL;
   }
 }

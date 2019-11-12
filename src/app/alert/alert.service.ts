@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import {Alert, AlertError, AlertSuccess} from '../model/Alert';
+import {delay} from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
@@ -20,7 +21,7 @@ export class AlertService {
     });
   }
 
-  getAlert(): Observable<any> {
+  getAlert(): Observable<Alert> {
     return this.subject.asObservable();
   }
 

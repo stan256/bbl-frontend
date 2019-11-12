@@ -2,6 +2,8 @@ import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@a
 import {finalize, map, tap} from 'rxjs/operators';
 import {TagService} from '../../services/tag.service';
 import {Tag} from '../../shared/common.types';
+import {Observable} from 'rxjs';
+import {AlertService} from '../../alert/alert.service';
 
 @Component({
   selector: 'app-tag-select',
@@ -18,7 +20,8 @@ export class TagSelectComponent implements OnInit {
   @ViewChild('tagInput', {static: true}) tagInput:ElementRef;
 
   constructor(
-    private tagService: TagService
+    private tagService: TagService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -27,7 +30,6 @@ export class TagSelectComponent implements OnInit {
 
   addTag(tag: Tag) {
     this.selectedTags.push(tag);
-    this.tagsInHint = this.tagsInHint.filter(t => t != tag);
     this.clearInput();
   }
 
@@ -36,12 +38,11 @@ export class TagSelectComponent implements OnInit {
   }
 
   updateHint() {
-    if (this.inputIsEmpty()) {
+    if (this.tagInputEmpty()) {
       this.tagsInHint = [];
       return;
     }
 
-    // todo no tags fits your request. you can add a new one.
     const value = this.tagInput.nativeElement.value;
     this.isLoading = true;
     this.tagService.getTags(value).pipe(
@@ -51,12 +52,20 @@ export class TagSelectComponent implements OnInit {
     ).subscribe();
   }
 
-  inputIsEmpty() {
+  tagInputEmpty() {
     return this.tagInput.nativeElement.value === "";
   }
 
   clearInput() {
     this.tagInput.nativeElement.value = "";
     this.updateHint();
+  }
+
+  createOwnTag() {
+    this.tagService.createTag(this.tagInput.nativeElement.value)
+      .subscribe(tag => {
+        this.addTag(tag);
+        this.alertService.success(`Tag ${tag} was successfully created.`)
+      })
   }
 }

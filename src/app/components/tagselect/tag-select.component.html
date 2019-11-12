@@ -1,7 +1,7 @@
 <div>
   <div data-content="tag-menu">
     <input type="text" #tagInput data-content="tag-input" (input)="updateHint()">
-    <span *ngIf="!inputIsEmpty()" data-content="clear-text" (click)="clearInput()"><i class="fa fa-times-circle"></i></span>
+    <span *ngIf="!tagInputEmpty()" data-content="clear-text" (click)="clearInput()"><i class="fa fa-times-circle"></i></span>
   </div>
   <div data-content="tag-tips-list">
     <ul *ngIf="!isLoading && tagsInHint.length != 0">
@@ -9,8 +9,11 @@
         <a href="javascript:void(0);" (click)="addTag(tag)">{{tag}}</a>
       </li>
     </ul>
-    <p *ngIf="!isLoading && !inputIsEmpty() && tagsInHint.length == 0">No tags fit entered text...</p>
-    <app-dummy-rows *ngIf="isLoading && !inputIsEmpty()"></app-dummy-rows>
+    <p *ngIf="!isLoading && !tagInputEmpty() && tagsInHint.length == 0">
+      <span>No tags fit entered text...</span>
+      <button (click)="createOwnTag()">Add to tags</button>
+    </p>
+    <app-dummy-rows *ngIf="isLoading && !tagInputEmpty()"></app-dummy-rows>
   </div>
   <ul data-content="selected-tags" *ngIf="selectedTags">
     <li *ngFor="let tag of selectedTags">

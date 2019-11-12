@@ -8,21 +8,30 @@ import {Observable, of} from 'rxjs';
   providedIn: 'root'
 })
 export class TagService {
+  tags: Array<Tag> = [
+    wrapTag('hiking'),
+    wrapTag('skying'),
+    wrapTag('chess')
+  ];
 
   constructor(
     private restService: RestService
   ) {}
 
-  getTags(tagText: string): Observable<ReadonlyArray<Tag>> {
-    // todo to use tag text
+  getTags(pattern: string): Observable<ReadonlyArray<Tag>> {
+    // todo Real regex matching
     // return this.restService.get<ReadonlyArray<Tag>>("localhost:9004/bbl-agent", {});
 
-    return of([
-      wrapTag('hiking'),
-      wrapTag('skying'),
-      wrapTag('chess')
-    ]).pipe(
-      delay(1000)
+    return of(this.tags).pipe(
+      delay(1000000)
     );
+  }
+
+  createTag(tagText: string): Observable<Tag> {
+    // todo Real add on backend...
+    const tag = wrapTag(tagText);
+    this.tags.push(tag);
+
+    return of(tag);
   }
 }
