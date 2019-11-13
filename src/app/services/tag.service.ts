@@ -23,7 +23,7 @@ export class TagService {
     // return this.restService.get<ReadonlyArray<Tag>>("localhost:9004/bbl-agent", {});
 
     return of(this.tags).pipe(
-      delay(1000000)
+      delay(1000)
     );
   }
 

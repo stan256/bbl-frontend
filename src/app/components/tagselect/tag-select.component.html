@@ -11,6 +11,7 @@
     </ul>
     <p *ngIf="!isLoading && !tagInputEmpty() && tagsInHint.length == 0">
       <span>No tags fit entered text...</span>
+      <!-- Todo to be approved -->
       <button (click)="createOwnTag()">Add to tags</button>
     </p>
     <app-dummy-rows *ngIf="isLoading && !tagInputEmpty()"></app-dummy-rows>

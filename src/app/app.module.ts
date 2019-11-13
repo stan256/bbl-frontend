@@ -18,6 +18,8 @@ import {LoginComponent} from './components/login/login.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import { DummyRowsComponent } from './components/dummy-rows/dummy-rows.component';
 import {TagSelectComponent} from './components/tagselect/tag-select.component';
+import {CreateTourComponent} from './components/create-tour/create-tour.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -31,13 +33,17 @@ import {TagSelectComponent} from './components/tagselect/tag-select.component';
     AlertComponent,
     HomeComponent,
     TagSelectComponent,
-    DummyRowsComponent
+    DummyRowsComponent,
+    CreateTourComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU'
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
