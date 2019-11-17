@@ -8,7 +8,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {fakeBackendProvider} from './interceptor/FakeBackendInterceptor';
 import {ErrorInterceptor} from './interceptor/ErrorInterceptor';
 import {JwtInterceptor} from './interceptor/JwtInterceptor';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {EntryComponent} from './components/entry/entry.component';
 import {ModalWindowComponent} from './components/modal-window/modal-window.component';
@@ -20,6 +20,10 @@ import { DummyRowsComponent } from './components/dummy-rows/dummy-rows.component
 import {TagSelectComponent} from './components/tagselect/tag-select.component';
 import {CreateTourComponent} from './components/create-tour/create-tour.component';
 import { AgmCoreModule } from '@agm/core';
+import { TourStepsComponent } from './components/tour-steps/tour-steps.component';
+import { TourStepComponent } from './components/tour-steps/tour-step/tour-step.component';
+import {CalendarModule} from 'primeng/calendar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import { AgmCoreModule } from '@agm/core';
     HomeComponent,
     TagSelectComponent,
     DummyRowsComponent,
-    CreateTourComponent
+    CreateTourComponent,
+    TourStepsComponent,
+    TourStepComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,10 @@ import { AgmCoreModule } from '@agm/core';
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU'
-    })
+    }),
+    CalendarModule,
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
