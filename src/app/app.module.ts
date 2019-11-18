@@ -24,6 +24,7 @@ import { TourStepsComponent } from './components/tour-steps/tour-steps.component
 import { TourStepComponent } from './components/tour-steps/tour-step/tour-step.component';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { InputWithDescriptionComponent } from './components/shared/input-with-description/input-with-description.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     DummyRowsComponent,
     CreateTourComponent,
     TourStepsComponent,
-    TourStepComponent
+    TourStepComponent,
+    InputWithDescriptionComponent
   ],
   imports: [
     BrowserModule,

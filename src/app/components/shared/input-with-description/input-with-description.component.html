@@ -1,0 +1,7 @@
+<div>
+  <p>
+    <input type="text" [maxLength]="200">
+    <button (click)="changeShowDescription()"><i class="fa fa-plus"></i></button>
+  </p>
+  <textarea *ngIf="showDescription" name="description" cols="30" rows="10"></textarea>
+</div>
