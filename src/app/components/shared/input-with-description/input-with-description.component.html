@@ -1,7 +1,20 @@
 <div>
-  <p>
-    <input type="text" [maxLength]="200">
-    <button (click)="changeShowDescription()"><i class="fa fa-plus"></i></button>
-  </p>
-  <textarea *ngIf="showDescription" name="description" cols="30" rows="10"></textarea>
+  <div>
+    <p>
+      <input type="text"
+             [maxLength]="200"
+             (input)="emitValueAndDescription()">
+      <button *ngIf="!mandatoryDescription"
+              pTooltip="Open description"
+              tooltipPosition="top"
+              (click)="changeShowDescription()"><i class="fa fa-plus"></i></button>
+    </p>
+    <span *ngFor="let error of inputErrors()" data-content="error-message">{{error}}</span>
+  </div>
+  <div>
+    <textarea *ngIf="showDescription"
+            [(ngModel)]="description"
+            (input)="emitValueAndDescription()"></textarea>
+    <span *ngFor="let error of textareaErrors()" data-content="error-message">{{error}}</span>
+  </div>
 </div>

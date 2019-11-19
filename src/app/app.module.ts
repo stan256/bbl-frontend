@@ -25,6 +25,8 @@ import { TourStepComponent } from './components/tour-steps/tour-step/tour-step.c
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { InputWithDescriptionComponent } from './components/shared/input-with-description/input-with-description.component';
+import {TooltipModule} from 'primeng/primeng';
+import {InputErrorDirective} from './directives/input-error.directive';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { InputWithDescriptionComponent } from './components/shared/input-with-de
     CreateTourComponent,
     TourStepsComponent,
     TourStepComponent,
-    InputWithDescriptionComponent
+    InputWithDescriptionComponent,
+    InputErrorDirective
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,11 @@ import { InputWithDescriptionComponent } from './components/shared/input-with-de
     }),
     CalendarModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TooltipModule
+  ],
+  exports: [
+    InputErrorDirective
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
