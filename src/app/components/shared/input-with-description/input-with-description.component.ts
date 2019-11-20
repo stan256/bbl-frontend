@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-input-with-description',
@@ -11,14 +12,24 @@ export class InputWithDescriptionComponent implements OnInit {
   @Output() valueAndDescription = new EventEmitter<ValueAndDescription>();
 
   showDescription: boolean;
-  value: string;
-  description: string | null;
 
-  constructor() {
+  form: FormGroup;
+
+  constructor(
+    private fb: FormBuilder
+  ) {
     this.showDescription = this.mandatoryDescription;
+    this.form = this.fb.group({
+      "value": [null, [Validators.required]],
+      "description": [null, [Validators.required]]
+    });
   }
 
   ngOnInit() {
+  }
+
+  get f(): FormGroup{
+    return this.form;
   }
 
   changeShowDescription() {
@@ -26,18 +37,12 @@ export class InputWithDescriptionComponent implements OnInit {
   }
 
   emitValueAndDescription(){
-    this.valueAndDescription.next(new ValueAndDescription(this.value, this.description));
+
   }
 
-  textareaErrors(): ReadonlyArray<string> {
-    const errors = [];
-    if (!this.description && this.mandatoryDescription) errors.push("Please fill the description");
-    return errors;
-  }
-
-  inputErrors(): ReadonlyArray<string> {
-    if (!this.value)
-      return ["Fill title!"]
+  public errorsOf(control: AbstractControl): Array<string> {
+    const hasSomeError = control.invalid && (control.dirty || control.touched);
+    return hasSomeError ? Object.keys(control.errors!) : [];
   }
 }
 
