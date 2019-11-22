@@ -1,0 +1,35 @@
+<div [formGroup]="form">
+  <div>
+    <div data-content="value-block">
+      <label for="value">Step title</label>
+      <p>
+        <input type="text"
+               formControlName="value"
+               id="value"
+               [(ngModel)]="step.title"
+               [maxLength]="200">
+        <button pTooltip="Open description"
+                tooltipPosition="top"
+                class="action"
+                (click)="changeShowDescription()"><i class="fa fa-plus"></i></button>
+      </p>
+      <span *ngFor="let error of errorsOf(f.get('value'))" class="validation">{{error}}</span>
+    </div>
+    <div *ngIf="showDescription" data-content="textarea-block">
+      <label for="description">Description</label>
+      <textarea formControlName="description"
+                id="description"
+                [(ngModel)]="step.description"
+                [maxLength]="400"></textarea>
+      <span *ngFor="let error of errorsOf(f.get('description'))" class="validation">{{error}}</span>
+    </div>
+  </div>
+  <div data-content="calendar">
+    <p-calendar showTime="true"
+                hourFormat="24"
+                showButtonBar="true"
+                (onSelect)="setStepDate($event)"
+                [showIcon]="true">
+    </p-calendar>
+  </div>
+</div>

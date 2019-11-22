@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Step} from "../../model/Step";
 
 @Component({
   selector: 'app-tour-steps',
@@ -12,9 +13,8 @@ export class TourStepsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.addStep();
+    this.addStep()
   }
-
 
   private addStep() {
     if (!this.steps.length){
@@ -23,15 +23,4 @@ export class TourStepsComponent implements OnInit {
       this.steps.push(new Step());
     }
   }
-
-  setDateTime(step: Step, $event: any) {
-    console.log(step)
-
-  }
-}
-
-export class Step {
-  title: string | null;
-  description: string | null;
-  date: Date | null;
 }

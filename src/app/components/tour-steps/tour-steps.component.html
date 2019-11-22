@@ -1,12 +1,6 @@
 <ul>
   <li *ngFor="let step of steps">
-    <input type="text" [(ngModel)]="step.title">
-    <p-calendar [(ngModel)]="step.description"
-                showTime="true"
-                hourFormat="24"
-                showButtonBar="true"
-                (onSelect)="setDateTime(step, $event)"
-                [showIcon]="true"></p-calendar>
+    <app-tour-step [step]="step"></app-tour-step>
   </li>
-  <li data-content="add-step"><button>Add point</button></li>
+  <li data-content="add-step"><button class="action">Add point</button></li>
 </ul>

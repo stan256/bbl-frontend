@@ -24,7 +24,6 @@ import { TourStepsComponent } from './components/tour-steps/tour-steps.component
 import { TourStepComponent } from './components/tour-steps/tour-step/tour-step.component';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { InputWithDescriptionComponent } from './components/shared/input-with-description/input-with-description.component';
 import {TooltipModule} from 'primeng/primeng';
 import {InputErrorDirective} from './directives/input-error.directive';
 
@@ -44,7 +43,6 @@ import {InputErrorDirective} from './directives/input-error.directive';
     CreateTourComponent,
     TourStepsComponent,
     TourStepComponent,
-    InputWithDescriptionComponent,
     InputErrorDirective
   ],
   imports: [
