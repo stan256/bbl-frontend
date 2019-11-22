@@ -10,24 +10,39 @@
 }
 
 [data-content="value-block"] {
-  display: flex;
-
-  input[type="text"] {
-    @include input-text;
+  > label {
+    margin-bottom: 0;
   }
 
-  button {
-    @include button;
+  > p {
+    display: flex;
+    margin-bottom: 0;
+    align-items: center;
 
-    background-color: transparent;
+    input[type="text"] {
+      @include input-text;
+    }
 
-    &:hover {
+    button {
+      @include button;
+
+      margin-left: $M;
       background-color: transparent;
+
+      &:hover {
+        background-color: transparent;
+      }
     }
   }
 }
 
 [data-content="textarea-block"] {
+  margin-top: $S;
+
+  > label {
+    margin-bottom: 0;
+  }
+
   textarea {
     @include textarea;
   }

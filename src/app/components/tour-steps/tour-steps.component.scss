@@ -1,0 +1,13 @@
+@import "mixins/vars";
+@import "mixins/inputs";
+@import "mixins/colors";
+
+ul {
+  > li {
+    &:last-child {
+      > button {
+        @include button;
+      }
+    }
+  }
+}

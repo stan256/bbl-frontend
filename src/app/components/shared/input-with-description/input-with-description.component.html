@@ -1,8 +1,10 @@
 <div [formGroup]="form">
   <div data-content="value-block">
+    <label *ngIf="valueTitle" for="value">{{valueTitle}}</label>
     <p>
       <input type="text"
              formControlName="value"
+             id="value"
              [maxLength]="200"
              (input)="emitValueAndDescription()">
       <button *ngIf="!mandatoryDescription"
@@ -13,9 +15,10 @@
     </p>
     <span *ngFor="let error of errorsOf(f.get('value'))" class="validation">{{error}}</span>
   </div>
-  <div data-content="textarea-block">
-    <textarea *ngIf="showDescription"
-              formControlName="description"
+  <div *ngIf="showDescription" data-content="textarea-block">
+    <label *ngIf="descriptionTitle" for="description">{{descriptionTitle}}</label>
+    <textarea formControlName="description"
+              id="description"
               [maxLength]="400"
               (input)="emitValueAndDescription()"></textarea>
     <span *ngFor="let error of errorsOf(f.get('description'))" class="validation">{{error}}</span>

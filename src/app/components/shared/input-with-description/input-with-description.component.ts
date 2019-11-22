@@ -7,6 +7,8 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
   styleUrls: ['./input-with-description.component.scss']
 })
 export class InputWithDescriptionComponent implements OnInit {
+  @Input() valueTitle: string | null = "Value";
+  @Input() descriptionTitle: string | null = "Description";
   @Input() mandatoryDescription: boolean = false;
 
   @Output() valueAndDescription = new EventEmitter<ValueAndDescription>();
@@ -34,6 +36,7 @@ export class InputWithDescriptionComponent implements OnInit {
 
   changeShowDescription() {
     this.showDescription = !this.showDescription;
+    this.f.get('description').setValue("");
   }
 
   emitValueAndDescription(){

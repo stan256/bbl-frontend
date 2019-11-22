@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "mixins/inputs";
 
+input,
+textarea,
+button {
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
 ul, ol {
   list-style: none;
   padding-left: 0;

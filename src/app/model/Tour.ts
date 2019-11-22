@@ -1,7 +1,7 @@
 export class Tour {
-  tags: Array<TourTags>;
+  tags: Array<TourTag>;
 }
 
-export class TourTags {
+export class TourTag {
   tag: string;
 }
