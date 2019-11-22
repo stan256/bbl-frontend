@@ -1,5 +1,5 @@
 <div [formGroup]="form">
-  <div>
+  <div data-content="value-block">
     <p>
       <input type="text"
              formControlName="value"
@@ -8,11 +8,12 @@
       <button *ngIf="!mandatoryDescription"
               pTooltip="Open description"
               tooltipPosition="top"
+              class="action"
               (click)="changeShowDescription()"><i class="fa fa-plus"></i></button>
     </p>
     <span *ngFor="let error of errorsOf(f.get('value'))" class="validation">{{error}}</span>
   </div>
-  <div>
+  <div data-content="textarea-block">
     <textarea *ngIf="showDescription"
               formControlName="description"
               [maxLength]="400"

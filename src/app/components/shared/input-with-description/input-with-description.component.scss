@@ -1,0 +1,34 @@
+@import "mixins/vars";
+@import "mixins/inputs";
+@import "mixins/colors";
+
+:host {
+  > div > div {
+    max-width: 20em;
+    width: 100%;
+  }
+}
+
+[data-content="value-block"] {
+  display: flex;
+
+  input[type="text"] {
+    @include input-text;
+  }
+
+  button {
+    @include button;
+
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+[data-content="textarea-block"] {
+  textarea {
+    @include textarea;
+  }
+}

@@ -2,12 +2,40 @@
 @import "mixins/colors";
 
 @mixin input-text {
-  input[type="text"] {
-    padding: $S;
-    margin: $M 0;
-    outline: none;
-    border-radius: $M;
-    background-color: $white;
-    border: 1px solid $grey;
+  padding: $S;
+  margin: $M 0;
+  outline: none;
+  border-radius: $M;
+  background-color: $white;
+  border: 1px solid $grey;
+  width: 100%;
+}
+
+@mixin textarea {
+  padding: $S;
+  margin: $M 0;
+  outline: none;
+  border-radius: $M;
+  background-color: $white;
+  border: 1px solid $grey;
+  resize: none;
+  width: 100%;
+}
+
+@mixin button {
+  border-radius: $M;
+  padding: $S;
+  font-size: $font-L;
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  border: 0;
+
+  &.action {
+    background-color: #55acee;
+
+    &:hover {
+      background-color: #6FC6FF;
+    }
   }
 }
