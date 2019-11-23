@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Step} from "../../model/Step";
+import {ModalService} from "../shared/modal-window/modal.service";
+import {FormBuilder} from "@angular/forms";
+import {Subject} from "rxjs";
+import {take, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-tour-steps',
@@ -9,8 +13,9 @@ import {Step} from "../../model/Step";
 export class TourStepsComponent implements OnInit {
   value: Date;
   steps: Array<Step> = [];
+  removeStepConfirmation$ = new Subject<boolean>();
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
 
   ngOnInit() {
     this.addStep()
@@ -26,7 +31,24 @@ export class TourStepsComponent implements OnInit {
     }
   }
 
-  private removeStep(i: number) {
-    this.steps.splice(i, 1);
+  removeStep(i: number) {
+    this.modalService.open("stepRemovePopup");
+    this.removeStepConfirmation$.pipe(
+      take(1),
+      tap(confirmed => {
+        this.closeModal();
+        if (confirmed)
+          this.steps.splice(i, 1);
+      })
+    ).subscribe();
+  }
+
+  confirmRemove() {
+    this.removeStepConfirmation$.next(true);
+  }
+
+  closeModal() {
+    this.removeStepConfirmation$.next(false);
+    this.modalService.close('stepRemovePopup');
   }
 }

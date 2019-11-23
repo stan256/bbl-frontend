@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Step} from "../../../model/Step";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ModalService} from "../../shared/modal-window/modal.service";
 
 @Component({
   selector: 'app-tour-step',
@@ -9,6 +10,7 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 })
 export class TourStepComponent implements OnInit {
   @Input() step: Step;
+  @Input() stepLength: number;
   @Output() stepRemoved = new EventEmitter<void>();
 
   showDescription: boolean = false;
@@ -33,13 +35,6 @@ export class TourStepComponent implements OnInit {
   changeShowDescription() {
     this.showDescription = !this.showDescription;
     this.f.get('description').setValue("");
-    // todo
-    console.log(this.step.description)
-  }
-
-  public errorsOf(control: AbstractControl): Array<string> {
-    const hasSomeError = control.invalid && (control.dirty || control.touched);
-    return hasSomeError ? Object.keys(control.errors!) : [];
   }
 
   setStepDate(date: Date) {
@@ -47,7 +42,12 @@ export class TourStepComponent implements OnInit {
     this.step.date = date;
   }
 
+  public errorsOf(control: AbstractControl): Array<string> {
+    const hasSomeError = control.invalid && (control.dirty || control.touched);
+    return hasSomeError ? Object.keys(control.errors!) : [];
+  }
+
   onStepRemoved() {
-    this.stepRemoved.emit();
+    this.stepRemoved.next();
   }
 }

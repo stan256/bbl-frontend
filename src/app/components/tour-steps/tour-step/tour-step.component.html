@@ -3,7 +3,7 @@
     <div data-content="value-block">
       <p data-content="step-header">
         <label for="value">Step title</label>
-        <button (click)="onStepRemoved()" class="action">
+        <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
           <i class="fa fa-minus"></i>
         </button>
       </p>

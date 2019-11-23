@@ -11,7 +11,6 @@ import {JwtInterceptor} from './interceptor/JwtInterceptor';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {EntryComponent} from './components/entry/entry.component';
-import {ModalWindowComponent} from './components/modal-window/modal-window.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {HomeComponent} from './components/home/home.component';
 import {LoginComponent} from './components/login/login.component';
@@ -26,6 +25,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TooltipModule} from 'primeng/primeng';
 import {InputErrorDirective} from './directives/input-error.directive';
+import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 
 @NgModule({
   declarations: [
