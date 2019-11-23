@@ -24,7 +24,6 @@ import { TourStepComponent } from './components/tour-steps/tour-step/tour-step.c
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TooltipModule} from 'primeng/primeng';
-import {InputErrorDirective} from './directives/input-error.directive';
 import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 
 @NgModule({
@@ -42,8 +41,7 @@ import {ModalWindowComponent} from "./components/shared/modal-window/modal-windo
     DummyRowsComponent,
     CreateTourComponent,
     TourStepsComponent,
-    TourStepComponent,
-    InputErrorDirective
+    TourStepComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +57,6 @@ import {ModalWindowComponent} from "./components/shared/modal-window/modal-windo
     TooltipModule
   ],
   exports: [
-    InputErrorDirective
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
