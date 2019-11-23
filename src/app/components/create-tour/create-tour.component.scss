@@ -1,3 +1,12 @@
-agm-map {
-  height: 300px;
+[data-content="steps-map-pipe"] {
+  display: flex;
+
+  > app-tour-steps {
+    flex: 1;
+  }
+
+  > agm-map {
+    flex: 3;
+    height: 300px;
+  }
 }
