@@ -1,7 +1,12 @@
 <div [formGroup]="form">
   <div>
     <div data-content="value-block">
-      <label for="value">Step title</label>
+      <p data-content="step-header">
+        <label for="value">Step title</label>
+        <button (click)="onStepRemoved()" class="action">
+          <i class="fa fa-minus"></i>
+        </button>
+      </p>
       <p>
         <input type="text"
                formControlName="value"

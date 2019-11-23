@@ -8,6 +8,9 @@
     width: 100%;
   }
 }
+button {
+  @include button;
+}
 
 [data-content="value-block"] {
   > label {
@@ -24,14 +27,7 @@
     }
 
     button {
-      @include button;
-
       margin-left: $M;
-      background-color: transparent;
-
-      &:hover {
-        background-color: transparent;
-      }
     }
   }
 }

@@ -1,6 +1,7 @@
 <ul>
-  <li *ngFor="let step of steps">
-    <app-tour-step [step]="step"></app-tour-step>
+  <li *ngFor="let step of steps; let i = index;">
+    <app-tour-step [step]="step"
+                   (stepRemoved)="removeStep(i)"></app-tour-step>
   </li>
-  <li data-content="add-step"><button class="action">Add point</button></li>
+  <li data-content="add-step"><button class="action" (click)="addStep()">Add point</button></li>
 </ul>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Step} from "../../../model/Step";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -9,6 +9,7 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 })
 export class TourStepComponent implements OnInit {
   @Input() step: Step;
+  @Output() stepRemoved = new EventEmitter<void>();
 
   showDescription: boolean = false;
   form: FormGroup;
@@ -44,5 +45,9 @@ export class TourStepComponent implements OnInit {
   setStepDate(date: Date) {
     console.log(date);
     this.step.date = date;
+  }
+
+  onStepRemoved() {
+    this.stepRemoved.emit();
   }
 }

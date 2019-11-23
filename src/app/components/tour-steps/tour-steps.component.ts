@@ -17,10 +17,16 @@ export class TourStepsComponent implements OnInit {
   }
 
   private addStep() {
-    if (!this.steps.length){
+    if (!this.steps.length) {
       this.steps.push(new Step());
-    } else if (this.steps.pop().title || this.steps.pop().description ) {
-      this.steps.push(new Step());
+    } else {
+      const lastStep = this.steps[this.steps.length - 1];
+      if (lastStep.title || lastStep.description)
+        this.steps.push(new Step());
     }
+  }
+
+  private removeStep(i: number) {
+    this.steps.splice(i, 1);
   }
 }
