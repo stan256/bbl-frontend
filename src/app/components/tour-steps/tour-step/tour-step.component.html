@@ -1,16 +1,16 @@
 <div [formGroup]="form">
   <div>
-    <div data-content="value-block">
+    <div data-content="location-block">
       <p data-content="step-header">
-        <label for="value">Step title</label>
+        <label for="location">Step title</label>
         <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
           <i class="fa fa-minus"></i>
         </button>
       </p>
       <p>
         <input type="text"
-               formControlName="value"
-               id="value"
+               formControlName="location"
+               id="location"
                [(ngModel)]="step.title"
                [maxLength]="200">
         <button pTooltip="Open description"
@@ -18,7 +18,7 @@
                 class="action"
                 (click)="changeShowDescription()"><i class="fa fa-plus"></i></button>
       </p>
-      <span *ngFor="let error of errorsOf(f.get('value'))" class="validation">{{error}}</span>
+      <span *ngFor="let error of errorsOf(f.get('location'))" class="validation">{{error}}</span>
     </div>
     <div *ngIf="showDescription" data-content="textarea-block">
       <label for="description">Description</label>
