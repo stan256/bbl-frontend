@@ -1,3 +1,5 @@
+@import "mixins/vars";
+
 [data-content="steps-map-pipe"] {
   display: flex;
 
@@ -5,9 +7,15 @@
     flex: 1;
   }
 
-  > agm-map {
+  > [data-content="map"] {
     flex: 3;
-    height: 300px;
-    margin-left: 2em;
+
+    > agm-map {
+      margin-left: 2em;
+      height: calc(100% - 45px);
+      position: fixed;
+      // 3/4 from content width - margin left
+      width: calc(#{$content-width} * 0.75 - 2em);
+    }
   }
 }

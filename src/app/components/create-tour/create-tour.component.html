@@ -3,7 +3,9 @@
 <div data-content="steps-map-pipe">
   <app-tour-steps></app-tour-steps>
 
-  <agm-map [latitude]="userLat" [longitude]="userLng">
-    <agm-marker [latitude]="userLng" [longitude]="userLng"></agm-marker>
-  </agm-map>
+  <div data-content="map">
+    <agm-map [latitude]="userLat" [longitude]="userLng">
+      <agm-marker [latitude]="userLng" [longitude]="userLng"></agm-marker>
+    </agm-map>
+  </div>
 </div>
