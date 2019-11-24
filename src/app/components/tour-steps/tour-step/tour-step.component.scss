@@ -2,12 +2,6 @@
 @import "mixins/inputs";
 @import "mixins/colors";
 
-:host {
-  > div > div {
-    max-width: 20em;
-    width: 100%;
-  }
-}
 button {
   @include button;
 }

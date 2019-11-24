@@ -1,10 +1,23 @@
 @import "mixins/inputs";
+@import "mixins/vars";
 @import "mixins/reset";
 
 @include reset;
 
 * {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: $font-XXL;
+}
+
+h2 {
+  font-size: $font-XL;
+}
+
+h3 {
+  font-size: $font-L;
 }
 
 input,
@@ -17,9 +30,15 @@ button {
   }
 }
 
-
 ul, ol {
   list-style: none;
   padding-left: 0;
 
+}
+
+
+// footer to bottom
+
+html, body {
+  height: 100%;
 }

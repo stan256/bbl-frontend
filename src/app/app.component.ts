@@ -6,7 +6,11 @@ import './app.component.scss';
 import {User} from './model/User';
 import {AuthenticationService} from './auth/authentication.service';
 
-@Component({ selector: 'app', templateUrl: 'app.component.html' })
+@Component({
+    selector: 'app',
+    styleUrls: ['./app.component.scss'],
+    templateUrl: 'app.component.html'
+  })
 export class AppComponent {
   currentUser: User;
 
