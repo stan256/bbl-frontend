@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
+import {Tag} from '../../shared/common.types';
 
 @Component({
   selector: 'app-create-tour',
@@ -9,6 +10,8 @@ import {LocationService} from '../../services/location.service';
 export class CreateTourComponent implements OnInit {
   userLng: number;
   userLat: number;
+
+  tags: ReadonlyArray<Tag>;
 
   constructor(
     private locationService: LocationService
@@ -31,5 +34,9 @@ export class CreateTourComponent implements OnInit {
   private setDefaultLocation() {
     this.userLng = 42;
     this.userLat = 7;
+  }
+
+  setTourTags(tags: ReadonlyArray<Tag>) {
+    this.tags = tags;
   }
 }

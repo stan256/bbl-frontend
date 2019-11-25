@@ -1,8 +1,7 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {finalize, map, tap} from 'rxjs/operators';
+import {finalize, map, take, tap} from 'rxjs/operators';
 import {TagService} from '../../services/tag.service';
 import {Tag} from '../../shared/common.types';
-import {Observable} from 'rxjs';
 import {AlertService} from '../../alert/alert.service';
 
 @Component({
@@ -14,8 +13,6 @@ export class TagSelectComponent implements OnInit {
   isLoading: boolean = false;
   tagsInHint: ReadonlyArray<Tag> = [];
   selectedTags: Array<Tag> = [];
-
-  @Output() selectedTagsEmitter = new EventEmitter<ReadonlyArray<Tag>>();
 
   @ViewChild('tagInput', {static: true}) tagInput:ElementRef;
 
@@ -46,6 +43,7 @@ export class TagSelectComponent implements OnInit {
     const value = this.tagInput.nativeElement.value;
     this.isLoading = true;
     this.tagService.getTags(value).pipe(
+      take(1),
       map(a => a.filter(t => this.selectedTags.indexOf(t) === -1)), // filter tags which are already selected
       tap(v => this.tagsInHint = v),
       finalize(() => this.isLoading = false)

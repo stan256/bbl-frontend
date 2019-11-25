@@ -1,5 +1,12 @@
 @import "mixins/vars";
 @import "mixins/colors";
+@import "mixins/inputs";
+
+[data-content="tag-menu"] {
+  [data-content="tag-input"] {
+    @include input-text;
+  }
+}
 
 [data-content="tag-tips-list"] {
   > ul {
