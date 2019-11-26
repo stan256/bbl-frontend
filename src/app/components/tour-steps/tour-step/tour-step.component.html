@@ -11,8 +11,13 @@
         <input type="text"
                formControlName="location"
                id="location"
+               placeholder="Enter your location here"
+               autocorrect="off"
+               autocapitalize="off"
+               spellcheck="off"
                [(ngModel)]="step.title"
                [maxLength]="200">
+
         <button pTooltip="Open description"
                 tooltipPosition="top"
                 class="action"
