@@ -4,9 +4,13 @@
 <app-tag-select></app-tag-select>
 
 <div data-content="steps-map-pipe">
-  <app-tour-steps></app-tour-steps>
+  <div class="pipe-step">
+    <app-tour-steps></app-tour-steps>
+  </div>
 
-  <agm-map [latitude]="userLat" [longitude]="userLng">
-    <agm-marker [latitude]="userLng" [longitude]="userLng"></agm-marker>
-  </agm-map>
+  <div class="map-wrapper pipe-step">
+    <agm-map [latitude]="userLat" [longitude]="userLng">
+      <agm-marker [latitude]="userLng" [longitude]="userLng"></agm-marker>
+    </agm-map>
+  </div>
 </div>

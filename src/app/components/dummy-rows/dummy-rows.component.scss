@@ -5,7 +5,8 @@ ul {
   background-color: $white;
 
   > li {
-    margin: $M;
+    margin-top: $M;
+    margin-left: $M;
     background-color: $grey;
     height: $font-XL;
     font-size: $font-L;

@@ -1,13 +1,23 @@
+@import "mixins/vars";
+
+
 [data-content="steps-map-pipe"] {
   display: flex;
+
+  > .pipe-step {
+    margin-bottom: $XXXXL;
+  }
 
   > app-tour-steps {
     flex: 1;
   }
 
-  > agm-map {
+  > .map-wrapper {
     flex: 3;
-    height: 300px;
-    margin-left: 2em;
+    padding-left: 2em;
+
+    > agm-map {
+      height: 300px;
+    }
   }
 }

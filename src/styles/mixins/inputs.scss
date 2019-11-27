@@ -8,7 +8,7 @@
   border-radius: $M;
   background-color: $white;
   border: 1px solid $grey;
-  width: 100%;
+  min-width: 18em;
 }
 
 @mixin textarea {

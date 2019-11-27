@@ -33,3 +33,9 @@ ul[data-content="selected-tags"] {
   position: relative;
   left: -2em;
 }
+
+::ng-deep app-dummy-rows {
+  > ul {
+    width: 15.75em;
+  }
+}
