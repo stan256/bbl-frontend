@@ -1,14 +1,16 @@
 <h1>Create your route:</h1>
 
-<h2>Set tags for your tour:</h2>
-<app-tag-select></app-tag-select>
+<div class="pipe-step">
+  <h2>Set tags which fits to theme of the route</h2>
+  <app-tag-select></app-tag-select>
+</div>
 
-<div data-content="steps-map-pipe">
-  <div class="pipe-step">
+<div class="pipe-step">
+  <h2>Select geo locations on your tour</h2>
+
+  <div data-content="steps-map-pipe">
     <app-tour-steps></app-tour-steps>
-  </div>
 
-  <div class="map-wrapper pipe-step">
     <agm-map [latitude]="userLat" [longitude]="userLng">
       <agm-marker [latitude]="userLng" [longitude]="userLng"></agm-marker>
     </agm-map>

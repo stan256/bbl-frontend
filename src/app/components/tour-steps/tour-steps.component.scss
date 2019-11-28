@@ -4,8 +4,6 @@
 
 ul {
   > li {
-    margin-top: $XXXL;
-
     &:last-child {
       > button {
         @include button;
