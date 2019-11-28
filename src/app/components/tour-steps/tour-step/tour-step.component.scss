@@ -6,7 +6,7 @@ button {
   @include button;
 }
 
-[data-content="value-block"] {
+[data-content="location-block"] {
   > label {
     margin-bottom: 0;
   }

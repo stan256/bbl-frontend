@@ -49,7 +49,8 @@ import {ModalWindowComponent} from "./components/shared/modal-window/modal-windo
     HttpClientModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU'
+      apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU',
+      libraries: ["places"]
     }),
     CalendarModule,
     FormsModule,
