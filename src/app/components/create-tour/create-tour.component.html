@@ -9,10 +9,12 @@
   <h2>Select geo locations on your tour</h2>
 
   <div data-content="steps-map-pipe">
-    <app-tour-steps></app-tour-steps>
+    <app-tour-steps (stepsUpdated)="setSteps($event)"></app-tour-steps>
 
     <agm-map [latitude]="userLat" [longitude]="userLng">
-      <agm-marker [latitude]="userLng" [longitude]="userLng"></agm-marker>
+<!--      <agm-marker *ngFor="let step of steps"-->
+<!--                  [latitude]="step.place.geometry.location.lat()"-->
+<!--                  [longitude]="step.place.geometry.location.lng()"></agm-marker>-->
     </agm-map>
   </div>
 </div>

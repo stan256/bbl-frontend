@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Step} from "../../model/Step";
 import {ModalService} from "../shared/modal-window/modal.service";
-import {FormBuilder} from "@angular/forms";
 import {Subject} from "rxjs";
 import {take, tap} from "rxjs/operators";
 
@@ -15,10 +14,12 @@ export class TourStepsComponent implements OnInit {
   steps: Array<Step> = [];
   removeStepConfirmation$ = new Subject<boolean>();
 
+  @Output() stepsUpdated = new EventEmitter<ReadonlyArray<Step>>();
+
   constructor(private modalService: ModalService) { }
 
   ngOnInit() {
-    this.addStep()
+    this.addStep();
   }
 
   private addStep() {
@@ -29,6 +30,8 @@ export class TourStepsComponent implements OnInit {
       if (lastStep.title || lastStep.description)
         this.steps.push(new Step());
     }
+
+    this.stepsUpdated.next(this.steps);
   }
 
   removeStep(i: number) {

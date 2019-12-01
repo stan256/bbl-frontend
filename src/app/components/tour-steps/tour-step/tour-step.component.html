@@ -15,8 +15,10 @@
                autocorrect="off"
                autocapitalize="off"
                spellcheck="off"
+               (keydown.enter)="$event.preventDefault()"
                [(ngModel)]="step.title"
-               [maxLength]="200">
+               [maxLength]="200"
+               #search>
 
         <button pTooltip="Open description"
                 tooltipPosition="top"

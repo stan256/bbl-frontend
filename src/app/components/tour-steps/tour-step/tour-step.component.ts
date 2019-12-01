@@ -1,10 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
 import {Step} from "../../../model/Step";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ModalService} from "../../shared/modal-window/modal.service";
-import {MapsAPILoader} from "@agm/core";
-import Autocomplete = google.maps.places.Autocomplete;
-import PlaceResult = google.maps.places.PlaceResult;
+import { MapsAPILoader, MouseEvent } from '@agm/core';
 
 @Component({
   selector: 'app-tour-step',
@@ -19,7 +16,7 @@ export class TourStepComponent implements OnInit {
   showDescription: boolean = false;
   form: FormGroup;
 
-  @ViewChild("location", {static: false}) private locationRef: ElementRef;
+  @ViewChild("search", {static: false}) private locationRef: ElementRef;
 
   constructor(
     private fb: FormBuilder,
@@ -34,23 +31,15 @@ export class TourStepComponent implements OnInit {
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new Autocomplete(this.locationRef.nativeElement, {
-        types: ["address"]
-      });
+      let autocomplete = new google.maps.places.Autocomplete(this.locationRef.nativeElement);
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
-          //get the place result
-          let place: PlaceResult = autocomplete.getPlace();
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
+          if (place.geometry === undefined || place.geometry === null)
             return;
-          }
 
-          //set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.zoom = 12;
+          this.step.place = place;
         });
       });
     });
