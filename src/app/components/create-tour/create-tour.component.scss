@@ -1,4 +1,5 @@
 @import "mixins/vars";
+@import "mixins/inputs";
 
 
 .pipe-step {
@@ -8,8 +9,16 @@
 [data-content="steps-map-pipe"] {
   display: flex;
 
-  > app-tour-steps {
+  > ul {
     flex: 1;
+
+    > li {
+      &:last-child {
+        > button {
+          @include button;
+        }
+      }
+    }
   }
 
   > agm-map {

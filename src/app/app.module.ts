@@ -21,12 +21,11 @@ import { DummyRowsComponent } from './components/dummy-rows/dummy-rows.component
 import {TagSelectComponent} from './components/tagselect/tag-select.component';
 import {CreateTourComponent} from './components/create-tour/create-tour.component';
 import { AgmCoreModule } from '@agm/core';
-import { TourStepsComponent } from './components/tour-steps/tour-steps.component';
-import { TourStepComponent } from './components/tour-steps/tour-step/tour-step.component';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TooltipModule} from 'primeng/primeng';
 import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
+import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import {ModalWindowComponent} from "./components/shared/modal-window/modal-windo
     TagSelectComponent,
     DummyRowsComponent,
     CreateTourComponent,
-    TourStepsComponent,
     TourStepComponent
   ],
   imports: [

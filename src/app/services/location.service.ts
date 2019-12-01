@@ -20,8 +20,3 @@ export class LocationService {
     });
   }
 }
-
-export interface Location {
-  lng: number,
-  lat: number
-}

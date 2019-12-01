@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {Tag} from '../../shared/common.types';
 import {Step} from '../../model/Step';
+import {Subject} from 'rxjs';
+import {ModalService} from '../shared/modal-window/modal.service';
+import {take, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-tour',
@@ -13,33 +16,63 @@ export class CreateTourComponent implements OnInit {
   userLat: number;
 
   tags: ReadonlyArray<Tag>;
-  steps: ReadonlyArray<Step>;
+  steps: Array<Step> = [];
+
+  removeStepConfirmation$ = new Subject<boolean>();
 
   constructor(
-    private locationService: LocationService
-  ) {
-  }
+    private locationService: LocationService,
+    private modalService: ModalService
+  ) {}
 
   ngOnInit() {
+    this.addStep();
     this.setDefaultLocation();
-    this.locationService.getPosition().subscribe(this.setLocation());
+    this.locationService.getPosition().subscribe(func => {
+      func(g => {
+        console.log(g)
+
+        this.userLng = g.lng;
+        this.userLat = g.lat;
+      })
+    });
 
   }
 
-  private setLocation() {
-    return v => v(position => {
-      this.userLng = position.lng;
-      this.userLat = position.lat;
-    });
+  private addStep() {
+    if (!this.steps.length) {
+      this.steps.push(new Step());
+    } else {
+      const lastStep = this.steps[this.steps.length - 1];
+      if (lastStep.title || lastStep.description)
+        this.steps.push(new Step());
+    }
+  }
+
+  removeStep(i: number) {
+    this.modalService.open("stepRemovePopup");
+    this.removeStepConfirmation$.pipe(
+      take(1),
+      tap(confirmed => {
+        this.closeModal();
+        if (confirmed)
+          this.steps.splice(i, 1);
+      })
+    ).subscribe();
+  }
+
+  confirmRemove() {
+    this.removeStepConfirmation$.next(true);
+  }
+
+  closeModal() {
+    this.removeStepConfirmation$.next(false);
+    this.modalService.close('stepRemovePopup');
   }
 
   private setDefaultLocation() {
     this.userLng = 42;
     this.userLat = 7;
-  }
-
-  setTourTags(tags: ReadonlyArray<Tag>) {
-    this.tags = tags;
   }
 
 
@@ -74,8 +107,4 @@ export class CreateTourComponent implements OnInit {
   //     }
   //   });
   // }
-
-  setSteps($event: ReadonlyArray<Step>) {
-    this.steps = $event;
-  }
 }
