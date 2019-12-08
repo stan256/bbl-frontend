@@ -5,6 +5,7 @@ import {Step} from '../../model/Step';
 import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
 import {take, tap} from 'rxjs/operators';
+import {TourService} from '../../services/tour.service';
 
 @Component({
   selector: 'app-create-tour',
@@ -12,40 +13,49 @@ import {take, tap} from 'rxjs/operators';
   styleUrls: ['./create-tour.component.scss']
 })
 export class CreateTourComponent implements OnInit {
-  userLng: number;
-  userLat: number;
+  userLng: number = 11.582579;
+  userLat: number = 50.924845;
 
   tags: ReadonlyArray<Tag>;
   steps: Array<Step> = [];
-
   removeStepConfirmation$ = new Subject<boolean>();
+  showValidation$ = new Subject<void>();
 
   constructor(
     private locationService: LocationService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private tourService: TourService
   ) {}
 
   ngOnInit() {
-    this.addStep();
-    this.setDefaultLocation();
     this.locationService.getPosition().subscribe(func => {
       func(g => {
-        console.log(g)
-
         this.userLng = g.lng;
         this.userLat = g.lat;
-      })
+        this.addStep();
+      }, () => this.addStep())
     });
 
   }
 
+  get lastLng(): number {
+    return this.steps.length != 0 ? this.steps[this.steps.length - 1].lng : this.userLng;
+  }
+
+  get lastLat(): number {
+    return this.steps.length != 0 ? this.steps[this.steps.length - 1].lat : this.userLng;
+  }
+
   private addStep() {
     if (!this.steps.length) {
-      this.steps.push(new Step());
+      // setting the geo of user for start
+      this.steps.push(<Step> { lng: this.userLng, lat: this.userLat });
     } else {
       const lastStep = this.steps[this.steps.length - 1];
-      if (lastStep.title || lastStep.description)
-        this.steps.push(new Step());
+      if (lastStep.location)
+        this.steps.push(<Step> {});
+      else
+        this.showValidation$.next();
     }
   }
 
@@ -70,41 +80,25 @@ export class CreateTourComponent implements OnInit {
     this.modalService.close('stepRemovePopup');
   }
 
-  private setDefaultLocation() {
-    this.userLng = 42;
-    this.userLat = 7;
+  markerDragEnd($event: any, step: Step) {
+    step.lat = $event.coords.lat;
+    step.lng = $event.coords.lng;
+    this.locationService.geoCode(new google.maps.LatLng(step.lat, step.lng))
+      .pipe(
+        take(1),
+        tap(addresses => step.location = addresses[0].formatted_address)
+      )
+      .subscribe();
   }
 
+  validData() {
+    return this.steps.every(s => s.location);
+  }
 
-  // private setCurrentLocation() {
-  //   if ('geolocation' in navigator) {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       this.latitude = position.coords.latitude;
-  //       this.longitude = position.coords.longitude;
-  //       this.getAddress(this.latitude, this.longitude);
-  //     });
-  //   }
-  // }
-  //
-  // markerDragEnd($event: MouseEvent) {
-  //   // console.log($event);
-  //   // this.latitude = $event.coords.lat;
-  //   // this.longitude = $event.coords.lng;
-  //   // this.getAddress(this.latitude, this.longitude);
-  // }
-  //
-  // getAddress(latitude, longitude) {
-  //   this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
-  //     if (status === 'OK') {
-  //       if (results[0]) {
-  //         this.address = results[0].formatted_address;
-  //         console.log(this.address)
-  //       } else {
-  //         window.alert('No results found');
-  //       }
-  //     } else {
-  //       window.alert('Geocoder failed due to: ' + status);
-  //     }
-  //   });
-  // }
+  createTour() {
+    if (!this.validData())
+      this.showValidation$.next();
+    else
+      this.tourService.createTour();
+  }
 }

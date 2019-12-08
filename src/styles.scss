@@ -1,6 +1,7 @@
 @import "mixins/inputs";
 @import "mixins/vars";
 @import "mixins/reset";
+@import "styles/mixins/validation";
 
 @include reset;
 
@@ -23,10 +24,16 @@ h3 {
   margin: $M 0;
 }
 
+label {
+  margin-bottom: $L;
+  display: block;
+}
+
 input,
 textarea,
 button {
   outline: none;
+  margin-bottom: $XL;
 
   &:focus {
     outline: none;

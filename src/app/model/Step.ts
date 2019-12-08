@@ -1,6 +1,9 @@
-export class Step {
-  title: string | null;
-  description: string | null;
-  date: Date | null;
-  place: google.maps.places.PlaceResult;
+export interface Step {
+  location: string;
+  description?: string;
+  date: Date;
+
+  // todo opaque for lat & lng
+  lat?: number;
+  lng?: number;
 }

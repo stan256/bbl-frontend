@@ -1,8 +1,8 @@
 <div [formGroup]="form">
   <div>
     <div data-content="location-block">
-      <p data-content="step-header">
-        <label for="location">Step title</label>
+      <p data-content="step-header" class="input-group">
+        <label for="location">Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span></label>
         <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
           <i class="fa fa-minus"></i>
         </button>
@@ -16,28 +16,25 @@
                autocapitalize="off"
                spellcheck="off"
                (keydown.enter)="$event.preventDefault()"
-               [(ngModel)]="step.title"
+               [(ngModel)]="step.location"
                [maxLength]="200"
-               #search>
-
-        <button pTooltip="Open description"
-                tooltipPosition="top"
-                class="action"
-                (click)="changeShowDescription()"><i class="fa fa-plus"></i></button>
+               #searchLocation>
       </p>
-      <span *ngFor="let error of errorsOf(f.get('location'))" class="validation">{{error}}</span>
+      <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
     </div>
-    <div *ngIf="showDescription" data-content="textarea-block">
+    <div data-content="textarea-block" class="input-group">
       <label for="description">Description</label>
       <textarea formControlName="description"
                 id="description"
                 [(ngModel)]="step.description"
                 [maxLength]="400"></textarea>
-      <span *ngFor="let error of errorsOf(f.get('description'))" class="validation">{{error}}</span>
+      <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
     </div>
   </div>
-  <div data-content="calendar">
-    <p-calendar showTime="true"
+  <div data-content="calendar" class="input-group">
+    <label for="stepDate">Date & time</label>
+    <p-calendar [inputId]="'stepDate'"
+                showTime="true"
                 hourFormat="24"
                 showButtonBar="true"
                 (onSelect)="setStepDate($event)"

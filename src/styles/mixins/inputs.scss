@@ -3,7 +3,6 @@
 
 @mixin input-text {
   padding: $S;
-  margin: $S 0;
   outline: none;
   border-radius: $M;
   background-color: $white;
@@ -13,13 +12,14 @@
 
 @mixin textarea {
   padding: $S;
-  margin: $M 0;
   outline: none;
   border-radius: $M;
   background-color: $white;
   border: 1px solid $grey;
-  resize: none;
+  resize: vertical;
   width: 100%;
+  min-height: 100px;
+  max-height: 200px;
 }
 
 @mixin button {
@@ -39,4 +39,24 @@
       background-color: #6FC6FF;
     }
   }
+
+  &.confirmation {
+    background-color: $slime-green;
+
+    &:hover {
+      background-color: #0ed014;
+    }
+  }
+
+  &:disabled {
+    background-color: $grey;
+  }
+
+  &.btn-L {
+    padding: $S $M;
+    font-size: $font-XL;
+  }
 }
+
+
+

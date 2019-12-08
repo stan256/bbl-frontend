@@ -6,6 +6,16 @@
 </div>
 
 <div class="pipe-step">
+  <div class="pipe-columns">
+    <div class="pipe-column">
+      <h2><label for="">Number of people on the tour</label></h2>
+      <input #peopleNumber
+             type="text">
+    </div>
+  </div>
+</div>
+
+<div class="pipe-step">
   <h2>Select geo locations on your tour</h2>
 
   <div data-content="steps-map-pipe">
@@ -13,17 +23,28 @@
       <li *ngFor="let step of steps; let i = index;">
         <app-tour-step [step]="step"
                        [stepLength]="steps.length"
+                       [stepIndex]="i"
+                       [showValidation$]="showValidation$"
                        (stepRemoved)="removeStep(i)"></app-tour-step>
       </li>
-      <li data-content="add-step"><button class="action" (click)="addStep()">Add point</button></li>
+      <li data-content="add-step"><button class="action" (click)="addStep()">Add new step</button></li>
     </ul>
 
-    <agm-map [latitude]="userLat" [longitude]="userLng">
-<!--      <agm-marker *ngFor="let step of steps"-->
-<!--                  [latitude]="step.place.geometry.location.lat()"-->
-<!--                  [longitude]="step.place.geometry.location.lng()"></agm-marker>-->
-    </agm-map>
+    <div data-content="map">
+      <agm-map [latitude]="lastLat" [longitude]="lastLng" [zoom]="16">
+        <agm-marker *ngFor="let step of steps"
+                    [latitude]="step.lat"
+                    [longitude]="step.lng"
+                    [markerDraggable]="true"
+                    (dragEnd)="markerDragEnd($event, step)"></agm-marker>
+      </agm-map>
+    </div>
   </div>
+  <p data-content="create-tour">
+    <button class="btn-L confirmation"
+            [disabled]="!validData()"
+            (click)="createTour()">Create tour</button>
+  </p>
 </div>
 
 <app-modal-window id="stepRemovePopup">

@@ -1,7 +1,9 @@
 import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
 import {Step} from "../../../model/Step";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { MapsAPILoader, MouseEvent } from '@agm/core';
+import { MapsAPILoader } from '@agm/core';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-tour-step',
@@ -11,12 +13,13 @@ import { MapsAPILoader, MouseEvent } from '@agm/core';
 export class TourStepComponent implements OnInit {
   @Input() step: Step;
   @Input() stepLength: number;
+  @Input() stepIndex: number;
+  @Input() showValidation$: Observable<void>;
   @Output() stepRemoved = new EventEmitter<void>();
 
-  showDescription: boolean = false;
   form: FormGroup;
 
-  @ViewChild("search", {static: false}) private locationRef: ElementRef;
+  @ViewChild("searchLocation", {static: false}) private locationRef: ElementRef;
 
   constructor(
     private fb: FormBuilder,
@@ -25,7 +28,7 @@ export class TourStepComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       "location": [null, [Validators.required]],
-      "description": [null, [Validators.required]]
+      "description": [null, []]
     });
   }
 
@@ -39,19 +42,22 @@ export class TourStepComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null)
             return;
 
-          this.step.place = place;
+          this.step.lng = place.geometry.location.lng();
+          this.step.lat = place.geometry.location.lat();
         });
       });
     });
+
+    this.showValidation$
+      .pipe(
+        // Mark all controls as dirty
+        tap(() => Object.keys(this.form.controls).forEach(key => this.form.controls[key].markAsDirty()))
+      )
+      .subscribe()
   }
 
   get f(): FormGroup{
     return this.form;
-  }
-
-  changeShowDescription() {
-    this.showDescription = !this.showDescription;
-    this.f.get('description').setValue("");
   }
 
   setStepDate(date: Date) {

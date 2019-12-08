@@ -7,20 +7,31 @@ button {
 }
 
 [data-content="location-block"] {
-  > label {
-    margin-bottom: 0;
-  }
-
   > p {
     display: flex;
     margin-bottom: 0;
     align-items: center;
 
-    input[type="text"] {
-      @include input-text;
+    > label > span[data-content="step-index"] {
+      color: $white;
+      padding: $S;
+      border-radius: 50%;
+      background-color: $slime-green;
+      width: 2em;
+      height: 2em;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: $M;
     }
 
-    button {
+    input[type="text"] {
+      @include input-text;
+
+      flex: 1;
+    }
+
+    > button {
       margin-left: $M;
     }
   }
@@ -29,11 +40,13 @@ button {
 [data-content="textarea-block"] {
   margin-top: $S;
 
-  > label {
-    margin-bottom: 0;
-  }
-
   textarea {
     @include textarea;
+  }
+}
+
+[data-content="calendar"] {
+  p-calendar {
+    margin: 0.5em 0;
   }
 }

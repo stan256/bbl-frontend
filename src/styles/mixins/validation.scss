@@ -1,0 +1,11 @@
+@import "mixins/vars";
+@import "mixins/colors";
+
+.validation {
+  display: block;
+}
+
+.validation-error {
+  color: $red;
+  margin-bottom: $XL;
+}
