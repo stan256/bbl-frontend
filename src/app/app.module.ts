@@ -26,6 +26,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TooltipModule} from 'primeng/primeng';
 import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
+import { OnlyNumberDirective } from './shared/only-number.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {TourStepComponent} from './components/create-tour/tour-step/tour-step.co
     TagSelectComponent,
     DummyRowsComponent,
     CreateTourComponent,
-    TourStepComponent
+    TourStepComponent,
+    OnlyNumberDirective
   ],
   imports: [
     BrowserModule,
