@@ -27,6 +27,7 @@ import {TooltipModule} from 'primeng/primeng';
 import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
+import {AgmDirectionModule} from 'agm-direction';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { OnlyNumberDirective } from './shared/only-number.directive';
       apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU',
       libraries: ["places"]
     }),
+    AgmDirectionModule,
     CalendarModule,
     FormsModule,
     BrowserAnimationsModule,

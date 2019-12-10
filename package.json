@@ -23,6 +23,7 @@
     "@angular/router": "~8.2.4",
     "@types/google-maps": "^3.2.1",
     "@types/jest": "^24.0.23",
+    "agm-direction": "^0.7.9",
     "chart.js": "^2.9.3",
     "primeicons": "^2.0.0",
     "primeng": "^8.1.1",

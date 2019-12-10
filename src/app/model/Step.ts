@@ -3,6 +3,8 @@ export interface Step {
   description?: string;
   date: Date;
 
+  showRouteToNext: boolean;
+
   // todo opaque for lat & lng
   lat?: number;
   lng?: number;

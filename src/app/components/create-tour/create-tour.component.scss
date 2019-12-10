@@ -4,6 +4,10 @@
 
 .pipe-step {
   margin-bottom: $XXXXL;
+
+  [data-content="people-number"] {
+    @include input-text;
+  }
 }
 
 [data-content="steps-map-pipe"] {

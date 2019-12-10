@@ -18,8 +18,10 @@ export class CreateTourComponent implements OnInit {
 
   tags: ReadonlyArray<Tag>;
   steps: Array<Step> = [];
+  peopleNumber: number;
   removeStepConfirmation$ = new Subject<boolean>();
   showValidation$ = new Subject<void>();
+  peopleNumber$ = new Subject<number>();
 
   constructor(
     private locationService: LocationService,
@@ -35,7 +37,7 @@ export class CreateTourComponent implements OnInit {
         this.addStep();
       }, () => this.addStep())
     });
-
+    this.peopleNumber$.next(1);
   }
 
   get lastLng(): number {
@@ -52,10 +54,11 @@ export class CreateTourComponent implements OnInit {
       this.steps.push(<Step> { lng: this.userLng, lat: this.userLat });
     } else {
       const lastStep = this.steps[this.steps.length - 1];
-      if (lastStep.location)
-        this.steps.push(<Step> {});
-      else
+      if (lastStep.location) {
+        this.steps.push(<Step> { lat: lastStep.lat, lng: lastStep.lng });
+      }  else {
         this.showValidation$.next();
+      }
     }
   }
 
@@ -100,5 +103,23 @@ export class CreateTourComponent implements OnInit {
       this.showValidation$.next();
     else
       this.tourService.createTour();
+  }
+
+  iconUrl(step: Step) {
+    if (this.steps.indexOf(step) === this.steps.length - 1){
+      return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+    } else {
+      return "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+    }
+  }
+
+  // check that step is not last & has initialized coordinates and showRouteToNext is true
+  possibleToBuildRoute(stepIndex: number): boolean {
+    return stepIndex != this.steps.length - 1 &&
+      this.steps[stepIndex].showRouteToNext &&
+      this.steps[stepIndex].lat &&
+      this.steps[stepIndex].lng &&
+      this.steps[stepIndex + 1].lat !== this.steps[stepIndex].lat &&
+      this.steps[stepIndex + 1].lng !== this.steps[stepIndex].lng;
   }
 }

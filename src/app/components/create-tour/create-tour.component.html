@@ -8,9 +8,11 @@
 <div class="pipe-step">
   <div class="pipe-columns">
     <div class="pipe-column">
-      <h2><label for="">Number of people on the tour</label></h2>
-      <input #peopleNumber
-             onlyNumber
+      <h2><label for="peopleNumber">Number of people on the tour</label></h2>
+      <input id="peopleNumber"
+             only-number
+             data-content="people-number"
+             [(ngModel)]="peopleNumber"
              type="text">
     </div>
   </div>
@@ -32,13 +34,25 @@
     </ul>
 
     <div data-content="map">
-      <agm-map [latitude]="lastLat" [longitude]="lastLng" [zoom]="16">
-        <agm-marker *ngFor="let step of steps"
-                    [latitude]="step.lat"
-                    [longitude]="step.lng"
-                    [markerDraggable]="true"
-                    (dragEnd)="markerDragEnd($event, step)"></agm-marker>
-      </agm-map>
+      <agm-map [latitude]="lastLat"
+               [longitude]="lastLng"
+               [clickableIcons]="true"
+               [zoom]="16">
+
+        <ng-container *ngFor="let step of steps; let i = index;">
+          <agm-marker
+            [latitude]="step.lat"
+            [longitude]="step.lng"
+            [markerDraggable]="true"
+            [iconUrl]="iconUrl(step)"
+            (dragEnd)="markerDragEnd($event, step)"></agm-marker>
+
+          <!-- taking the next point as destination -->
+          <agm-direction *ngIf="possibleToBuildRoute(i)"
+                         [origin]="{ lat: step.lat, lng: step.lng }"
+                         [destination]="{ lat: steps[i + 1].lat, lng: steps[i + 1].lng }"></agm-direction>
+        </ng-container>
+        </agm-map>
     </div>
   </div>
   <p data-content="create-tour">

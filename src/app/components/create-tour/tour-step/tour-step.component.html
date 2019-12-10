@@ -1,7 +1,7 @@
 <div [formGroup]="form">
   <div>
     <div data-content="location-block">
-      <p data-content="step-header" class="input-group">
+      <p data-content="step-header">
         <label for="location">Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span></label>
         <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
           <i class="fa fa-minus"></i>
@@ -22,7 +22,7 @@
       </p>
       <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
     </div>
-    <div data-content="textarea-block" class="input-group">
+    <div data-content="textarea-block">
       <label for="description">Description</label>
       <textarea formControlName="description"
                 id="description"
@@ -31,7 +31,7 @@
       <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
     </div>
   </div>
-  <div data-content="calendar" class="input-group">
+  <div data-content="calendar">
     <label for="stepDate">Date & time</label>
     <p-calendar [inputId]="'stepDate'"
                 showTime="true"
@@ -40,5 +40,12 @@
                 (onSelect)="setStepDate($event)"
                 [showIcon]="true">
     </p-calendar>
+  </div>
+  <div data-content="show-route" *ngIf="notLast()">
+    <label [for]="'show-route-' + stepIndex">Show route to the next point</label>
+    <input [id]="'show-route-' + stepIndex"
+           [(ngModel)]="step.showRouteToNext"
+           [ngModelOptions]="{standalone: true}"
+           type="checkbox">
   </div>
 </div>

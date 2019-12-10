@@ -18,7 +18,6 @@ export class TourStepComponent implements OnInit {
   @Output() stepRemoved = new EventEmitter<void>();
 
   form: FormGroup;
-
   @ViewChild("searchLocation", {static: false}) private locationRef: ElementRef;
 
   constructor(
@@ -72,5 +71,9 @@ export class TourStepComponent implements OnInit {
 
   onStepRemoved() {
     this.stepRemoved.next();
+  }
+
+  notLast() {
+    return this.stepIndex !== this.stepLength - 1;
   }
 }
