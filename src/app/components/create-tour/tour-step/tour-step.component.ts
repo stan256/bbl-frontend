@@ -42,8 +42,10 @@ export class TourStepComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null)
             return;
 
-          this.step.lng = place.geometry.location.lng();
-          this.step.lat = place.geometry.location.lat();
+          this.step.coordinates = {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()
+          };
         });
       });
     });

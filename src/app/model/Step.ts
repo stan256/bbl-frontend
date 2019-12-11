@@ -1,4 +1,5 @@
 import {TravelMode} from '../shared/common.types';
+import {Coordinates} from './Coordinates';
 
 export interface Step {
   location: string;
@@ -8,7 +9,5 @@ export interface Step {
   showRouteToNext: boolean;
   travelModeToNext: TravelMode;
 
-  // todo opaque for lat & lng
-  lat?: number;
-  lng?: number;
+  coordinates: Coordinates;
 }

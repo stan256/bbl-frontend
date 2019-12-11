@@ -49,21 +49,22 @@ export class CreateTourComponent implements OnInit {
   }
 
   get lastLng(): number {
-    return this.steps.length != 0 ? this.steps[this.steps.length - 1].lng : this.userLng;
+    return this.steps.length != 0 ? this.steps[this.steps.length - 1].coordinates.lng : this.userLng;
   }
 
   get lastLat(): number {
-    return this.steps.length != 0 ? this.steps[this.steps.length - 1].lat : this.userLng;
+    return this.steps.length != 0 ? this.steps[this.steps.length - 1].coordinates.lat : this.userLng;
   }
 
   private addStep() {
     if (!this.steps.length) {
       // setting the geo of user for start
-      this.steps.push(<Step> { lng: this.userLng, lat: this.userLat });
+      this.steps.push(<Step> { coordinates: {lng: this.userLng, lat: this.userLat }});
     } else {
       const lastStep = this.steps[this.steps.length - 1];
       if (lastStep.location) {
-        this.steps.push(<Step> { lat: lastStep.lat, lng: lastStep.lng });
+        // todo to make more elegant
+        this.steps.push(<Step> { coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng } });
       }  else {
         this.showValidation$.next();
       }
@@ -92,9 +93,8 @@ export class CreateTourComponent implements OnInit {
   }
 
   markerDragEnd($event: any, step: Step) {
-    step.lat = $event.coords.lat;
-    step.lng = $event.coords.lng;
-    this.locationService.geoCode(new google.maps.LatLng(step.lat, step.lng))
+    step.coordinates = { lat: $event.coords.lat, lng: $event.coords.lng };
+    this.locationService.geoCode(new google.maps.LatLng(step.coordinates.lat, step.coordinates.lng))
       .pipe(
         take(1),
         tap(addresses => step.location = addresses[0].formatted_address)
@@ -121,14 +121,14 @@ export class CreateTourComponent implements OnInit {
     }
   }
 
-  // check that step is not last & has initialized coordinates and showRouteToNext is true
+  // check that step is not last & has initialized coordinates (but not same as origin) and showRouteToNext is true
   possibleToBuildRoute(stepIndex: number): boolean {
     return stepIndex != this.steps.length - 1 &&
       this.steps[stepIndex].showRouteToNext &&
-      this.steps[stepIndex].lat &&
-      this.steps[stepIndex].lng &&
-      this.steps[stepIndex + 1].lat !== this.steps[stepIndex].lat &&
-      this.steps[stepIndex + 1].lng !== this.steps[stepIndex].lng;
+      this.steps[stepIndex].coordinates.lat &&
+      this.steps[stepIndex].coordinates.lng &&
+      this.steps[stepIndex + 1].coordinates.lat !== this.steps[stepIndex].coordinates.lat &&
+      this.steps[stepIndex + 1].coordinates.lng !== this.steps[stepIndex].coordinates.lng;
   }
 
   getTravelMode(i: number) {

@@ -1,3 +1,5 @@
+/// <reference types="@types/googlemaps" />
+
 import {Injectable} from '@angular/core';
 import {Observable, Observer, of} from 'rxjs';
 

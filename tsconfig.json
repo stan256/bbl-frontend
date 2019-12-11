@@ -3,9 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "types": [
-      "googlemaps"
-    ],
+    "types": [],
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -22,6 +20,11 @@
       "dom"
     ]
   },
+  "include": [
+    "src/**/*.ts",
+    "node_modules/@types",
+    "@types/googlemaps"
+  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
