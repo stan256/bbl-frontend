@@ -1,9 +1,10 @@
 import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
-import {Step} from "../../../model/Step";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { MapsAPILoader } from '@agm/core';
+import {Step} from '../../../model/Step';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MapsAPILoader} from '@agm/core';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {TravelMode} from '../../../shared/common.types';
 
 @Component({
   selector: 'app-tour-step',
@@ -47,6 +48,9 @@ export class TourStepComponent implements OnInit {
       });
     });
 
+    // todo not to init this variable
+    this.step.travelModeToNext = TravelMode.DRIVING;
+
     this.showValidation$
       .pipe(
         // Mark all controls as dirty
@@ -75,5 +79,14 @@ export class TourStepComponent implements OnInit {
 
   notLast() {
     return this.stepIndex !== this.stepLength - 1;
+  }
+
+  updateRouteType($event) {
+    this.step.travelModeToNext = $event.target.value as TravelMode;
+  }
+
+  setValue() {
+    // todo to fix, does not set the value in select
+    return this.step.travelModeToNext.toString()
   }
 }

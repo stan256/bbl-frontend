@@ -22,6 +22,14 @@ export class CreateTourComponent implements OnInit {
   removeStepConfirmation$ = new Subject<boolean>();
   showValidation$ = new Subject<void>();
   peopleNumber$ = new Subject<number>();
+  markerOptions = {
+    origin: {
+      draggable: true,
+    },
+    destination: {
+      draggable: true,
+    }
+  };
 
   constructor(
     private locationService: LocationService,
@@ -121,5 +129,9 @@ export class CreateTourComponent implements OnInit {
       this.steps[stepIndex].lng &&
       this.steps[stepIndex + 1].lat !== this.steps[stepIndex].lat &&
       this.steps[stepIndex + 1].lng !== this.steps[stepIndex].lng;
+  }
+
+  getTravelMode(i: number) {
+    return this.steps[i].travelModeToNext.toString();
   }
 }

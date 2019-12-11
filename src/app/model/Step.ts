@@ -1,9 +1,12 @@
+import {TravelMode} from '../shared/common.types';
+
 export interface Step {
   location: string;
   description?: string;
   date: Date;
 
   showRouteToNext: boolean;
+  travelModeToNext: TravelMode;
 
   // todo opaque for lat & lng
   lat?: number;

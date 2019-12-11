@@ -1,4 +1,4 @@
-import {AfterViewInit, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, Observer, of} from 'rxjs';
 
 @Injectable({

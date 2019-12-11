@@ -49,6 +49,8 @@
 
           <!-- taking the next point as destination -->
           <agm-direction *ngIf="possibleToBuildRoute(i)"
+                         [travelMode]="getTravelMode(i)"
+                         [markerOptions]="markerOptions"
                          [origin]="{ lat: step.lat, lng: step.lng }"
                          [destination]="{ lat: steps[i + 1].lat, lng: steps[i + 1].lng }"></agm-direction>
         </ng-container>

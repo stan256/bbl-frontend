@@ -47,5 +47,17 @@
            [(ngModel)]="step.showRouteToNext"
            [ngModelOptions]="{standalone: true}"
            type="checkbox">
+
+    <ng-container *ngIf="step.showRouteToNext">
+      <label  [for]="'route-type-' + stepIndex">Type of movement:</label>
+      <select [name]="'route-type-' + stepIndex"
+              [id]="'route-type-' + stepIndex"
+              [value]="setValue()"
+              (change)="updateRouteType($event)">
+        <option value="WALKING">Walking</option>
+        <option value="DRIVING">Driving</option>
+        <option value="BICYCLING">Bicycling</option>
+      </select>
+    </ng-container>
   </div>
 </div>
