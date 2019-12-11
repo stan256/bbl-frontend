@@ -47,6 +47,19 @@ button {
 
 [data-content="calendar"] {
   p-calendar {
-    margin: 0.5em 0;
+    display: block;
+
+    ::ng-deep > span {
+      display: block;
+
+      > input {
+        @include input-text;
+        width: 100%;
+
+        &:focus, &:hover {
+          border: 1px solid $grey;
+        }
+      }
+    }
   }
 }

@@ -1,45 +1,44 @@
 <div [formGroup]="form">
-  <div>
-    <div data-content="location-block">
-      <p data-content="step-header">
-        <label for="location">Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span></label>
-        <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
-          <i class="fa fa-minus"></i>
-        </button>
-      </p>
-      <p>
-        <input type="text"
-               formControlName="location"
-               id="location"
-               placeholder="Enter your location here"
-               autocorrect="off"
-               autocapitalize="off"
-               spellcheck="off"
-               (keydown.enter)="$event.preventDefault()"
-               [(ngModel)]="step.location"
-               [maxLength]="200"
-               #searchLocation>
-      </p>
-      <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
-    </div>
-    <div data-content="textarea-block">
-      <label for="description">Description</label>
-      <textarea formControlName="description"
-                id="description"
-                [(ngModel)]="step.description"
-                [maxLength]="400"></textarea>
-      <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
-    </div>
+  <div data-content="location-block">
+    <p data-content="step-header">
+      <label for="location">Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span></label>
+      <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
+        <i class="fa fa-minus"></i>
+      </button>
+    </p>
+    <p>
+      <input type="text"
+             formControlName="location"
+             id="location"
+             placeholder="Enter your location here"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="off"
+             (keydown.enter)="$event.preventDefault()"
+             [(ngModel)]="step.location"
+             [maxLength]="200"
+             #searchLocation>
+    </p>
+    <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
   </div>
   <div data-content="calendar">
     <label for="stepDate">Date & time</label>
-    <p-calendar [inputId]="'stepDate'"
+    <p-calendar [id]="'stepDate-' + stepIndex"
+                [formControlName]="'calendar'"
                 showTime="true"
                 hourFormat="24"
                 showButtonBar="true"
-                (onSelect)="setStepDate($event)"
-                [showIcon]="true">
+                (onSelect)="setStepDate($event)">
     </p-calendar>
+    <span *ngFor="let error of errorsOf(f.get('calendar'))" class="validation validation-error">{{error}}</span>
+  </div>
+  <div data-content="textarea-block">
+    <label for="description">Description</label>
+    <textarea formControlName="description"
+              id="description"
+              [(ngModel)]="step.description"
+              [maxLength]="400"></textarea>
+    <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
   </div>
   <div data-content="show-route" *ngIf="notLast()">
     <label [for]="'show-route-' + stepIndex">Show route to the next point</label>

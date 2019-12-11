@@ -28,7 +28,8 @@ export class TourStepComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       "location": [null, [Validators.required]],
-      "description": [null, []]
+      "description": [null, []],
+      "calendar": [null, [Validators.required]]
     });
   }
 
