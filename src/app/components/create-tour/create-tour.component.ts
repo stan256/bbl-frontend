@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
-import {Tag} from '../../shared/common.types';
+import {Tag, TravelMode} from '../../shared/common.types';
 import {Step} from '../../model/Step';
 import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
@@ -58,13 +58,20 @@ export class CreateTourComponent implements OnInit {
 
   private addStep() {
     if (!this.steps.length) {
-      // setting the geo of user for start
-      this.steps.push(<Step> { coordinates: {lng: this.userLng, lat: this.userLat }});
+      // setting the geo of user as first step
+      this.steps.push(<Step> {
+        coordinates: {lng: this.userLng, lat: this.userLat },
+        travelModeToNext: "BICYCLING"
+      });
     } else {
+      // creating a new step with geo location in the same place as previous
       const lastStep = this.steps[this.steps.length - 1];
       if (lastStep.location) {
-        // todo to make more elegant
-        this.steps.push(<Step> { coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng } });
+        let step = <Step> {
+          coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng },
+          travelModeToNext: "BICYCLING"
+        };
+        this.steps.push(step);
       }  else {
         this.showValidation$.next();
       }

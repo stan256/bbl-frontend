@@ -51,9 +51,6 @@ export class TourStepComponent implements OnInit {
       });
     });
 
-    // todo not to init this variable
-    this.step.travelModeToNext = TravelMode.DRIVING;
-
     this.showValidation$
       .pipe(
         // Mark all controls as dirty
@@ -86,10 +83,5 @@ export class TourStepComponent implements OnInit {
 
   updateRouteType($event) {
     this.step.travelModeToNext = $event.target.value as TravelMode;
-  }
-
-  setValue() {
-    // todo to fix, does not set the value in select
-    return this.step.travelModeToNext.toString()
   }
 }

@@ -70,4 +70,9 @@ button {
   .checkbox {
     @include checkbox;
   }
+
+  select {
+    @include select;
+    width: 100%;
+  }
 }

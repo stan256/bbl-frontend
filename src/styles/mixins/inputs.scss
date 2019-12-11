@@ -11,6 +11,8 @@
 }
 
 @mixin checkbox {
+  margin-bottom: $XL;
+
   > input[type="checkbox"] {
     visibility: hidden;
     position: absolute;
@@ -46,6 +48,16 @@
       }
     }
   }
+}
+
+@mixin select {
+  padding: $S;
+  outline: none;
+  border-radius: $M;
+  background-color: $white;
+  border: 1px solid $grey;
+  min-width: 18em;
+  font-size: $font-M;
 }
 
 @mixin textarea {
