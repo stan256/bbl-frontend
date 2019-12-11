@@ -1,4 +1,6 @@
+@import "mixins/colors";
+
 p {
   height: 45px;
-  background-color: black;
+  background-color: $grey;
 }

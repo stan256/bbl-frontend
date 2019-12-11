@@ -23,8 +23,8 @@
   </div>
   <div data-content="calendar">
     <label for="stepDate">Date & time</label>
-    <p-calendar [id]="'stepDate-' + stepIndex"
-                [formControlName]="'calendar'"
+    <p-calendar id="stepDate"
+                formControlName="calendar"
                 showTime="true"
                 hourFormat="24"
                 showButtonBar="true"
@@ -40,12 +40,14 @@
               [maxLength]="400"></textarea>
     <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
   </div>
-  <div data-content="show-route" *ngIf="notLast()">
-    <label [for]="'show-route-' + stepIndex">Show route to the next point</label>
-    <input [id]="'show-route-' + stepIndex"
-           [(ngModel)]="step.showRouteToNext"
-           [ngModelOptions]="{standalone: true}"
-           type="checkbox">
+<!--  <div data-content="show-route" *ngIf="notLast()">-->
+  <div data-content="show-route">
+    <label class="checkbox">
+      <input [(ngModel)]="step.showRouteToNext"
+             [ngModelOptions]="{standalone: true}"
+             type="checkbox">
+      <span>Show route to the next point</span>
+    </label>
 
     <ng-container *ngIf="step.showRouteToNext">
       <label  [for]="'route-type-' + stepIndex">Type of movement:</label>
