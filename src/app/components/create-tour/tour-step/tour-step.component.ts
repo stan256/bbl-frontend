@@ -25,13 +25,7 @@ export class TourStepComponent implements OnInit {
     private fb: FormBuilder,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
-  ) {
-    this.form = this.fb.group({
-      "location": [null, [Validators.required]],
-      "description": [null, []],
-      "calendar": [null, [Validators.required]]
-    });
-  }
+  ) { }
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
@@ -55,8 +49,13 @@ export class TourStepComponent implements OnInit {
       .pipe(
         // Mark all controls as dirty
         tap(() => Object.keys(this.form.controls).forEach(key => this.form.controls[key].markAsDirty()))
-      )
-      .subscribe()
+      ).subscribe();
+
+    this.form = this.fb.group({
+      ["location-" + this.stepIndex]:    [null, [Validators.required]],
+      ["description-" + this.stepIndex]: [null, []],
+      ["calendar-" + this.stepIndex]:    [null, [Validators.required]]
+    });
   }
 
   get f(): FormGroup{
