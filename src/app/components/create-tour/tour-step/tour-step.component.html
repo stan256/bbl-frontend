@@ -40,25 +40,28 @@
               [maxLength]="400"></textarea>
     <span *ngFor="let error of errorsOf(f.get('description-' + stepIndex))" class="validation validation-error">{{error}}</span>
   </div>
-<!--&lt;!&ndash;  <div data-content="show-route" *ngIf="notLast()">&ndash;&gt;-->
-<!--  <div data-content="show-route">-->
-<!--    <label class="checkbox">-->
-<!--      <input [(ngModel)]="step.showRouteToNext"-->
-<!--             [ngModelOptions]="{standalone: true}"-->
-<!--             type="checkbox">-->
-<!--      <span>Show route to the next point</span>-->
-<!--    </label>-->
+<!--  <div data-content="show-route" *ngIf="notLast()">-->
+  <div data-content="show-route">
+    <label class="checkbox">
+      <input [(ngModel)]="step.showRouteToNext"
+             [ngModelOptions]="{standalone: true}"
+             type="checkbox">
+      <span>Show route to the next point</span>
+    </label>
 
-<!--    <ng-container *ngIf="step.showRouteToNext">-->
-<!--      <label  [for]="'route-type-' + stepIndex">Type of movement:</label>-->
-<!--      <select [name]="'route-type-' + stepIndex"-->
-<!--              [id]="'route-type-' + stepIndex"-->
-<!--              [value]="this.step.travelModeToNext"-->
-<!--              (change)="updateRouteType($event)">-->
-<!--        <option value="WALKING">Walking</option>-->
-<!--        <option value="DRIVING">Driving</option>-->
-<!--        <option value="BICYCLING">Bicycling</option>-->
-<!--      </select>-->
-<!--    </ng-container>-->
-<!--  </div>-->
+    <ng-container *ngIf="step.showRouteToNext">
+      <label  [for]="'route-type-' + stepIndex">Type of movement:</label>
+      <select [name]="'route-type-' + stepIndex"
+              [id]="'route-type-' + stepIndex"
+              [value]="this.step.travelModeToNext"
+              (change)="updateRouteType($event)">
+        <option value="WALKING">Walking</option>
+        <option value="DRIVING">Driving</option>
+        <option value="BICYCLING">Bicycling</option>
+      </select>
+    </ng-container>
+  </div>
+  <div data-content="slider">
+    <app-image-drag-upload></app-image-drag-upload>
+  </div>
 </div>

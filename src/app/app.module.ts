@@ -28,6 +28,8 @@ import {ModalWindowComponent} from "./components/shared/modal-window/modal-windo
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
 import {AgmDirectionModule} from 'agm-direction';
+import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive';
+import { ImageDragUploadComponent } from './components/shared/file-drag-upload/image-drag-upload.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import {AgmDirectionModule} from 'agm-direction';
     DummyRowsComponent,
     CreateTourComponent,
     TourStepComponent,
-    OnlyNumberDirective
+    OnlyNumberDirective,
+    DragAndDropFilesDirective,
+    ImageDragUploadComponent
   ],
   imports: [
     BrowserModule,

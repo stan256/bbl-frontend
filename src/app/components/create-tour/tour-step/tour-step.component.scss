@@ -38,8 +38,6 @@ button {
 }
 
 [data-content="textarea-block"] {
-  margin-top: $S;
-
   textarea {
     @include textarea;
     resize: none;
