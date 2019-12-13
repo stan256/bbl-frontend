@@ -83,4 +83,8 @@ export class TourStepComponent implements OnInit {
   updateRouteType($event) {
     this.step.travelModeToNext = $event.target.value as TravelMode;
   }
+
+  formInvalid() {
+    return this.form.invalid;
+  }
 }

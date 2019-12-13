@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {Tag, TravelMode} from '../../shared/common.types';
 import {Step} from '../../model/Step';
@@ -6,6 +6,8 @@ import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
 import {take, tap} from 'rxjs/operators';
 import {TourService} from '../../services/tour.service';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TourStepComponent} from './tour-step/tour-step.component';
 
 @Component({
   selector: 'app-create-tour',
@@ -19,22 +21,19 @@ export class CreateTourComponent implements OnInit {
   tags: ReadonlyArray<Tag>;
   steps: Array<Step> = [];
   peopleNumber: number;
+  form: FormGroup;
+
   removeStepConfirmation$ = new Subject<boolean>();
   showValidation$ = new Subject<void>();
   peopleNumber$ = new Subject<number>();
-  markerOptions = {
-    origin: {
-      draggable: true,
-    },
-    destination: {
-      draggable: true,
-    }
-  };
+
+  @ViewChildren(TourStepComponent) stepsRefs: QueryList<TourStepComponent>;
 
   constructor(
     private locationService: LocationService,
     private modalService: ModalService,
-    private tourService: TourService
+    private tourService: TourService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -45,7 +44,13 @@ export class CreateTourComponent implements OnInit {
         this.addStep();
       }, () => this.addStep())
     });
-    this.peopleNumber$.next(1);
+
+    this.peopleNumber$.next(5);
+
+    this.form = this.formBuilder.group({
+      numberOfTickets: ['', Validators.required],
+      steps: new FormArray([])
+    });
   }
 
   get lastLng(): number {
@@ -66,7 +71,8 @@ export class CreateTourComponent implements OnInit {
     } else {
       // creating a new step with geo location in the same place as previous
       const lastStep = this.steps[this.steps.length - 1];
-      if (lastStep.location) {
+
+      if (!this.stepsRefs.some(s => s.formInvalid())) {
         let step = <Step> {
           coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng },
           travelModeToNext: "BICYCLING"
@@ -140,5 +146,13 @@ export class CreateTourComponent implements OnInit {
 
   getTravelMode(i: number) {
     return this.steps[i].travelModeToNext.toString();
+  }
+
+  private addFormControls() {
+    let controlSteps = this.form.controls.steps as FormArray;
+    controlSteps.push(this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
+    }))
   }
 }
