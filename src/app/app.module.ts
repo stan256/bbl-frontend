@@ -23,7 +23,7 @@ import {CreateTourComponent} from './components/create-tour/create-tour.componen
 import { AgmCoreModule } from '@agm/core';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TooltipModule} from 'primeng/primeng';
+import {CarouselModule, TooltipModule} from 'primeng/primeng';
 import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
@@ -57,13 +57,14 @@ import { ImageDragUploadComponent } from './components/shared/file-drag-upload/i
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU',
-      libraries: ["places"]
+      libraries: ['places']
     }),
     AgmDirectionModule,
     CalendarModule,
     FormsModule,
     BrowserAnimationsModule,
-    TooltipModule
+    TooltipModule,
+    CarouselModule
   ],
   exports: [
   ],

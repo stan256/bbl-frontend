@@ -1,0 +1,24 @@
+<div data-content="carousel">
+
+<!-- TODO default alt when @input is not provided -->
+  <p-carousel *ngIf="imageSelections.length > 0"
+              [value]="imageSelections"
+              [numVisible]="3"
+              [numScroll]="3"
+              [circular]="false">
+    <ng-template let-img pTemplate="rowexpansion">
+      <img [src]="img.src" [alt]="stepTitle">
+    </ng-template>
+  </p-carousel>
+</div>
+
+<div data-content="data-upload-area" app-drag-and-drop (fileDropped)="onFilesDropped($event)">
+  <p>Select or drag your images here!</p>
+  <!-- todo only images -->
+  <input type="file"
+         multiple
+         [id]="'fileInput'"
+         (change)="onFilesSelected($event)"/>
+  <label [for]="'fileInput'"
+         class="action">Choose</label>
+</div>
