@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {ImageSelection} from '../../../model/files';
+import {ModalService} from '../modal-window/modal.service';
 
 @Component({
   selector: 'app-image-drag-upload',
@@ -10,8 +11,11 @@ export class ImageDragUploadComponent implements OnInit {
   @Input() stepTitle;
 
   imageSelections: Array<ImageSelection> = [];
+  private imageInModal: ImageSelection;
 
-  constructor() { }
+  constructor(
+    private modalService: ModalService
+  ) { }
 
   ngOnInit() {
   }
@@ -46,4 +50,23 @@ export class ImageDragUploadComponent implements OnInit {
     }
     return array;
   }
+
+  openImgModal(img) {
+    this.imageInModal = img;
+    this.modalService.open("imageView")
+  }
+
+  closeImgModal() {
+    this.modalService.close("imageView");
+    this.imageInModal = null;
+  }
+
+  remove() {
+
+  }
+}
+
+export interface ImageSelection {
+  file: File;
+  src: string;
 }

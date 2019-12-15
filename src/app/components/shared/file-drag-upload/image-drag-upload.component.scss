@@ -17,7 +17,7 @@
 
         > button {
           position: absolute;
-          z-index: 1000;
+          z-index: 800;
 
           &.ui-carousel-next {
             right: 0;
@@ -25,6 +25,8 @@
         }
 
         .ui-carousel-items-container {
+          align-items: center;
+
           > .ui-carousel-item:not(:first-child) {
             padding-left: $XS;
           }
@@ -69,5 +71,12 @@
 
   &.drag-over {
     border: 2px dashed $slime-green;
+  }
+}
+
+[data-content="showImage"] {
+  > img {
+    max-height: 500px;
+    max-width: 500px;
   }
 }

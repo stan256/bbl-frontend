@@ -11,11 +11,14 @@
     left: 0;
     z-index: 1000;
     overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .modal-window-body {
       padding: 20px;
-      background: #fff;
-      margin: 40px;
+      background: $white;
+      display: inline-block;
     }
   }
 
