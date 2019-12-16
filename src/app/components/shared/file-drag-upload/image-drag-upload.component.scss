@@ -42,6 +42,32 @@
   }
 }
 
+[data-content="showImage"] {
+  img {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .ui-carousel-content {
+      padding: 0;
+
+      > .ui-carousel-container {
+        padding: 0;
+
+        .ui-carousel-items-container {
+          align-items: center;
+        }
+      }
+
+      > .ui-carousel-dots-container {
+        > li > button {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
 [data-content="data-upload-area"] {
   margin-top: $XL;
   border: 2px dashed $grey;

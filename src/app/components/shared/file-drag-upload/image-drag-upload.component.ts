@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ImageSelection} from '../../../model/files';
 import {ModalService} from '../modal-window/modal.service';
 
@@ -7,11 +7,13 @@ import {ModalService} from '../modal-window/modal.service';
   templateUrl: './image-drag-upload.component.html',
   styleUrls: ['./image-drag-upload.component.scss']
 })
+// todo animation does not work when element is removed from DOM
 export class ImageDragUploadComponent implements OnInit {
-  @Input() stepTitle;
+  @Input() stepTitle: string;
 
   imageSelections: Array<ImageSelection> = [];
-  private imageInModal: ImageSelection;
+  modalImage: number;
+  modalOpened: boolean = false;
 
   constructor(
     private modalService: ModalService
@@ -52,17 +54,39 @@ export class ImageDragUploadComponent implements OnInit {
   }
 
   openImgModal(img) {
-    this.imageInModal = img;
+    this.modalOpened = true;
+    this.modalImage = this.imageSelections.indexOf(img);
     this.modalService.open("imageView")
   }
 
   closeImgModal() {
     this.modalService.close("imageView");
-    this.imageInModal = null;
+    this.modalOpened = false;
   }
 
-  remove() {
+  removeCurrentImage() {
+    if (this.modalImage === this.imageSelections.length - 1) {
+      this.imageSelections.splice(this.modalImage, 1);
+      this.modalImage--;
+    } else {
+      this.imageSelections.splice(this.modalImage, 1);
+    }
 
+    // bug of primeNG -> when we dynamically change length of array to 1, transoform does not work properly
+    if (this.imageSelections.length === 1){
+      (document.querySelector('#imageView .ui-carousel-items-container') as HTMLElement)
+        .style.transform = "translate3d(0px, 0px, 0px)";
+      (document.querySelector('app-image-drag-upload .ui-carousel-items-container') as HTMLElement)
+        .style.transform = "translate3d(0px, 0px, 0px)";
+    }
+
+    if (this.imageSelections.length === 0) {
+      this.closeImgModal();
+    }
+  }
+
+  setSelectedImage($event: any) {
+    this.modalImage = $event.page;
   }
 }
 
