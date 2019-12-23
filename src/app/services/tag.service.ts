@@ -18,13 +18,11 @@ export class TagService {
     private restService: RestService
   ) {}
 
-  getTags(pattern: string): Observable<ReadonlyArray<Tag>> {
+  getTags(pattern: string): Promise<Array<Tag>> {
     // todo Real regex matching
     // return this.restService.get<ReadonlyArray<Tag>>("localhost:9004/bbl-agent", {});
 
-    return of(this.tags).pipe(
-      delay(1000)
-    );
+    return of(this.tags).toPromise();
   }
 
   createTag(tagText: string): Observable<Tag> {

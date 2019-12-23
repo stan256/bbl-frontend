@@ -8,6 +8,8 @@ import {take, tap} from 'rxjs/operators';
 import {TourService} from '../../services/tour.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TourStepComponent} from './tour-step/tour-step.component';
+import {RestrictionService} from '../../services/restriction.service';
+import {TagService} from '../../services/tag.service';
 
 @Component({
   selector: 'app-create-tour',
@@ -18,10 +20,14 @@ export class CreateTourComponent implements OnInit {
   userLng: number = 11.582579;
   userLat: number = 50.924845;
 
-  tags: ReadonlyArray<Tag>;
   steps: Array<Step> = [];
-  peopleNumber: number;
+  peopleNumber: number = 5;
   form: FormGroup;
+
+  tagsInputText: string;
+  tagsResults: string[];
+  restrictionsInputText: string;
+  restrictionsResults: string[];
 
   removeStepConfirmation$ = new Subject<boolean>();
   showValidation$ = new Subject<void>();
@@ -33,8 +39,22 @@ export class CreateTourComponent implements OnInit {
     private locationService: LocationService,
     private modalService: ModalService,
     private tourService: TourService,
+    private tagService: TagService,
+    private restrictionService: RestrictionService,
     private formBuilder: FormBuilder
   ) {}
+
+  searchRestrictions(event) {
+    this.restrictionService.getResults(event.query).then(data => {
+      this.restrictionsResults = data;
+    });
+  }
+
+  searchTags(event) {
+    this.tagService.getTags(event.query).then(data => {
+      this.tagsResults = data;
+    });
+  }
 
   ngOnInit() {
     this.locationService.getPosition().subscribe(func => {
@@ -80,6 +100,7 @@ export class CreateTourComponent implements OnInit {
         this.steps.push(step);
       }  else {
         this.showValidation$.next();
+        document.getElementById('step-' + --this.steps.length).scrollIntoView();
       }
     }
   }

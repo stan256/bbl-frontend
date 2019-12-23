@@ -4,12 +4,15 @@ import {TagService} from '../../services/tag.service';
 import {Tag} from '../../shared/common.types';
 import {AlertService} from '../../alert/alert.service';
 
+// todo do I need this component ? It is already not in use
+
 @Component({
   selector: 'app-tag-select',
   templateUrl: './tag-select.component.html',
   styleUrls: ['./tag-select.component.scss']
 })
 export class TagSelectComponent implements OnInit {
+
   isLoading: boolean = false;
   tagsInHint: ReadonlyArray<Tag> = [];
   selectedTags: Array<Tag> = [];

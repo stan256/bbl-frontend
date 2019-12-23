@@ -23,7 +23,7 @@ import {CreateTourComponent} from './components/create-tour/create-tour.componen
 import { AgmCoreModule } from '@agm/core';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CarouselModule, TooltipModule} from 'primeng/primeng';
+import {AutoCompleteModule, CarouselModule, SliderModule, SpinnerModule, TooltipModule} from 'primeng/primeng';
 import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
@@ -64,7 +64,10 @@ import { ImageDragUploadComponent } from './components/shared/file-drag-upload/i
     FormsModule,
     BrowserAnimationsModule,
     TooltipModule,
-    CarouselModule
+    CarouselModule,
+    SliderModule,
+    SpinnerModule,
+    AutoCompleteModule
   ],
   exports: [
   ],
