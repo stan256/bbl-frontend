@@ -100,7 +100,9 @@ export class CreateTourComponent implements OnInit {
         this.steps.push(step);
       }  else {
         this.showValidation$.next();
-        document.getElementById('step-' + --this.steps.length).scrollIntoView();
+        let id = 'step-' + --this.steps.length;
+        console.log(id);
+        document.getElementById(id).scrollIntoView();
       }
     }
   }
