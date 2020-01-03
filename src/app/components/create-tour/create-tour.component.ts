@@ -51,7 +51,7 @@ export class CreateTourComponent implements OnInit {
   }
 
   searchTags(event) {
-    this.tagService.getTags(event.query).then(data => {
+    this.tagService.getTags(event.query).toPromise().then(data => {
       this.tagsResults = data;
     });
   }
@@ -92,17 +92,16 @@ export class CreateTourComponent implements OnInit {
       // creating a new step with geo location in the same place as previous
       const lastStep = this.steps[this.steps.length - 1];
 
-      if (!this.stepsRefs.some(s => s.formInvalid())) {
+      if (this.stepsRefs.some(s => s.formInvalid())) {
+        this.showValidation$.next();
+        let id = 'step-' + (this.steps.length - 1);
+        document.getElementById(id).scrollIntoView();
+      }  else {
         let step = <Step> {
           coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng },
           travelModeToNext: "BICYCLING"
         };
         this.steps.push(step);
-      }  else {
-        this.showValidation$.next();
-        let id = 'step-' + --this.steps.length;
-        console.log(id);
-        document.getElementById(id).scrollIntoView();
       }
     }
   }
@@ -171,11 +170,13 @@ export class CreateTourComponent implements OnInit {
     return this.steps[i].travelModeToNext.toString();
   }
 
-  private addFormControls() {
-    let controlSteps = this.form.controls.steps as FormArray;
-    controlSteps.push(this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
-    }))
-  }
+
+
+  // private addFormControls() {
+  //   let controlSteps = this.form.controls.steps as FormArray;
+  //   controlSteps.push(this.formBuilder.group({
+  //     name: ['', Validators.required],
+  //     email: ['', [Validators.required, Validators.email]]
+  //   }))
+  // }
 }

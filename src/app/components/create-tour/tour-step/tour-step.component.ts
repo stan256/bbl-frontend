@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
 import {Step} from '../../../model/Step';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -16,9 +16,9 @@ export class TourStepComponent implements OnInit {
   @Input() stepLength: number;
   @Input() stepIndex: number;
   @Input() showValidation$: Observable<void>;
-  @Output() stepRemoved = new EventEmitter<void>();
+  @Input() parentForm: FormGroup;
 
-  form: FormGroup;
+  @Output() stepRemoved = new EventEmitter<void>();
   @ViewChild("searchLocation", {static: false}) private locationRef: ElementRef;
 
   constructor(
@@ -28,6 +28,15 @@ export class TourStepComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.addFormControls();
+
+    let steps: any = this.parentForm.controls.steps;
+    this.showValidation$
+      .pipe(
+        // Mark all controls as dirty when triggered
+        tap(() => Object.keys(steps.controls).forEach(key => steps.controls[key].markAsDirty()))
+      ).subscribe();
+
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.locationRef.nativeElement);
       autocomplete.addListener("place_changed", () => {
@@ -44,26 +53,24 @@ export class TourStepComponent implements OnInit {
         });
       });
     });
+  }
 
-    this.showValidation$
-      .pipe(
-        // Mark all controls as dirty
-        tap(() => Object.keys(this.form.controls).forEach(key => this.form.controls[key].markAsDirty()))
-      ).subscribe();
 
-    this.form = this.fb.group({
+  private addFormControls() {
+    let controlSteps = this.parentForm.controls.steps as FormArray;
+    controlSteps.push(this.fb.group({
       ["location-" + this.stepIndex]:    [null, [Validators.required]],
       ["description-" + this.stepIndex]: [null, []],
       ["calendar-" + this.stepIndex]:    [null, [Validators.required]]
-    });
+    }));
   }
 
   get f(): FormGroup{
-    return this.form;
+    let steps: any = this.parentForm.controls.steps;
+    return steps.controls[this.stepIndex]
   }
 
   setStepDate(date: Date) {
-    console.log(date);
     this.step.date = date;
   }
 
@@ -85,6 +92,7 @@ export class TourStepComponent implements OnInit {
   }
 
   formInvalid() {
-    return this.form.invalid;
+    let steps: any = this.parentForm.controls.steps;
+    return steps.controls[this.stepIndex].invalid;
   }
 }

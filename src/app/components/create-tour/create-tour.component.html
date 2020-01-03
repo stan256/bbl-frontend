@@ -20,6 +20,7 @@
                        [stepLength]="steps.length"
                        [stepIndex]="i"
                        [showValidation$]="showValidation$"
+                       [parentForm]="form"
                        (stepRemoved)="removeStep(i)"></app-tour-step>
       </li>
       <li data-content="add-step"><button class="action" (click)="addStep()">Add new step</button></li>
