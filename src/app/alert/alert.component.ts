@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {AlertService} from './alert.service';
 import {Alert} from '../model/Alert';
-import {delay, tap} from 'rxjs/operators';
+import {debounceTime, delay, take, takeLast, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-alert',
@@ -18,7 +18,7 @@ export class AlertComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.alertService.getAlert().pipe(
       tap((x: Alert) => this.alert = x),
-      delay(5000),
+      debounceTime(5000),
       tap(x => this.alert = null)
     ).subscribe();
   }

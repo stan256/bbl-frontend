@@ -14,8 +14,6 @@ export class AlertService {
       if (event instanceof NavigationStart) {
         if (this.keepAfterNavigationChange) {
           this.keepAfterNavigationChange = false;
-        } else {
-          this.subject.next();
         }
       }
     });
