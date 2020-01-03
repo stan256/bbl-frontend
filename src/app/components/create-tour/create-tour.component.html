@@ -1,81 +1,84 @@
 <h1>Create your route:</h1>
 
-<div class="pipe-step">
-  <div class="pipe-columns">
-    <div class="pipe-column" data-content="people-range">
-      <h2>Number of people on the tour</h2>
-      <p-spinner [(ngModel)]="peopleNumber" [min]="1" [max]="100"></p-spinner>
+<form [formGroup]="form">
+  <div class="pipe-step">
+    <div class="pipe-columns">
+      <div class="pipe-column" data-content="people-range">
+        <h2>Number of people on the tour</h2>
+        <p-spinner formControlName="peopleNumber" [min]="1" [max]="100"></p-spinner>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="pipe-step">
-  <h2>Select geo locations on your tour</h2>
+  <div class="pipe-step">
+    <h2>Select geo locations on your tour</h2>
 
-  <div data-content="steps-map-pipe">
-    <ul>
-      <li *ngFor="let step of steps; let i = index;">
-        <app-tour-step [step]="step"
-                       [id]="'step-' + i"
-                       [stepLength]="steps.length"
-                       [stepIndex]="i"
-                       [showValidation$]="showValidation$"
-                       [parentForm]="form"
-                       (stepRemoved)="removeStep(i)"></app-tour-step>
-      </li>
-      <li data-content="add-step"><button class="action" (click)="addStep()">Add new step</button></li>
-    </ul>
+    <div data-content="steps-map-pipe">
+      <ul>
+        <li *ngFor="let step of steps; let i = index;">
+          <app-tour-step [step]="step"
+                         [stepLength]="steps.length"
+                         [stepIndex]="i"
+                         [showValidation$]="showValidation$"
+                         [parentForm]="form"
+                         (stepRemoved)="removeStep(i)"></app-tour-step>
+        </li>
+        <li data-content="add-step">
+          <button class="action" (click)="addStep()">Add new step</button>
+        </li>
+      </ul>
 
-    <div data-content="map">
-<!--      <agm-map [latitude]="lastLat"-->
-<!--               [longitude]="lastLng"-->
-<!--               [clickableIcons]="true"-->
-<!--               [zoom]="16">-->
+      <div data-content="map">
+        <!--      <agm-map [latitude]="lastLat"-->
+        <!--               [longitude]="lastLng"-->
+        <!--               [clickableIcons]="true"-->
+        <!--               [zoom]="16">-->
 
-<!--        <ng-container *ngFor="let step of steps; let i = index;">-->
-<!--          <agm-marker-->
-<!--            [latitude]="step.coordinates.lat"-->
-<!--            [longitude]="step.coordinates.lng"-->
-<!--            [markerDraggable]="true"-->
-<!--            [iconUrl]="iconUrl(step)"-->
-<!--            (dragEnd)="markerDragEnd($event, step)"></agm-marker>-->
+        <!--        <ng-container *ngFor="let step of steps; let i = index;">-->
+        <!--          <agm-marker-->
+        <!--            [latitude]="step.coordinates.lat"-->
+        <!--            [longitude]="step.coordinates.lng"-->
+        <!--            [markerDraggable]="true"-->
+        <!--            [iconUrl]="iconUrl(step)"-->
+        <!--            (dragEnd)="markerDragEnd($event, step)"></agm-marker>-->
 
-<!--          &lt;!&ndash; taking the next point as destination &ndash;&gt;-->
-<!--          <agm-direction *ngIf="possibleToBuildRoute(i)"-->
-<!--                         [travelMode]="getTravelMode(i)"-->
-<!--                         [markerOptions]="markerOptions"-->
-<!--                         [origin]="{ lat: step.coordinates.lat, lng: step.coordinates.lng }"-->
-<!--                         [destination]="{ lat: steps[i + 1].coordinates.lat, lng: steps[i + 1].coordinates.lng }"></agm-direction>-->
-<!--        </ng-container>-->
-<!--        </agm-map>-->
+        <!--          &lt;!&ndash; taking the next point as destination &ndash;&gt;-->
+        <!--          <agm-direction *ngIf="possibleToBuildRoute(i)"-->
+        <!--                         [travelMode]="getTravelMode(i)"-->
+        <!--                         [markerOptions]="markerOptions"-->
+        <!--                         [origin]="{ lat: step.coordinates.lat, lng: step.coordinates.lng }"-->
+        <!--                         [destination]="{ lat: steps[i + 1].coordinates.lat, lng: steps[i + 1].coordinates.lng }"></agm-direction>-->
+        <!--        </ng-container>-->
+        <!--        </agm-map>-->
+      </div>
     </div>
   </div>
-</div>
 
-<div class="pipe-step">
-  <div class="pipe-columns">
-    <div class="pipe-column">
-      <h2>Set tags which fits to theme of the route</h2>
-      <p-autoComplete [(ngModel)]="tagsInputText"
-                      [suggestions]="tagsResults"
-                      [multiple]="true"
-                      (completeMethod)="searchTags($event)"></p-autoComplete>
-    </div>
-    <div class="pipe-column">
-      <h2>Restrictions for the tour:</h2>
-      <p-autoComplete [(ngModel)]="restrictionsInputText"
-                      [suggestions]="restrictionsResults"
-                      [multiple]="true"
-                      (completeMethod)="searchRestrictions($event)"></p-autoComplete>
+  <div class="pipe-step">
+    <div class="pipe-columns">
+      <div class="pipe-column">
+        <h2>Set tags which fits to theme of the route</h2>
+        <p-autoComplete [suggestions]="tagsResults"
+                        formControlName="tagsAutocomplete"
+                        [multiple]="true"
+                        (completeMethod)="searchTags($event)"></p-autoComplete>
+      </div>
+      <div class="pipe-column">
+        <h2>Restrictions for the tour:</h2>
+        <p-autoComplete [suggestions]="restrictionsResults"
+                        formControlName="restrictionsAutocomplete"
+                        [multiple]="true"
+                        (completeMethod)="searchRestrictions($event)"></p-autoComplete>
+      </div>
     </div>
   </div>
-</div>
 
-<p data-content="create-tour">
-  <button class="btn-L confirmation"
-          [disabled]="!validData()"
-          (click)="createTour()">Create tour</button>
-</p>
+  <p data-content="create-tour">
+    <button class="btn-L confirmation"
+            [disabled]="!validData()"
+            (click)="createTour()">Create tour</button>
+  </p>
+</form>
 
 <app-modal-window id="stepRemovePopup">
   <p>Are you really sure you want to delete this step?</p>

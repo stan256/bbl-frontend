@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, OnChanges, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {Tag, TravelMode} from '../../shared/common.types';
 import {Step} from '../../model/Step';
@@ -68,7 +68,9 @@ export class CreateTourComponent implements OnInit {
     this.peopleNumber$.next(5);
 
     this.form = this.formBuilder.group({
-      numberOfTickets: ['', Validators.required],
+      peopleNumber: ['', Validators.required],
+      tagsAutocomplete: ['', Validators.required],
+      restrictionsAutocomplete: ['', Validators.required],
       steps: new FormArray([])
     });
   }
