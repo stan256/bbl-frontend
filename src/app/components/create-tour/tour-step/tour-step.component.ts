@@ -18,7 +18,10 @@ export class TourStepComponent implements OnInit {
   @Input() showValidation$: Observable<void>;
   @Input() parentForm: FormGroup;
 
+  stepForm: FormGroup;
+
   @Output() stepRemoved = new EventEmitter<void>();
+
   @ViewChild("searchLocation", {static: false}) private locationRef: ElementRef;
 
   constructor(
@@ -58,16 +61,16 @@ export class TourStepComponent implements OnInit {
 
   private addFormControls() {
     let controlSteps = this.parentForm.controls.steps as FormArray;
-    controlSteps.push(this.fb.group({
-      "location":    [null, [Validators.required]],
-      "description": [null, []],
-      "calendar":    [null, [Validators.required]]
-    }));
+    this.stepForm = this.fb.group({
+      ["location"]:    [null, [Validators.required]],
+      ["description"]: [null, []],
+      ["calendar"]:    [null, [Validators.required]]
+    });
+    controlSteps.push(this.stepForm);
   }
 
   get f(): FormGroup{
-    let steps: any = this.parentForm.controls.steps;
-    return steps.controls[this.stepIndex]
+    return this.stepForm;
   }
 
   setStepDate(date: Date) {
@@ -76,7 +79,7 @@ export class TourStepComponent implements OnInit {
 
   public errorsOf(control: AbstractControl): Array<string> {
     const hasSomeError = control.invalid && (control.dirty || control.touched);
-    return hasSomeError ? Object.keys(control.errors!) : [];
+    return hasSomeError ? Object.keys(control.errors) : [];
   }
 
   onStepRemoved() {
@@ -85,14 +88,5 @@ export class TourStepComponent implements OnInit {
 
   notLast() {
     return this.stepIndex !== this.stepLength - 1;
-  }
-
-  updateRouteType($event) {
-    this.step.travelModeToNext = $event.target.value as TravelMode;
-  }
-
-  formInvalid() {
-    let steps: any = this.parentForm.controls.steps;
-    return steps.controls[this.stepIndex].invalid;
   }
 }

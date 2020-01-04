@@ -1,15 +1,15 @@
-import {ChangeDetectorRef, Component, OnChanges, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
-import {Tag, TravelMode} from '../../shared/common.types';
 import {Step} from '../../model/Step';
 import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
 import {take, tap} from 'rxjs/operators';
 import {TourService} from '../../services/tour.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TourStepComponent} from './tour-step/tour-step.component';
 import {RestrictionService} from '../../services/restriction.service';
 import {TagService} from '../../services/tag.service';
+import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
+
 
 @Component({
   selector: 'app-create-tour',
@@ -24,16 +24,12 @@ export class CreateTourComponent implements OnInit {
   peopleNumber: number = 5;
   form: FormGroup;
 
-  tagsInputText: string;
   tagsResults: string[];
-  restrictionsInputText: string;
   restrictionsResults: string[];
 
   removeStepConfirmation$ = new Subject<boolean>();
   showValidation$ = new Subject<void>();
   peopleNumber$ = new Subject<number>();
-
-  @ViewChildren(TourStepComponent) stepsRefs: QueryList<TourStepComponent>;
 
   constructor(
     private locationService: LocationService,
@@ -91,14 +87,14 @@ export class CreateTourComponent implements OnInit {
         travelModeToNext: "BICYCLING"
       });
     } else {
-      // creating a new step with geo location in the same place as previous
-      const lastStep = this.steps[this.steps.length - 1];
+      let firstInvalidStepId: number = this.firstInvalidStep();
 
-      if (this.stepsRefs.some(s => s.formInvalid())) {
-        this.showValidation$.next();
-        let id = 'step-' + (this.steps.length - 1);
-        document.getElementById(id).scrollIntoView();
+      if (firstInvalidStepId >= 0) {
+        MarkFormDirtyUtils.markGroupDirty(this.form);
+        document.getElementById("step-" + firstInvalidStepId).scrollIntoView();
       }  else {
+        // creating a new step with geo location in the same place as previous
+        const lastStep = this.steps[this.steps.length - 1];
         let step = <Step> {
           coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng },
           travelModeToNext: "BICYCLING"
@@ -172,13 +168,12 @@ export class CreateTourComponent implements OnInit {
     return this.steps[i].travelModeToNext.toString();
   }
 
-
-
-  // private addFormControls() {
-  //   let controlSteps = this.form.controls.steps as FormArray;
-  //   controlSteps.push(this.formBuilder.group({
-  //     name: ['', Validators.required],
-  //     email: ['', [Validators.required, Validators.email]]
-  //   }))
-  // }
+  private firstInvalidStep(): number {
+    let steps: any = this.form.controls.steps;
+    return steps.controls.findIndex((step) => {
+      return Object.keys(step.controls).some(c => {
+        return step.controls[c].invalid
+      });
+    });
+  }
 }

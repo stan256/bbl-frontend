@@ -12,9 +12,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": ["./node_modules/@types/"],
     "lib": [
       "es2018",
       "dom"
@@ -23,7 +21,8 @@
   "include": [
     "src/**/*.ts",
     "node_modules/@types",
-    "@types/googlemaps"
+    "@types/googlemaps",
+    "typings/*.d.ts"
   ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

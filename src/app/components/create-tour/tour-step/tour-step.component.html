@@ -1,7 +1,9 @@
-<div [formGroup]="parentForm">
+<div [formGroup]="stepForm">
   <div data-content="location-block">
     <p data-content="step-header">
-      <label [for]="'location'">Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span></label>
+      <label [for]="'location' + this.stepIndex">
+        Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span>
+      </label>
       <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
         <i class="fa fa-minus"></i>
       </button>
@@ -9,21 +11,21 @@
     <p>
       <input type="text"
              [id]="'location-' + stepIndex"
+             formControlName="location"
              placeholder="Enter your location here"
              autocorrect="off"
              autocapitalize="off"
              spellcheck="off"
              (keydown.enter)="$event.preventDefault()"
-             [(ngModel)]="step.location"
              [maxLength]="200"
              #searchLocation>
     </p>
     <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
   </div>
   <div data-content="calendar">
-    <label [for]="'calendar'">Date & time</label>
-    <p-calendar
-                [inputId]="'calendar-' + stepIndex"
+    <label [for]="'calendar' + this.stepIndex">Date & time</label>
+    <p-calendar [inputId]="'calendar-' + this.stepIndex"
+                formControlName="calendar"
                 showTime="true"
                 hourFormat="24"
                 showButtonBar="true"
@@ -32,18 +34,16 @@
     <span *ngFor="let error of errorsOf(f.get('calendar'))" class="validation validation-error">{{error}}</span>
   </div>
   <div data-content="textarea-block">
-    <label [for]="'description'">Description</label>
+    <label [for]="'description' + this.stepIndex">Description</label>
     <textarea [id]="'description-' + stepIndex"
-              [(ngModel)]="step.description"
+              formControlName="description"
               [maxLength]="400"></textarea>
     <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
   </div>
-<!--  <div data-content="show-route" *ngIf="notLast()">-->
-  <div data-content="show-route">
+  <div data-content="show-route" *ngIf="notLast()">
+<!--  <div data-content="show-route">-->
     <label class="checkbox">
-      <input [(ngModel)]="step.showRouteToNext"
-             [ngModelOptions]="{standalone: true}"
-             type="checkbox">
+      <input formControlName="showRouteToNext" type="checkbox">
       <span>Show route to the next point</span>
     </label>
 
@@ -52,7 +52,7 @@
       <select [name]="'route-type-' + stepIndex"
               [id]="'route-type-' + stepIndex"
               [value]="this.step.travelModeToNext"
-              (change)="updateRouteType($event)">
+              formControlName="travelModeToNext">
         <option value="WALKING">Walking</option>
         <option value="DRIVING">Driving</option>
         <option value="BICYCLING">Bicycling</option>
