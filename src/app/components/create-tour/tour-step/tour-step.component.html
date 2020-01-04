@@ -1,7 +1,7 @@
 <div [formGroup]="stepForm">
   <div data-content="location-block">
     <p data-content="step-header">
-      <label [for]="'location' + this.stepIndex">
+      <label [for]="'location-' + this.stepIndex">
         Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span>
       </label>
       <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
@@ -23,7 +23,7 @@
     <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
   </div>
   <div data-content="calendar">
-    <label [for]="'calendar' + this.stepIndex">Date & time</label>
+    <label [for]="'calendar-' + this.stepIndex">Date & time</label>
     <p-calendar [inputId]="'calendar-' + this.stepIndex"
                 formControlName="calendar"
                 showTime="true"
@@ -34,24 +34,23 @@
     <span *ngFor="let error of errorsOf(f.get('calendar'))" class="validation validation-error">{{error}}</span>
   </div>
   <div data-content="textarea-block">
-    <label [for]="'description' + this.stepIndex">Description</label>
+    <label [for]="'description-' + this.stepIndex">Description</label>
     <textarea [id]="'description-' + stepIndex"
               formControlName="description"
               [maxLength]="400"></textarea>
     <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
   </div>
-  <div data-content="show-route" *ngIf="notLast()">
-<!--  <div data-content="show-route">-->
+<!--  <div data-content="show-route" *ngIf="notLast()">-->
+  <div data-content="show-route">
     <label class="checkbox">
       <input formControlName="showRouteToNext" type="checkbox">
       <span>Show route to the next point</span>
     </label>
 
-    <ng-container *ngIf="step.showRouteToNext">
+    <ng-container *ngIf="stepForm.get('showRouteToNext').value">
       <label  [for]="'route-type-' + stepIndex">Type of movement:</label>
       <select [name]="'route-type-' + stepIndex"
               [id]="'route-type-' + stepIndex"
-              [value]="this.step.travelModeToNext"
               formControlName="travelModeToNext">
         <option value="WALKING">Walking</option>
         <option value="DRIVING">Driving</option>

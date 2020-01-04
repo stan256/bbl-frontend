@@ -64,7 +64,9 @@ export class TourStepComponent implements OnInit {
     this.stepForm = this.fb.group({
       ["location"]:    [null, [Validators.required]],
       ["description"]: [null, []],
-      ["calendar"]:    [null, [Validators.required]]
+      ["calendar"]:    [null, [Validators.required]],
+      ["showRouteToNext"]: [null, []],
+      ["travelModeToNext"]: ['WALKING', [Validators.required]]
     });
     controlSteps.push(this.stepForm);
   }
