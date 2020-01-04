@@ -49,6 +49,8 @@ export class TourStepComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null)
             return;
 
+          this.stepForm.get('location').setValue(place.formatted_address);
+
           this.step.coordinates = {
             lat: place.geometry.location.lat(),
             lng: place.geometry.location.lng()
@@ -68,15 +70,14 @@ export class TourStepComponent implements OnInit {
       ["showRouteToNext"]: [null, []],
       ["travelModeToNext"]: ['WALKING', [Validators.required]]
     });
+    this.stepForm.valueChanges.subscribe(v => {
+      console.log(v)
+    });
     controlSteps.push(this.stepForm);
   }
 
   get f(): FormGroup{
     return this.stepForm;
-  }
-
-  setStepDate(date: Date) {
-    this.step.date = date;
   }
 
   public errorsOf(control: AbstractControl): Array<string> {

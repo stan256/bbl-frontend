@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {Step} from '../../model/Step';
 import {Subject} from 'rxjs';
@@ -37,7 +37,8 @@ export class CreateTourComponent implements OnInit {
     private tourService: TourService,
     private tagService: TagService,
     private restrictionService: RestrictionService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   searchRestrictions(event) {
@@ -130,7 +131,8 @@ export class CreateTourComponent implements OnInit {
     this.locationService.geoCode(new google.maps.LatLng(step.coordinates.lat, step.coordinates.lng))
       .pipe(
         take(1),
-        tap(addresses => step.location = addresses[0].formatted_address)
+        tap(addresses => step.location = addresses[0].formatted_address),
+        tap(() => this.changeDetector.detectChanges())
       )
       .subscribe();
   }
