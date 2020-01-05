@@ -59,14 +59,14 @@
       <div class="pipe-column">
         <h2>Set tags which fits to theme of the route</h2>
         <p-autoComplete [suggestions]="tagsResults"
-                        formControlName="tagsAutocomplete"
+                        formControlName="tourTags"
                         [multiple]="true"
                         (completeMethod)="searchTags($event)"></p-autoComplete>
       </div>
       <div class="pipe-column">
         <h2>Restrictions for the tour:</h2>
         <p-autoComplete [suggestions]="restrictionsResults"
-                        formControlName="restrictionsAutocomplete"
+                        formControlName="tourRestrictions"
                         [multiple]="true"
                         (completeMethod)="searchRestrictions($event)"></p-autoComplete>
       </div>
@@ -75,7 +75,7 @@
 
   <p data-content="create-tour">
     <button class="btn-L confirmation"
-            [disabled]="!validData()"
+            [disabled]="this.form.invalid"
             (click)="createTour()">Create tour</button>
   </p>
 </form>

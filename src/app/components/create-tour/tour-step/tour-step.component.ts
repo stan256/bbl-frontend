@@ -1,8 +1,8 @@
-import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Step} from '../../../model/Step';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
 @Component({
@@ -10,7 +10,7 @@ import {tap} from 'rxjs/operators';
   templateUrl: './tour-step.component.html',
   styleUrls: ['./tour-step.component.scss']
 })
-export class TourStepComponent implements OnInit {
+export class TourStepComponent implements OnInit, OnDestroy {
   @Input() step: Step;
   @Input() stepLength: number;
   @Input() stepIndex: number;
@@ -18,6 +18,7 @@ export class TourStepComponent implements OnInit {
   @Input() parentForm: FormGroup;
 
   stepForm: FormGroup;
+  showValidationSubscription: Subscription;
 
   @Output() stepRemoved = new EventEmitter<void>();
 
@@ -33,7 +34,7 @@ export class TourStepComponent implements OnInit {
     this.addFormControls();
 
     let steps: any = this.parentForm.controls.steps;
-    this.showValidation$
+    this.showValidationSubscription = this.showValidation$
       .pipe(
         // Mark all controls as dirty when triggered
         tap(() => Object.keys(steps.controls).forEach(key => steps.controls[key].markAsDirty()))
@@ -59,6 +60,9 @@ export class TourStepComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.showValidationSubscription.unsubscribe();
+  }
 
   private addFormControls() {
     let controlSteps = this.parentForm.controls.steps as FormArray;
@@ -73,11 +77,9 @@ export class TourStepComponent implements OnInit {
     controlSteps.push(this.stepForm);
   }
 
-  private copyFormToStep(form: FormGroup) {
-    if (form && form.value) {
-      Object.keys(form.value).forEach(key => this.step[key] = form.get(key));
-    }
-    console.log(this.step)
+  private copyFormToStep(formStep: Step) {
+    Object.keys(formStep).forEach(key => this.step[key] = formStep[key]);
+    console.log('copied step: ', this.step)
   }
 
   get f(): FormGroup{

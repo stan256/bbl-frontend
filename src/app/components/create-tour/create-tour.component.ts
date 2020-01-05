@@ -9,6 +9,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RestrictionService} from '../../services/restriction.service';
 import {TagService} from '../../services/tag.service';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
+import {TourCreationDetails} from '../../model/TourCreationDetails';
 
 
 @Component({
@@ -66,8 +67,8 @@ export class CreateTourComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       peopleNumber: ['', Validators.required],
-      tagsAutocomplete: ['', Validators.required],
-      restrictionsAutocomplete: ['', Validators.required],
+      tourTags: ['', Validators.required],
+      tourRestrictions: ['', Validators.required],
       steps: new FormArray([])
     });
   }
@@ -139,15 +140,11 @@ export class CreateTourComponent implements OnInit {
       .subscribe();
   }
 
-  validData() {
-    return this.steps.every(s => s.location);
-  }
-
   createTour() {
-    if (!this.validData())
+    if (this.form.invalid)
       this.showValidation$.next();
     else
-      this.tourService.createTour();
+      this.tourService.createTour(this.form.value as TourCreationDetails);
   }
 
   iconUrl(step: Step) {
@@ -175,9 +172,7 @@ export class CreateTourComponent implements OnInit {
   private firstInvalidStep(): number {
     let steps: any = this.form.controls.steps;
     return steps.controls.findIndex((step) => {
-      return Object.keys(step.controls).some(c => {
-        return step.controls[c].invalid
-      });
+      return Object.keys(step.controls).some(c => step.controls[c].invalid);
     });
   }
 }
