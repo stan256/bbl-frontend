@@ -93,12 +93,16 @@
     background-color: $slime-green;
 
     &:hover {
-      background-color: #0ed014;
+      background-color: $green;
     }
   }
 
   &:disabled {
     background-color: $grey;
+
+    &:hover {
+      background-color: $grey;
+    }
   }
 
   &.btn-L {

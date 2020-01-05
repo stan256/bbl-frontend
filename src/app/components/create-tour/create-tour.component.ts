@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {Step} from '../../model/Step';
 import {Subject} from 'rxjs';
@@ -30,7 +30,6 @@ export class CreateTourComponent implements OnInit {
 
   removeStepConfirmation$ = new Subject<boolean>();
   showValidation$ = new Subject<void>();
-  peopleNumber$ = new Subject<number>();
 
   constructor(
     private locationService: LocationService,
@@ -62,8 +61,6 @@ export class CreateTourComponent implements OnInit {
         this.addStep();
       }, () => this.addStep())
     });
-
-    this.peopleNumber$.next(5);
 
     this.form = this.formBuilder.group({
       peopleNumber: ['', Validators.required],

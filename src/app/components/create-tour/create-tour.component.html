@@ -5,7 +5,10 @@
     <div class="pipe-columns">
       <div class="pipe-column" data-content="people-range">
         <h2>Number of people on the tour</h2>
-        <p-spinner formControlName="peopleNumber" [min]="1" [max]="100"></p-spinner>
+        <p-spinner formControlName="peopleNumber"
+                   [(ngModel)]="peopleNumber"
+                   [min]="1"
+                   [max]="100"></p-spinner>
       </div>
     </div>
   </div>
