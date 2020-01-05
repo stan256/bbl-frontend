@@ -4,7 +4,6 @@ import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@a
 import {MapsAPILoader} from '@agm/core';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {TravelMode} from '../../../shared/common.types';
 
 @Component({
   selector: 'app-tour-step',
@@ -70,10 +69,15 @@ export class TourStepComponent implements OnInit {
       ["showRouteToNext"]: [null, []],
       ["travelModeToNext"]: ['WALKING', [Validators.required]]
     });
-    this.stepForm.valueChanges.subscribe(v => {
-      console.log(v)
-    });
+    this.stepForm.valueChanges.subscribe(v => this.copyFormToStep(v));
     controlSteps.push(this.stepForm);
+  }
+
+  private copyFormToStep(form: FormGroup) {
+    if (form && form.value) {
+      Object.keys(form.value).forEach(key => this.step[key] = form.get(key));
+    }
+    console.log(this.step)
   }
 
   get f(): FormGroup{
