@@ -101,6 +101,8 @@ export class CreateTourComponent implements OnInit {
           travelModeToNext: "BICYCLING"
         };
         this.steps.push(step);
+        this.changeDetector.detectChanges();
+        document.getElementById("step-" + (this.steps.length - 1)).scrollIntoView();
       }
     }
   }
