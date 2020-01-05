@@ -45,6 +45,7 @@ export class ModalWindowComponent implements OnInit, OnDestroy {
 
   close(): void {
     this.element.style.display = 'none';
-    document.body.classList.remove('modal-window-open');
+    document.body.classList.remove('' +
+      'modal-window-open');
   }
 }

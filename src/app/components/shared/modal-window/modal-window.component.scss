@@ -14,13 +14,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 800px;
     margin: 0 auto;
 
     .modal-window-body {
       padding: 20px;
       background: $white;
       display: inline-block;
+      max-width: 800px;
     }
   }
 
