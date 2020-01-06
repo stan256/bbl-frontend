@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TourService} from '../../services/tour.service';
 import {Observable} from 'rxjs';
-import {TourDTO} from '../../model/Tour';
+import {TourDTO, TourForm} from '../../model/tour';
 
 @Component({
   selector: 'app-created-tours',
@@ -19,6 +19,6 @@ export class CreatedToursComponent implements OnInit {
     // todo get from cookie
     let userId = 4;
     this.myTours$ = this.tourService.getMyTours(userId);
-  }
+  }a
 
 }

@@ -3,7 +3,7 @@ import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@a
 import {MapsAPILoader} from '@agm/core';
 import {Observable, Subscription} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {StepDTO} from '../../../model/Step';
+import {StepForm} from '../../../model/step';
 
 @Component({
   selector: 'app-tour-step',
@@ -11,7 +11,7 @@ import {StepDTO} from '../../../model/Step';
   styleUrls: ['./tour-step.component.scss']
 })
 export class TourStepComponent implements OnInit, OnDestroy {
-  @Input() step: StepDTO;
+  @Input() step: StepForm;
   @Input() stepLength: number;
   @Input() stepIndex: number;
   @Input() showValidation$: Observable<void>;
@@ -51,10 +51,8 @@ export class TourStepComponent implements OnInit, OnDestroy {
 
           this.stepForm.get('location').setValue(place.formatted_address);
 
-          this.step.coordinates = {
-            lat: place.geometry.location.lat(),
-            lng: place.geometry.location.lng()
-          };
+          this.step.locationLat = place.geometry.location.lat();
+          this.step.locationLng = place.geometry.location.lng();
         });
       });
     });
@@ -67,19 +65,21 @@ export class TourStepComponent implements OnInit, OnDestroy {
   private addFormControls() {
     let controlSteps = this.parentForm.controls.steps as FormArray;
     this.stepForm = this.fb.group({
-      ["location"]:    [null, [Validators.required]],
-      ["description"]: [null, []],
-      ["date"]:    [null, [Validators.required]],
-      ["showRouteToNext"]: [null, []],
-      ["travelModeToNext"]: ['WALKING', [Validators.required]]
+      "location": [null, [Validators.required]],
+      "description": [null, []],
+      "date": [null, [Validators.required]],
+      "showRouteToNext": [null, []],
+      "locationLat": [this.step.locationLat, []],
+      "locationLng": [this.step.locationLng, []],
+      "travelModeToNext": ['WALKING', [Validators.required]]
     });
     this.stepForm.valueChanges.subscribe(v => this.copyFormToStep(v));
     controlSteps.push(this.stepForm);
   }
 
-  private copyFormToStep(formStep: StepDTO) {
+  private copyFormToStep(formStep: StepForm) {
     Object.keys(formStep).forEach(key => this.step[key] = formStep[key]);
-    console.log('copied step: ', this.step)
+    console.log(this.parentForm.value)
   }
 
   get f(): FormGroup{

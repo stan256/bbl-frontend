@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AlertService} from '../alert/alert.service';
 import {Router} from '@angular/router';
-import {TourDTO} from '../model/Tour';
+import {TourDTO, TourForm} from '../model/tour';
 import {Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {wrapRestriction, wrapTag} from '../shared/common.types';
@@ -15,7 +15,7 @@ export class TourService {
               private httpClient: HttpClient,
               private router: Router) { }
 
-  createTour(formValue: TourDTO) {
+  createTour(formValue: TourForm) {
     console.log(formValue)
     this.alertService.success('You have created a tour');
     this.router.navigate(['/']);
@@ -23,7 +23,7 @@ export class TourService {
 
   getMyTours(userId: number): Observable<TourDTO> {
     // todo
-    // return this.httpClient.get<TourDTO>("localhost:5200/api/my-tours", {});
+    // return this.httpClient.get<TourForm>("localhost:5200/api/my-tours", {});
 
     return of({
       id: 1,

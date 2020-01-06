@@ -40,8 +40,8 @@
 
                 <ng-container *ngFor="let step of steps; let i = index;">
                   <agm-marker
-                    [latitude]="step.coordinates.lat"
-                    [longitude]="step.coordinates.lng"
+                    [latitude]="step.locationLat"
+                    [longitude]="step.locationLng"
                     [markerDraggable]="true"
                     [iconUrl]="iconUrl(step)"
                     (dragEnd)="markerDragEnd($event, step)"></agm-marker>
@@ -49,8 +49,8 @@
                   <!-- taking the next point as destination -->
                   <agm-direction *ngIf="possibleToBuildRoute(i)"
                                  [travelMode]="getTravelMode(i)"
-                                 [origin]="{ lat: step.coordinates.lat, lng: step.coordinates.lng }"
-                                 [destination]="{ lat: steps[i + 1].coordinates.lat, lng: steps[i + 1].coordinates.lng }"></agm-direction>
+                                 [origin]="{ lat: step.locationLat, lng: step.locationLng }"
+                                 [destination]="{ lat: steps[i + 1].locationLat, lng: steps[i + 1].locationLng }"></agm-direction>
                 </ng-container>
                 </agm-map>
       </div>

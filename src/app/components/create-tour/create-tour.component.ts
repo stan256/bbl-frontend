@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
-import {StepDTO} from '../../model/Step';
+import {StepForm} from '../../model/step';
 import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
 import {take, tap} from 'rxjs/operators';
@@ -9,7 +9,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RestrictionService} from '../../services/restriction.service';
 import {TagService} from '../../services/tag.service';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
-import {TourDTO} from '../../model/Tour';
+import {TourForm} from '../../model/tour';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class CreateTourComponent implements OnInit {
   userLng: number = 11.582579;
   userLat: number = 50.924845;
 
-  steps: Array<StepDTO> = [];
+  steps: Array<StepForm> = [];
   peopleNumber: number = 5;
   form: FormGroup;
 
@@ -71,18 +71,19 @@ export class CreateTourComponent implements OnInit {
   }
 
   get lastLng(): number {
-    return this.steps.length != 0 ? this.steps[this.steps.length - 1].coordinates.lng : this.userLng;
+    return this.steps.length != 0 ? this.steps[this.steps.length - 1].locationLng : this.userLng;
   }
 
   get lastLat(): number {
-    return this.steps.length != 0 ? this.steps[this.steps.length - 1].coordinates.lat : this.userLng;
+    return this.steps.length != 0 ? this.steps[this.steps.length - 1].locationLat : this.userLng;
   }
 
   private addStep() {
     if (!this.steps.length) {
       // setting the geo of user as first step
-      this.steps.push(<StepDTO> {
-        coordinates: {lng: this.userLng, lat: this.userLat },
+      this.steps.push(<StepForm> {
+        locationLat: this.userLat,
+        locationLng: this.userLng,
         travelModeToNext: "BICYCLING"
       });
     } else {
@@ -94,8 +95,9 @@ export class CreateTourComponent implements OnInit {
       }  else {
         // creating a new step with geo location in the same place as previous
         const lastStep = this.steps[this.steps.length - 1];
-        let step = <StepDTO> {
-          coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng },
+        let step = <StepForm> {
+          locationLat: lastStep.locationLat,
+          locationLng: lastStep.locationLng,
           travelModeToNext: "BICYCLING"
         };
         this.steps.push(step);
@@ -126,9 +128,11 @@ export class CreateTourComponent implements OnInit {
     this.modalService.close('stepRemovePopup');
   }
 
-  markerDragEnd($event: any, step: StepDTO) {
-    step.coordinates = { lat: $event.coords.lat, lng: $event.coords.lng };
-    this.locationService.geoCode(new google.maps.LatLng(step.coordinates.lat, step.coordinates.lng))
+  markerDragEnd($event: any, step: StepForm) {
+    step.locationLat = $event.coords.lat;
+    step.locationLng = $event.coords.lng;
+
+    this.locationService.geoCode(new google.maps.LatLng(step.locationLat, step.locationLng))
       .pipe(
         take(1),
         tap(addresses => step.location = addresses[0].formatted_address),
@@ -141,10 +145,10 @@ export class CreateTourComponent implements OnInit {
     if (this.form.invalid)
       this.showValidation$.next();
     else
-      this.tourService.createTour(this.form.value as TourDTO);
+      this.tourService.createTour(this.form.value as TourForm);
   }
 
-  iconUrl(step: StepDTO) {
+  iconUrl(step: StepForm) {
     if (this.steps.indexOf(step) === this.steps.length - 1){
       return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
     } else {
@@ -156,10 +160,10 @@ export class CreateTourComponent implements OnInit {
   possibleToBuildRoute(stepIndex: number): boolean {
     return stepIndex != this.steps.length - 1 &&
       this.steps[stepIndex].showRouteToNext &&
-      this.steps[stepIndex].coordinates.lat &&
-      this.steps[stepIndex].coordinates.lng &&
-      this.steps[stepIndex + 1].coordinates.lat !== this.steps[stepIndex].coordinates.lat &&
-      this.steps[stepIndex + 1].coordinates.lng !== this.steps[stepIndex].coordinates.lng;
+      this.steps[stepIndex].locationLat &&
+      this.steps[stepIndex].locationLng &&
+      this.steps[stepIndex + 1].locationLat !== this.steps[stepIndex].locationLat &&
+      this.steps[stepIndex + 1].locationLng !== this.steps[stepIndex].locationLng;
   }
 
   getTravelMode(i: number) {
