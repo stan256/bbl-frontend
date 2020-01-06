@@ -6,6 +6,7 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {HomeComponent} from './components/home/home.component';
 import {TagSelectComponent} from './components/tagselect/tag-select.component';
 import {CreateTourComponent} from './components/create-tour/create-tour.component';
+import {UserAccountComponent} from './components/user-account/user-account.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'tag', component: TagSelectComponent},
   {path: 'create', component: CreateTourComponent},
+  {path: 'user', component: UserAccountComponent},
   {path: '**', redirectTo: 'login'},
 ];
 

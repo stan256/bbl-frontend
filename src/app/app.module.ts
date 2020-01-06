@@ -23,13 +23,15 @@ import {CreateTourComponent} from './components/create-tour/create-tour.componen
 import { AgmCoreModule } from '@agm/core';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AutoCompleteModule, CarouselModule, SliderModule, SpinnerModule, TooltipModule} from 'primeng/primeng';
+import {AutoCompleteModule, CarouselModule, SliderModule, SpinnerModule, TabViewModule, TooltipModule} from 'primeng/primeng';
 import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
 import {AgmDirectionModule} from 'agm-direction';
 import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive';
 import { ImageDragUploadComponent } from './components/shared/file-drag-upload/image-drag-upload.component';
+import { CreatedToursComponent } from './components/created-tours/created-tours.component';
+import { UserAccountComponent } from './components/user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { ImageDragUploadComponent } from './components/shared/file-drag-upload/i
     TourStepComponent,
     OnlyNumberDirective,
     DragAndDropFilesDirective,
-    ImageDragUploadComponent
+    ImageDragUploadComponent,
+    CreatedToursComponent,
+    UserAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,8 @@ import { ImageDragUploadComponent } from './components/shared/file-drag-upload/i
     CarouselModule,
     SliderModule,
     SpinnerModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    TabViewModule
   ],
   exports: [
   ],

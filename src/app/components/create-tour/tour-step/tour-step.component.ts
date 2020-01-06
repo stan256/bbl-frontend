@@ -1,9 +1,9 @@
 import {Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {Step} from '../../../model/Step';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
 import {Observable, Subscription} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {StepDTO} from '../../../model/Step';
 
 @Component({
   selector: 'app-tour-step',
@@ -11,7 +11,7 @@ import {tap} from 'rxjs/operators';
   styleUrls: ['./tour-step.component.scss']
 })
 export class TourStepComponent implements OnInit, OnDestroy {
-  @Input() step: Step;
+  @Input() step: StepDTO;
   @Input() stepLength: number;
   @Input() stepIndex: number;
   @Input() showValidation$: Observable<void>;
@@ -69,7 +69,7 @@ export class TourStepComponent implements OnInit, OnDestroy {
     this.stepForm = this.fb.group({
       ["location"]:    [null, [Validators.required]],
       ["description"]: [null, []],
-      ["calendar"]:    [null, [Validators.required]],
+      ["date"]:    [null, [Validators.required]],
       ["showRouteToNext"]: [null, []],
       ["travelModeToNext"]: ['WALKING', [Validators.required]]
     });
@@ -77,7 +77,7 @@ export class TourStepComponent implements OnInit, OnDestroy {
     controlSteps.push(this.stepForm);
   }
 
-  private copyFormToStep(formStep: Step) {
+  private copyFormToStep(formStep: StepDTO) {
     Object.keys(formStep).forEach(key => this.step[key] = formStep[key]);
     console.log('copied step: ', this.step)
   }

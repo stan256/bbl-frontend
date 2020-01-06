@@ -23,15 +23,15 @@
     </p>
     <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
   </div>
-  <div data-content="calendar">
-    <label [for]="'calendar-' + this.stepIndex">Date & time</label>
-    <p-calendar [inputId]="'calendar-' + this.stepIndex"
-                formControlName="calendar"
+  <div data-content="date">
+    <label [for]="'date-' + this.stepIndex">Date & time</label>
+    <p-calendar [inputId]="'date-' + this.stepIndex"
+                formControlName="date"
                 showTime="true"
                 hourFormat="24"
                 showButtonBar="true">
     </p-calendar>
-    <span *ngFor="let error of errorsOf(f.get('calendar'))" class="validation validation-error">{{error}}</span>
+    <span *ngFor="let error of errorsOf(f.get('date'))" class="validation validation-error">{{error}}</span>
   </div>
   <div data-content="textarea-block">
     <label [for]="'description-' + this.stepIndex">Description</label>

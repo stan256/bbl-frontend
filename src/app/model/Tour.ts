@@ -1,9 +1,10 @@
 import {Restriction, Tag} from '../shared/common.types';
-import {Step} from './Step';
+import {StepDTO} from './Step';
 
-export interface TourCreationDetails {
+export interface TourDTO   {
+  id: number;
   peopleNumber: number;
   tourTags: Array<Tag>;
   tourRestrictions: Array<Restriction>;
-  steps: Array<Step>
+  steps: Array<StepDTO>
 }

@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
-import {Step} from '../../model/Step';
+import {StepDTO} from '../../model/Step';
 import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
 import {take, tap} from 'rxjs/operators';
@@ -9,7 +9,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RestrictionService} from '../../services/restriction.service';
 import {TagService} from '../../services/tag.service';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
-import {TourCreationDetails} from '../../model/TourCreationDetails';
+import {TourDTO} from '../../model/Tour';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class CreateTourComponent implements OnInit {
   userLng: number = 11.582579;
   userLat: number = 50.924845;
 
-  steps: Array<Step> = [];
+  steps: Array<StepDTO> = [];
   peopleNumber: number = 5;
   form: FormGroup;
 
@@ -81,7 +81,7 @@ export class CreateTourComponent implements OnInit {
   private addStep() {
     if (!this.steps.length) {
       // setting the geo of user as first step
-      this.steps.push(<Step> {
+      this.steps.push(<StepDTO> {
         coordinates: {lng: this.userLng, lat: this.userLat },
         travelModeToNext: "BICYCLING"
       });
@@ -94,7 +94,7 @@ export class CreateTourComponent implements OnInit {
       }  else {
         // creating a new step with geo location in the same place as previous
         const lastStep = this.steps[this.steps.length - 1];
-        let step = <Step> {
+        let step = <StepDTO> {
           coordinates: { lat: lastStep.coordinates.lat, lng: lastStep.coordinates.lng },
           travelModeToNext: "BICYCLING"
         };
@@ -126,7 +126,7 @@ export class CreateTourComponent implements OnInit {
     this.modalService.close('stepRemovePopup');
   }
 
-  markerDragEnd($event: any, step: Step) {
+  markerDragEnd($event: any, step: StepDTO) {
     step.coordinates = { lat: $event.coords.lat, lng: $event.coords.lng };
     this.locationService.geoCode(new google.maps.LatLng(step.coordinates.lat, step.coordinates.lng))
       .pipe(
@@ -141,10 +141,10 @@ export class CreateTourComponent implements OnInit {
     if (this.form.invalid)
       this.showValidation$.next();
     else
-      this.tourService.createTour(this.form.value as TourCreationDetails);
+      this.tourService.createTour(this.form.value as TourDTO);
   }
 
-  iconUrl(step: Step) {
+  iconUrl(step: StepDTO) {
     if (this.steps.indexOf(step) === this.steps.length - 1){
       return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
     } else {
