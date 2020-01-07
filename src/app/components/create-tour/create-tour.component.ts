@@ -129,13 +129,13 @@ export class CreateTourComponent implements OnInit {
   }
 
   markerDragEnd($event: any, step: StepForm) {
-    step.locationLat = $event.coords.lat;
-    step.locationLng = $event.coords.lng;
-
-    this.locationService.geoCode(new google.maps.LatLng(step.locationLat, step.locationLng))
+    this.locationService.geoCode(new google.maps.LatLng($event.coords.lat, $event.coords.lng))
       .pipe(
-        take(1),
-        tap(addresses => step.location = addresses[0].formatted_address),
+        tap(addresses => {
+          step.location = addresses[0].formatted_address;
+          step.locationLat = addresses[0].geometry.location.lat();
+          step.locationLng = addresses[0].geometry.location.lng();
+        }),
         tap(() => this.changeDetector.detectChanges())
       )
       .subscribe();

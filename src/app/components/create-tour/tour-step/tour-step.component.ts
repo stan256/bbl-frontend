@@ -49,10 +49,13 @@ export class TourStepComponent implements OnInit, OnDestroy {
           if (place.geometry === undefined || place.geometry === null)
             return;
 
-          this.stepForm.get('location').setValue(place.formatted_address);
+          // this.step.location = place.formatted_address;
+          // this.step.locationLat = place.geometry.location.lat();
+          // this.step.locationLng = place.geometry.location.lng();
 
-          this.step.locationLat = place.geometry.location.lat();
-          this.step.locationLng = place.geometry.location.lng();
+          this.stepForm.get('location').setValue(place.formatted_address);
+          this.stepForm.get('locationLat').setValue(place.geometry.location.lat());
+          this.stepForm.get('locationLng').setValue(place.geometry.location.lng());
         });
       });
     });

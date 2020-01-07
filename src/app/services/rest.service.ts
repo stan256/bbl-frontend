@@ -76,7 +76,6 @@ export class RestService {
   }
 
   private handleError<T>(error: HttpErrorResponse): Observable<T> {
-    console.log("error handler", error);
     if (error.status === 401) {
       this.forceLogout.next(true);
       return throwError(error);

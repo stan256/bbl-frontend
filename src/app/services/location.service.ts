@@ -33,7 +33,6 @@ export class LocationService {
             observer.next(results);
             observer.complete();
           } else {
-            console.log('Geocoding service: geocoder failed due to: ' + status);
             observer.error(status);
           }
         })
