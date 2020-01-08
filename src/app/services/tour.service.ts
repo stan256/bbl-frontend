@@ -27,6 +27,7 @@ export class TourService {
 
     return of([{
       id: 1,
+      tourName: "Magical Spain",
       peopleNumber: 5,
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
@@ -52,6 +53,7 @@ export class TourService {
       ]
     }, {
       id: 2,
+      tourName: "Cold and beautiful bavarian Alps",
       peopleNumber: 5,
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
