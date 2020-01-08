@@ -9,16 +9,16 @@ import {TourDTO, TourForm} from '../../model/tour';
   styleUrls: ['./created-tours.component.scss']
 })
 export class CreatedToursComponent implements OnInit {
-  myTours$: Observable<TourDTO>;
+  myTours$: Observable<Array<TourDTO>>;
 
   constructor(
     private tourService: TourService
   ) { }
 
   ngOnInit() {
-    // todo get from cookie
+    // todo get userId from cookie
     let userId = 4;
     this.myTours$ = this.tourService.getMyTours(userId);
-  }a
+  }
 
 }

@@ -1,1 +1,5 @@
-<p>created-tours works!</p>
+<ul *ngIf="myTours$ | async as myTours">
+  <li *ngFor="let tour of myTours">
+    {{ tour }}
+  </li>
+</ul>
