@@ -1,8 +1,8 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
 import {Observable, Subscription} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {debounceTime, tap} from 'rxjs/operators';
 import {StepForm} from '../../../model/step';
 
 @Component({
@@ -76,13 +76,19 @@ export class TourStepComponent implements OnInit, OnDestroy {
       "locationLng": [this.step.locationLng, []],
       "travelModeToNext": ['WALKING', [Validators.required]]
     });
-    this.stepForm.valueChanges.subscribe(v => this.copyFormToStep(v));
+    this.stepForm.valueChanges
+      .pipe(
+        debounceTime(100)
+      )
+      .subscribe(v => this.copyFormToStep(v));
     controlSteps.push(this.stepForm);
   }
 
   private copyFormToStep(formStep: StepForm) {
-    Object.keys(formStep).forEach(key => this.step[key] = formStep[key]);
-    console.log(this.parentForm.value)
+    Object.keys(formStep)
+      .filter(key => key !== "location" && key !== "locationLat" && key !== "locationLng")
+      .forEach(key => this.step[key] = formStep[key]);
+    console.log(this.parentForm.value.steps[0])
   }
 
   get f(): FormGroup{
