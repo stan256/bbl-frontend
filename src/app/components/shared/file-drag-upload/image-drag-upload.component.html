@@ -18,9 +18,9 @@
 <!--  todo step number in id -->
   <input type="file"
          multiple
-         [id]="'fileInput'"
+         [id]="'fileInput-' + this.stepIndex"
          (change)="onFilesSelected($event)"/>
-  <label [for]="'fileInput'"
+  <label [for]="'fileInput-' + stepIndex"
          class="action">Choose</label>
 </div>
 

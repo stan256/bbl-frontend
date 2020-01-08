@@ -10,6 +10,7 @@ import {ModalService} from '../modal-window/modal.service';
 // todo animation does not work when element is removed from DOM
 export class ImageDragUploadComponent implements OnInit {
   @Input() stepTitle: string;
+  @Input() stepIndex: number;
 
   imageSelections: Array<ImageSelection> = [];
   modalImage: number;
