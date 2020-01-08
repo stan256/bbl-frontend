@@ -1,6 +1,13 @@
 <h1>Create your route:</h1>
 
 <form [formGroup]="form">
+  <div class="pipe-step" data-content="tourNameGroup">
+    <label for="tourName">Name of the tour</label>
+    <input id="tourName"
+           type="text"
+           formControlName="tourName"/>
+  </div>
+
   <div class="pipe-step">
     <div class="pipe-columns">
       <div class="pipe-column" data-content="people-range">

@@ -8,6 +8,12 @@
   [data-content="people-number"] {
     @include input-text;
   }
+
+  &[data-content="tourNameGroup"] {
+    input[type="text"] {
+      @include input-text();
+    }
+  }
 }
 
 [data-content="steps-map-pipe"] {

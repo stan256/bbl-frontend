@@ -63,6 +63,7 @@ export class CreateTourComponent implements OnInit {
     });
 
     this.form = this.formBuilder.group({
+      tourName: ['', Validators.required],
       peopleNumber: ['', Validators.required],
       tourTags: ['', Validators.required],
       tourRestrictions: ['', Validators.required],
