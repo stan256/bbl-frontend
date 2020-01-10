@@ -32,6 +32,8 @@ import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive'
 import { ImageDragUploadComponent } from './components/shared/file-drag-upload/image-drag-upload.component';
 import { CreatedToursComponent } from './components/created-tours/created-tours.component';
 import { UserAccountComponent } from './components/user-account/user-account.component';
+import { OwnTourComponent } from './components/own-tour/own-tour.component';
+import { OwnStepComponent } from './components/own-tour/own-step/own-step.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { UserAccountComponent } from './components/user-account/user-account.com
     DragAndDropFilesDirective,
     ImageDragUploadComponent,
     CreatedToursComponent,
-    UserAccountComponent
+    UserAccountComponent,
+    OwnTourComponent,
+    OwnStepComponent
   ],
   imports: [
     BrowserModule,

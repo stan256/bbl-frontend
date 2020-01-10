@@ -4,18 +4,20 @@ import {AuthGuard} from './guard/auth.guard';
 import {LoginComponent} from './components/login/login.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {HomeComponent} from './components/home/home.component';
-import {TagSelectComponent} from './components/tagselect/tag-select.component';
 import {CreateTourComponent} from './components/create-tour/create-tour.component';
 import {UserAccountComponent} from './components/user-account/user-account.component';
+import {OwnTourComponent} from './components/own-tour/own-tour.component';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
-  {path: 'tag', component: TagSelectComponent},
   {path: 'create', component: CreateTourComponent},
   {path: 'user', component: UserAccountComponent},
+
+  {path: 'owntours/edit/:id', component: OwnTourComponent},
+
   {path: '**', redirectTo: 'login'},
 ];
 

@@ -1,0 +1,100 @@
+<ng-container *ngIf="tour$ | async as tour">
+  <form [formGroup]="form">
+    <div class="pipe-step" data-content="tourNameGroup">
+      <label for="tourName">Name of the tour</label>
+      <input id="tourName"
+             type="text"
+             formControlName="tourName"/>
+    </div>
+
+    <div class="pipe-step">
+      <div class="pipe-columns">
+        <div class="pipe-column" data-content="people-range">
+          <h2>Number of people on the tour</h2>
+          <p-spinner formControlName="peopleNumber"
+                     [min]="1"
+                     [max]="100"></p-spinner>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-step">
+      <h2>Select geo locations on your tour</h2>
+
+      <div data-content="steps-map-pipe">
+        <ul>
+          <li *ngFor="let step of tour.steps; let i = index;">
+            <app-own-step></app-own-step>
+            <app-tour-step [step]="step"
+                           [id]="'step-' + i"
+                           [stepLength]="steps.length"
+                           [stepIndex]="i"
+                           [showValidation$]="showValidation$"
+                           [parentForm]="form"
+                           (stepRemoved)="removeStep(i)"></app-tour-step>
+          </li>
+          <li data-content="add-step">
+            <button class="action" (click)="addStep()">Add new step</button>
+          </li>
+        </ul>
+
+        <div data-content="map">
+          <agm-map [latitude]="lastLat"
+                   [longitude]="lastLng"
+                   [clickableIcons]="true"
+                   [zoom]="16">
+
+            <ng-container *ngFor="let step of steps; let i = index;">
+              <agm-marker
+                [latitude]="step.locationLat"
+                [longitude]="step.locationLng"
+                [markerDraggable]="true"
+                [iconUrl]="iconUrl(step)"
+                (dragEnd)="markerDragEnd($event, step)"></agm-marker>
+
+              <!-- taking the next point as destination -->
+              <agm-direction *ngIf="possibleToBuildRoute(i)"
+                             [travelMode]="getTravelMode(i)"
+                             [origin]="{ lat: step.locationLat, lng: step.locationLng }"
+                             [destination]="{ lat: steps[i + 1].locationLat, lng: steps[i + 1].locationLng }"></agm-direction>
+            </ng-container>
+          </agm-map>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-step">
+      <div class="pipe-columns">
+        <div class="pipe-column">
+          <h2>Set tags which fits to theme of the route</h2>
+          <p-autoComplete [suggestions]="tagsResults"
+                          formControlName="tourTags"
+                          [multiple]="true"
+                          (completeMethod)="searchTags($event)"></p-autoComplete>
+        </div>
+        <div class="pipe-column">
+          <h2>Restrictions for the tour:</h2>
+          <p-autoComplete [suggestions]="restrictionsResults"
+                          formControlName="tourRestrictions"
+                          [multiple]="true"
+                          (completeMethod)="searchRestrictions($event)"></p-autoComplete>
+        </div>
+      </div>
+    </div>
+
+    <p data-content="create-tour">
+      <button class="btn-L confirmation"
+              [disabled]="this.form.invalid"
+              (click)="createTour()">Create tour
+      </button>
+    </p>
+  </form>
+
+  <app-modal-window id="stepRemovePopup">
+    <p>Are you really sure you want to delete this step?</p>
+    <p>
+      <button (click)="confirmRemove()">Remove</button>
+      <button (click)="closeModal()">Cancel</button>
+    </p>
+  </app-modal-window>
+</ng-container>

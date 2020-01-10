@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {TourDTO, TourForm} from '../model/tour';
 import {Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {wrapRestriction, wrapTag} from '../shared/common.types';
+import {TravelMode, wrapRestriction, wrapTag} from '../shared/common.types';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,32 @@ export class TourService {
     // return this.httpClient.get<TourForm>("localhost:5200/api/my-tours", {});
 
     return of([{
+      id: 1,
+      tourName: "Magical Spain",
+      peopleNumber: 5,
+      tourTags: [wrapTag("hiking")],
+      tourRestrictions: [wrapRestriction("rain")],
+      steps: [
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "First step",
+          date: new Date(222222222),
+          showRouteToNext: true,
+          travelModeToNext: "WALKING",
+          coordinates: { lat: 48.15, lng: 11.33}
+        },
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "Second step",
+          date: new Date(222622222),
+          showRouteToNext: false,
+          travelModeToNext: "WALKING",
+          coordinates: { lat: 48.24, lng: 11.55}
+        }
+      ]
+    },{
       id: 1,
       tourName: "Magical Spain",
       peopleNumber: 5,
@@ -78,5 +104,35 @@ export class TourService {
         }
       ]
     }]);
+  }
+
+  getTour(id: number): Observable<TourDTO> {
+    return of({
+      id: 2,
+      tourName: "Cold and beautiful bavarian Alps",
+      peopleNumber: 5,
+      tourTags: [wrapTag("hiking")],
+      tourRestrictions: [wrapRestriction("rain")],
+      steps: [
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "First step",
+          date: new Date(222222222),
+          showRouteToNext: true,
+          travelModeToNext: "WALKING",
+          coordinates: { lat: 48.15, lng: 11.33}
+        },
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "Second step",
+          date: new Date(222622222),
+          showRouteToNext: false,
+          travelModeToNext: "WALKING",
+          coordinates: { lat: 48.24, lng: 11.55}
+        }
+      ]
+    });
   }
 }

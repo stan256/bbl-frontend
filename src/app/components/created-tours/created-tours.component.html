@@ -1,12 +1,12 @@
 <ul *ngIf="myTours$ | async as myTours">
-  <li *ngFor="let tour of myTours">
+  <li data-content="tour" *ngFor="let tour of myTours">
     <div>
-      <p>Tour name: {{tour.tourName}}</p>
-      <p>People number: {{tour.peopleNumber}}</p>
-      <div *ngIf="tour.tourTags.length > 0">
+      <p><a [routerLink]="['/my-tour', tour.id]">{{tour.tourName}}</a></p>
+      <p>{{tour.peopleNumber}} people</p>
+      <div data-content="tag" *ngIf="tour.tourTags.length > 0">
         Tags: <ul><li *ngFor="let tag of tour.tourTags">{{ tag }}</li></ul>
       </div>
-      <div *ngIf="tour.tourRestrictions.length > 0">
+      <div data-content="restriction" *ngIf="tour.tourRestrictions.length > 0">
         Restrictions: <ul><li *ngFor="let restr of tour.tourRestrictions">{{ restr }}</li></ul>
       </div>
     </div>
