@@ -29,7 +29,6 @@
                            [id]="'step-' + i"
                            [stepLength]="steps.length"
                            [stepIndex]="i"
-                           [showValidation$]="showValidation$"
                            [parentForm]="form"
                            (stepRemoved)="removeStep(i)"></app-tour-step>
           </li>
@@ -84,8 +83,8 @@
 
     <p data-content="create-tour">
       <button class="btn-L confirmation"
-              [disabled]="this.form.invalid"
-              (click)="createTour()">Create tour
+              [disabled]="this.form.invalid && this.form.touched"
+              (click)="updateTour()">Update tour
       </button>
     </p>
   </form>

@@ -18,7 +18,7 @@ export class CreatedToursComponent implements OnInit {
   ngOnInit() {
     // todo get userId from cookie
     let userId = 4;
-    this.myTours$ = this.tourService.getMyTours(userId);
+    this.myTours$ = this.tourService.getOwnTours(userId);
   }
 
 }

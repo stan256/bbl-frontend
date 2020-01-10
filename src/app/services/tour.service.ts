@@ -21,7 +21,7 @@ export class TourService {
     this.router.navigate(['/']);
   }
 
-  getMyTours(userId: number): Observable<Array<TourForm>> {
+  getOwnTours(userId: number): Observable<Array<TourForm>> {
     // todo
     // return this.httpClient.get<TourForm>("localhost:5200/api/my-tours", {});
 
@@ -141,5 +141,11 @@ export class TourService {
         }
       ]
     });
+  }
+
+  updateTour(tour: TourForm): boolean {
+    this.alertService.success(`You succesfully updated the tour ${tour.tourName}`);
+    this.router.navigate(['/']);
+    return true;
   }
 }

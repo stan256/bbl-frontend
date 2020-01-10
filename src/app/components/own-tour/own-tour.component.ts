@@ -1,12 +1,16 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TourService} from '../../services/tour.service';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
 import {StepForm} from '../../model/step';
 import {LocationService} from '../../services/location.service';
+import {take, tap} from 'rxjs/operators';
+import {ModalService} from '../shared/modal-window/modal.service';
+import {TagService} from '../../services/tag.service';
+import {RestrictionService} from '../../services/restriction.service';
 
 @Component({
   selector: 'app-own-tour',
@@ -21,12 +25,20 @@ export class OwnTourComponent implements OnInit {
   private form: FormGroup;
   private steps: Array<StepForm>;
 
+  tagsResults: string[];
+  restrictionsResults: string[];
+
+  removeStepConfirmation$ = new Subject<boolean>();
+
   constructor(
     private locationService: LocationService,
     private route: ActivatedRoute,
     private tourService: TourService,
     private formBuilder: FormBuilder,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private tagService: TagService,
+    private restrictionService: RestrictionService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -104,10 +116,86 @@ export class OwnTourComponent implements OnInit {
     }
   }
 
+  removeStep(i: number) {
+    this.modalService.open("stepRemovePopup");
+    this.removeStepConfirmation$.pipe(
+      take(1),
+      tap(confirmed => {
+        this.closeModal();
+        if (confirmed)
+          this.steps.splice(i, 1);
+      })
+    ).subscribe();
+  }
+
+  closeModal() {
+    this.removeStepConfirmation$.next(false);
+    this.modalService.close('stepRemovePopup');
+  }
+
+  iconUrl(step: StepForm) {
+    if (this.steps.indexOf(step) === this.steps.length - 1){
+      return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+    } else {
+      return "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+    }
+  }
+
+  markerDragEnd($event: any, step: StepForm) {
+    this.locationService.geoCode(new google.maps.LatLng($event.coords.lat, $event.coords.lng))
+      .pipe(
+        tap(addresses => {
+          step.location = addresses[0].formatted_address;
+          step.locationLat = addresses[0].geometry.location.lat();
+          step.locationLng = addresses[0].geometry.location.lng();
+        }),
+        tap(() => this.changeDetector.detectChanges())
+      )
+      .subscribe();
+  }
+
+  // check that step is not last & has initialized coordinates (but not same as origin) and showRouteToNext is true
+  possibleToBuildRoute(stepIndex: number): boolean {
+    return stepIndex != this.steps.length - 1 &&
+      this.steps[stepIndex].showRouteToNext &&
+      this.steps[stepIndex].locationLat &&
+      this.steps[stepIndex].locationLng &&
+      this.steps[stepIndex + 1].locationLat !== this.steps[stepIndex].locationLat &&
+      this.steps[stepIndex + 1].locationLng !== this.steps[stepIndex].locationLng;
+  }
+
+  getTravelMode(i: number) {
+    return this.steps[i].travelModeToNext.toString();
+  }
+
+  searchRestrictions(event) {
+    this.restrictionService.getResults(event.query).then(data => {
+      this.restrictionsResults = data;
+    });
+  }
+
+  searchTags(event) {
+    this.tagService.getTags(event.query).toPromise().then(data => {
+      this.tagsResults = data;
+    });
+  }
+
   private firstInvalidStep(): number {
     let steps: any = this.form.controls.steps;
     return steps.controls.findIndex((step) => {
       return Object.keys(step.controls).some(c => step.controls[c].invalid);
     });
+  }
+
+
+  confirmRemove() {
+    this.removeStepConfirmation$.next(true);
+  }
+
+  updateTour() {
+    if (this.form.invalid)
+      MarkFormDirtyUtils.markGroupDirty(this.form);
+    else
+      this.tourService.updateTour(this.form.value as TourForm);
   }
 }
