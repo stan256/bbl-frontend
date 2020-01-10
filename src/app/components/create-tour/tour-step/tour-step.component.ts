@@ -14,7 +14,6 @@ export class TourStepComponent implements OnInit, OnDestroy {
   @Input() step: StepForm;
   @Input() stepLength: number;
   @Input() stepIndex: number;
-  @Input() showValidation$: Observable<void>;
   @Input() parentForm: FormGroup;
 
   stepForm: FormGroup;
@@ -32,13 +31,6 @@ export class TourStepComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.addFormControls();
-
-    let steps: any = this.parentForm.controls.steps;
-    this.showValidationSubscription = this.showValidation$
-      .pipe(
-        // Mark all controls as dirty when triggered
-        tap(() => Object.keys(steps.controls).forEach(key => steps.controls[key].markAsDirty()))
-      ).subscribe();
 
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.locationRef.nativeElement);

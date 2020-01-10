@@ -1,7 +1,7 @@
 import {TravelMode} from '../shared/common.types';
-import {Coordinates} from './Coordinates';
 
 export interface StepForm {
+  id: number;
   location: string;
   description?: string;
   date: Date;
@@ -9,14 +9,4 @@ export interface StepForm {
   travelModeToNext: TravelMode;
   locationLat: number;
   locationLng: number;
-}
-
-export interface StepDTO {
-  id: number;
-  location: string;
-  description?: string;
-  date: Date;
-  showRouteToNext: boolean;
-  travelModeToNext: TravelMode;
-  coordinates: Coordinates;
 }

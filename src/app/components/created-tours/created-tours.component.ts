@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TourService} from '../../services/tour.service';
 import {Observable} from 'rxjs';
-import {TourDTO, TourForm} from '../../model/tour';
+import {TourForm} from '../../model/tour';
 
 @Component({
   selector: 'app-created-tours',
@@ -9,7 +9,7 @@ import {TourDTO, TourForm} from '../../model/tour';
   styleUrls: ['./created-tours.component.scss']
 })
 export class CreatedToursComponent implements OnInit {
-  myTours$: Observable<Array<TourDTO>>;
+  myTours$: Observable<Array<TourForm>>;
 
   constructor(
     private tourService: TourService

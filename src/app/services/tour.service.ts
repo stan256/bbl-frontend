@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AlertService} from '../alert/alert.service';
 import {Router} from '@angular/router';
-import {TourDTO, TourForm} from '../model/tour';
+import {TourForm} from '../model/tour';
 import {Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {TravelMode, wrapRestriction, wrapTag} from '../shared/common.types';
@@ -21,7 +21,7 @@ export class TourService {
     this.router.navigate(['/']);
   }
 
-  getMyTours(userId: number): Observable<Array<TourDTO>> {
+  getMyTours(userId: number): Observable<Array<TourForm>> {
     // todo
     // return this.httpClient.get<TourForm>("localhost:5200/api/my-tours", {});
 
@@ -39,7 +39,8 @@ export class TourService {
           date: new Date(222222222),
           showRouteToNext: true,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.15, lng: 11.33}
+          locationLat: 48.15,
+          locationLng: 11.33
         },
         {
           id: 12,
@@ -48,7 +49,8 @@ export class TourService {
           date: new Date(222622222),
           showRouteToNext: false,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.24, lng: 11.55}
+          locationLat: 48.24,
+          locationLng: 11.55
         }
       ]
     },{
@@ -65,7 +67,8 @@ export class TourService {
           date: new Date(222222222),
           showRouteToNext: true,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.15, lng: 11.33}
+          locationLat: 48.15,
+          locationLng: 11.33
         },
         {
           id: 12,
@@ -74,7 +77,8 @@ export class TourService {
           date: new Date(222622222),
           showRouteToNext: false,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.24, lng: 11.55}
+          locationLat: 48.24,
+          locationLng: 11.55
         }
       ]
     }, {
@@ -86,27 +90,28 @@ export class TourService {
       steps: [
         {
           id: 12,
-          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          location: "Wilh elmshof 14, 85764 Oberschleißheim, Germany",
           description: "First step",
           date: new Date(222222222),
           showRouteToNext: true,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.15, lng: 11.33}
-        },
-        {
+          locationLat: 48.15,
+          locationLng: 11.33
+        }, {
           id: 12,
           location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
           description: "Second step",
           date: new Date(222622222),
           showRouteToNext: false,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.24, lng: 11.55}
+          locationLat: 48.24,
+          locationLng: 11.55
         }
       ]
     }]);
   }
 
-  getTour(id: number): Observable<TourDTO> {
+  getTour(id: number): Observable<TourForm> {
     return of({
       id: 2,
       tourName: "Cold and beautiful bavarian Alps",
@@ -121,7 +126,8 @@ export class TourService {
           date: new Date(222222222),
           showRouteToNext: true,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.15, lng: 11.33}
+          locationLat: 48.24,
+          locationLng: 11.55
         },
         {
           id: 12,
@@ -130,7 +136,8 @@ export class TourService {
           date: new Date(222622222),
           showRouteToNext: false,
           travelModeToNext: "WALKING",
-          coordinates: { lat: 48.24, lng: 11.55}
+          locationLat: 48.24,
+          locationLng: 11.55
         }
       ]
     });

@@ -29,7 +29,6 @@ export class CreateTourComponent implements OnInit {
   restrictionsResults: string[];
 
   removeStepConfirmation$ = new Subject<boolean>();
-  showValidation$ = new Subject<void>();
 
   constructor(
     private locationService: LocationService,
@@ -144,7 +143,7 @@ export class CreateTourComponent implements OnInit {
 
   createTour() {
     if (this.form.invalid)
-      this.showValidation$.next();
+      MarkFormDirtyUtils.markGroupDirty(this.form);
     else
       this.tourService.createTour(this.form.value as TourForm);
   }

@@ -1,5 +1,5 @@
 import {Restriction, Tag} from '../shared/common.types';
-import {StepDTO, StepForm} from './step';
+import {StepForm} from './step';
 
 export interface TourForm   {
   tourName: string;
@@ -7,13 +7,4 @@ export interface TourForm   {
   tourTags: Array<Tag>;
   tourRestrictions: Array<Restriction>;
   steps: Array<StepForm>
-}
-
-export interface TourDTO   {
-  id: number;
-  tourName: string;
-  peopleNumber: number;
-  tourTags: Array<Tag>;
-  tourRestrictions: Array<Restriction>;
-  steps: Array<StepDTO>
 }
