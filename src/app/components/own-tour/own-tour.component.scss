@@ -1,0 +1,58 @@
+@import "mixins/vars";
+@import "mixins/inputs";
+
+
+.pipe-step {
+  margin-bottom: $XXXXL;
+
+  [data-content="people-number"] {
+    @include input-text;
+  }
+
+  &[data-content="tourNameGroup"] {
+    input[type="text"] {
+      @include input-text();
+    }
+  }
+}
+
+[data-content="steps-map-pipe"] {
+  display: flex;
+
+  > ul {
+    flex: 1;
+
+    > li {
+      &:last-child {
+        > button {
+          @include button;
+        }
+      }
+
+      &:not(:first-child) {
+        margin-top: $XXXXL;
+      }
+    }
+  }
+
+  > [data-content="map"] {
+    flex: 3;
+    padding-left: $XXXL;
+    height: 400px;
+
+    > agm-map {
+      width: 100%;
+      height: 400px;
+    }
+  }
+}
+
+[data-content="create-tour"] {
+  text-align: center;
+  margin-top: $XXXL;
+  margin-bottom: $XXL;
+
+  > button {
+    @include button;
+  }
+}

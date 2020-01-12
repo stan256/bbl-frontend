@@ -24,13 +24,11 @@
       <div data-content="steps-map-pipe">
         <ul>
           <li *ngFor="let step of tour.steps; let i = index;">
-            <app-own-step></app-own-step>
-            <app-tour-step [step]="step"
-                           [id]="'step-' + i"
-                           [stepLength]="steps.length"
-                           [stepIndex]="i"
-                           [parentForm]="form"
-                           (stepRemoved)="removeStep(i)"></app-tour-step>
+            <app-own-step [step]="step"
+                          [stepLength]="steps.length"
+                          [stepIndex]="i"
+                          [parentForm]="form"
+            ></app-own-step>
           </li>
           <li data-content="add-step">
             <button class="action" (click)="addStep()">Add new step</button>
@@ -83,7 +81,7 @@
 
     <p data-content="create-tour">
       <button class="btn-L confirmation"
-              [disabled]="this.form.invalid && this.form.touched"
+              [disabled]="this.form.invalid && this.form.untouched"
               (click)="updateTour()">Update tour
       </button>
     </p>

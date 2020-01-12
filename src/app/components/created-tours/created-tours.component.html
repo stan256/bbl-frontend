@@ -1,7 +1,7 @@
 <ul *ngIf="myTours$ | async as myTours">
   <li data-content="tour" *ngFor="let tour of myTours">
     <div>
-      <p><a [routerLink]="['/my-tour', tour.id]">{{tour.tourName}}</a></p>
+      <p><a [routerLink]="['/owntours/edit/', tour.id]">{{tour.tourName}}</a></p>
       <p>{{tour.peopleNumber}} people</p>
       <div data-content="tag" *ngIf="tour.tourTags.length > 0">
         Tags: <ul><li *ngFor="let tag of tour.tourTags">{{ tag }}</li></ul>

@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TourService} from '../../services/tour.service';
 import {Observable, Subject} from 'rxjs';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
 import {StepForm} from '../../model/step';
@@ -23,7 +23,7 @@ export class OwnTourComponent implements OnInit {
 
   private tour$: Observable<TourForm>;
   private form: FormGroup;
-  private steps: Array<StepForm>;
+  private steps: Array<StepForm> = [];
 
   tagsResults: string[];
   restrictionsResults: string[];
@@ -52,7 +52,7 @@ export class OwnTourComponent implements OnInit {
         peopleNumber: [tour.peopleNumber, Validators.required],
         tourTags: [tour.tourTags, Validators.required],
         tourRestrictions: [tour.tourRestrictions, Validators.required],
-        steps: this.buildStepsFormGroups(tour.steps)
+        steps: new FormArray([])
       });
     });
 
@@ -70,21 +70,6 @@ export class OwnTourComponent implements OnInit {
 
   get lastLat(): number {
     return this.steps.length != 0 ? this.steps[this.steps.length - 1].locationLat : this.userLng;
-  }
-
-  private buildStepsFormGroups(steps: Array<StepForm>) {
-    return steps
-      .map(step => {
-        return this.formBuilder.group({
-          "location": [step.location, [Validators.required]],
-          "description": [step.description, []],
-          "date": [step.date, [Validators.required]],
-          "showRouteToNext": [step.showRouteToNext, []],
-          "locationLat": [step.locationLat, []],
-          "locationLng": [step.locationLng, []],
-          "travelModeToNext": [step.travelModeToNext, [Validators.required]]
-        });
-      })
   }
 
   private addStep() {

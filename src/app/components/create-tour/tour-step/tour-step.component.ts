@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, QueryList, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, QueryList, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
 import {Subscription} from 'rxjs';
@@ -11,7 +11,7 @@ import {dateValidator} from '../../../shared/validators/date-validator';
   templateUrl: './tour-step.component.html',
   styleUrls: ['./tour-step.component.scss']
 })
-export class TourStepComponent implements OnInit, OnDestroy {
+export class TourStepComponent implements OnInit {
   @Input() step: StepForm;
   @Input() stepLength: number;
   @Input() stepIndex: number;
@@ -19,7 +19,6 @@ export class TourStepComponent implements OnInit, OnDestroy {
   @Input() stepsRefs: QueryList<TourStepComponent>;
 
   stepForm: FormGroup;
-  showValidationSubscription: Subscription;
 
   @Output() stepRemoved = new EventEmitter<void>();
 
@@ -56,26 +55,21 @@ export class TourStepComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.showValidationSubscription.unsubscribe();
-  }
-
   private addFormControls() {
-    let controlSteps = this.parentForm.controls.steps as FormArray;
     this.stepForm = this.fb.group({
-      "location": [null, [Validators.required]],
-      "description": [null, []],
-      "date": [null],
-      "showRouteToNext": [null, []],
+      "location": [this.step.location, [Validators.required]],
+      "description": [this.step.description, []],
+      "date": [this.step.date, [Validators.required]],
+      "showRouteToNext": [this.step.showRouteToNext, []],
       "locationLat": [this.step.locationLat, []],
       "locationLng": [this.step.locationLng, []],
-      "travelModeToNext": ['WALKING', [Validators.required]]
+      "travelModeToNext": [this.step.travelModeToNext, [Validators.required]]
     });
     this.setDateValidator();
     this.stepForm.valueChanges
       .pipe(debounceTime(100))
       .subscribe(v => this.copyFormToStep(v));
-    controlSteps.push(this.stepForm);
+    (this.parentForm.controls.steps as FormArray).push(this.stepForm);
   }
 
   private setDateValidator() {

@@ -1,1 +1,70 @@
-<p>own-step works!</p>
+<div [formGroup]="stepForm">
+  <div data-content="location-block">
+    <p data-content="step-header">
+      <label [for]="'location-' + stepIndex">
+        Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span>
+      </label>
+      <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
+        <i class="fa fa-minus"></i>
+      </button>
+    </p>
+    <p>
+      <input type="text"
+             [id]="'location-' + stepIndex"
+             [(ngModel)]="step.location"
+             formControlName="location"
+             placeholder="Enter your location here"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="off"
+             (keydown.enter)="$event.preventDefault()"
+             [maxLength]="200"
+             #searchLocation>
+    </p>
+    <span *ngFor="let error of errorsOf(f.get('location'))" class="validation validation-error">{{error}}</span>
+  </div>
+  <div data-content="date">
+    <label [for]="'date-' + this.stepIndex">Date & time</label>
+    <p-calendar [inputId]="'date-' + this.stepIndex"
+                formControlName="date"
+                showTime="true"
+                hourFormat="24"
+                showButtonBar="true">
+    </p-calendar>
+    <span *ngFor="let error of errorsOf(f.get('date'))" class="validation validation-error">{{error}}</span>
+  </div>
+  <div data-content="textarea-block">
+    <label [for]="'description-' + stepIndex">Description</label>
+    <textarea [id]="'description-' + stepIndex"
+              formControlName="description"
+              [maxLength]="400"></textarea>
+    <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
+  </div>
+  <!--  <div data-content="show-route" *ngIf="notLast()">-->
+  <div data-content="show-route">
+    <label class="checkbox">
+      <input formControlName="showRouteToNext" type="checkbox">
+      <span>Show route to the next point</span>
+    </label>
+
+    <ng-container *ngIf="stepForm.get('showRouteToNext').value">
+      <label  [for]="'route-type-' + stepIndex">Type of movement:</label>
+      <select [name]="'route-type-' + stepIndex"
+              [id]="'route-type-' + stepIndex"
+              formControlName="travelModeToNext">
+        <option value="WALKING">Walking</option>
+        <option value="DRIVING">Driving</option>
+        <option value="BICYCLING">Bicycling</option>
+      </select>
+    </ng-container>
+  </div>
+  <div data-content="slider">
+    <app-image-drag-upload
+      [stepIndex]="stepIndex">
+
+    </app-image-drag-upload>
+  </div>
+
+  <input formControlName="locationLat" type="hidden" [(ngModel)]="step.locationLat">
+  <input formControlName="locationLng" type="hidden" [(ngModel)]="step.locationLng">
+</div>
