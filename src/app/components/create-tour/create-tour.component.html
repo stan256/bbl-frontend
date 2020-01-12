@@ -11,8 +11,9 @@
   <div class="pipe-step">
     <div class="pipe-columns">
       <div class="pipe-column" data-content="people-range">
-        <h2>Number of people on the tour</h2>
+        <label [for]="'peopleNumber'">Number of people on the tour</label>
         <p-spinner formControlName="peopleNumber"
+                   [inputId]="'peopleNumber'"
                    [(ngModel)]="peopleNumber"
                    [min]="1"
                    [max]="100"></p-spinner>
@@ -67,15 +68,19 @@
   <div class="pipe-step">
     <div class="pipe-columns">
       <div class="pipe-column">
-        <h2>Set tags which fits to theme of the route</h2>
-        <p-autoComplete [suggestions]="tagsResults"
+        <label [for]="'tourTags'">Set tags which fits to theme of the route</label>
+        <p-autoComplete
+                        [inputId]="'tourTags'"
+                        [suggestions]="tagsResults"
                         formControlName="tourTags"
                         [multiple]="true"
                         (completeMethod)="searchTags($event)"></p-autoComplete>
       </div>
       <div class="pipe-column">
-        <h2>Restrictions for the tour:</h2>
-        <p-autoComplete [suggestions]="restrictionsResults"
+        <label [for]="'tourRestrictions'">Restrictions for the tour:</label>
+        <p-autoComplete
+                        [suggestions]="restrictionsResults"
+                        [inputId]="'tourRestrictions'"
                         formControlName="tourRestrictions"
                         [multiple]="true"
                         (completeMethod)="searchRestrictions($event)"></p-autoComplete>
