@@ -1,0 +1,76 @@
+@import "mixins/vars";
+@import "mixins/inputs";
+@import "mixins/colors";
+
+button {
+  @include button;
+}
+
+[data-content="location-block"] {
+  > p {
+    display: flex;
+    margin-bottom: 0;
+    align-items: center;
+
+    > label > span[data-content="step-index"] {
+      color: $white;
+      padding: $S;
+      border-radius: 50%;
+      background-color: $slime-green;
+      width: 2em;
+      height: 2em;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: $M;
+    }
+
+    input[type="text"] {
+      @include input-text;
+
+      flex: 1;
+    }
+
+    > button {
+      margin-left: $M;
+    }
+  }
+}
+
+[data-content="textarea-block"] {
+  textarea {
+    @include textarea;
+    resize: none;
+  }
+}
+
+[data-content="date"] {
+  p-calendar {
+    display: block;
+
+    ::ng-deep > span {
+      display: block;
+
+      > input {
+        @include input-text;
+        width: 100%;
+
+        &:focus, &:hover {
+          border: 1px solid $grey;
+        }
+      }
+    }
+  }
+}
+
+
+[data-content="show-route"] {
+  .checkbox {
+    @include checkbox;
+  }
+
+  select {
+    @include select;
+    width: 100%;
+  }
+}

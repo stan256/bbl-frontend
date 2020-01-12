@@ -5,14 +5,8 @@
 .pipe-step {
   margin-bottom: $XXXXL;
 
-  [data-content="people-number"] {
+  input[type="text"] {
     @include input-text;
-  }
-
-  &[data-content="tourNameGroup"] {
-    input[type="text"] {
-      @include input-text();
-    }
   }
 }
 
