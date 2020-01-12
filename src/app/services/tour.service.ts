@@ -16,7 +16,6 @@ export class TourService {
               private router: Router) { }
 
   createTour(formValue: TourForm) {
-    console.log(formValue)
     this.alertService.success('You have created a tour');
     this.router.navigate(['/']);
   }

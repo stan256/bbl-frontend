@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {StepForm} from '../../model/step';
 import {Subject} from 'rxjs';
@@ -10,6 +10,7 @@ import {RestrictionService} from '../../services/restriction.service';
 import {TagService} from '../../services/tag.service';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
+import {TourStepComponent} from './tour-step/tour-step.component';
 
 
 @Component({
@@ -18,6 +19,8 @@ import {TourForm} from '../../model/tour';
   styleUrls: ['./create-tour.component.scss']
 })
 export class CreateTourComponent implements OnInit {
+  @ViewChildren(TourStepComponent) stepsRefs: QueryList<TourStepComponent>;
+
   userLng: number = 11.582579;
   userLat: number = 50.924845;
 

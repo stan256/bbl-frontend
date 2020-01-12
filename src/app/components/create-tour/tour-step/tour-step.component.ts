@@ -1,9 +1,10 @@
-import {Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, QueryList, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MapsAPILoader} from '@agm/core';
-import {Observable, Subscription} from 'rxjs';
-import {debounceTime, tap} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {StepForm} from '../../../model/step';
+import {dateValidator} from '../../../shared/validators/date-validator';
 
 @Component({
   selector: 'app-tour-step',
@@ -15,6 +16,7 @@ export class TourStepComponent implements OnInit, OnDestroy {
   @Input() stepLength: number;
   @Input() stepIndex: number;
   @Input() parentForm: FormGroup;
+  @Input() stepsRefs: QueryList<TourStepComponent>;
 
   stepForm: FormGroup;
   showValidationSubscription: Subscription;
@@ -26,7 +28,8 @@ export class TourStepComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -62,25 +65,40 @@ export class TourStepComponent implements OnInit, OnDestroy {
     this.stepForm = this.fb.group({
       "location": [null, [Validators.required]],
       "description": [null, []],
-      "date": [null, [Validators.required]],
+      "date": [null],
       "showRouteToNext": [null, []],
       "locationLat": [this.step.locationLat, []],
       "locationLng": [this.step.locationLng, []],
       "travelModeToNext": ['WALKING', [Validators.required]]
     });
+    this.setDateValidator();
     this.stepForm.valueChanges
-      .pipe(
-        debounceTime(100)
-      )
+      .pipe(debounceTime(100))
       .subscribe(v => this.copyFormToStep(v));
     controlSteps.push(this.stepForm);
+  }
+
+  private setDateValidator() {
+    this.f.get('date').valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe(value => {
+        if (this.stepIndex !== 0) {
+          let prevStep: TourStepComponent = this.stepsRefs.toArray()[this.stepIndex - 1];
+          this.f.get('date').setValidators([Validators.required, dateValidator(prevStep.f.get('date').value, value)]);
+        } else {
+          this.f.get('date').setValidators([Validators.required]);
+        }
+        //ToDo date is not updated if previous one was changed
+        this.stepsRefs.forEach((stepRef, index) => {
+          stepRef.f.get('date').updateValueAndValidity();
+        });
+    })
   }
 
   private copyFormToStep(formStep: StepForm) {
     Object.keys(formStep)
       .filter(key => key !== "location" && key !== "locationLat" && key !== "locationLng")
       .forEach(key => this.step[key] = formStep[key]);
-    console.log(this.parentForm.value.steps[0])
   }
 
   get f(): FormGroup{
