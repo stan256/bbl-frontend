@@ -11,6 +11,7 @@ import {TagService} from '../../services/tag.service';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
 import {TourStepComponent} from './tour-step/tour-step.component';
+import {UserService} from '../../services/user.service';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class CreateTourComponent implements OnInit {
     private tagService: TagService,
     private restrictionService: RestrictionService,
     private formBuilder: FormBuilder,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private userService: UserService
   ) {}
 
   searchRestrictions(event) {
@@ -147,8 +149,11 @@ export class CreateTourComponent implements OnInit {
   createTour() {
     if (this.form.invalid)
       MarkFormDirtyUtils.markGroupDirty(this.form);
-    else
-      this.tourService.createTour(this.form.value as TourForm);
+    else {
+      let tourForm = this.form.value as TourForm;
+      tourForm.creatorId = this.userService.getUserId();
+      this.tourService.createTour(tourForm);
+    }
   }
 
   iconUrl(step: StepForm) {

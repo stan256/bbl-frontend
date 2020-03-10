@@ -18,4 +18,9 @@ export class UserService {
   delete(id: number) {
     return this.http.delete(`${environment.apiUrl}/users/${id}`);
   }
+
+  getUserId(): number {
+    // todo read from cookie
+    return 5;
+  }
 }

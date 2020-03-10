@@ -5,10 +5,10 @@ import {TourForm} from '../../model/tour';
 
 @Component({
   selector: 'app-created-tours',
-  templateUrl: './created-tours.component.html',
-  styleUrls: ['./created-tours.component.scss']
+  templateUrl: './own-tours-list.component.html',
+  styleUrls: ['./own-tours-list.component.scss']
 })
-export class CreatedToursComponent implements OnInit {
+export class OwnToursList implements OnInit {
   myTours$: Observable<Array<TourForm>>;
 
   constructor(

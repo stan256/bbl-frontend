@@ -29,7 +29,7 @@ import { OnlyNumberDirective } from './shared/only-number.directive';
 import {AgmDirectionModule} from 'agm-direction';
 import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive';
 import { ImageDragUploadComponent } from './components/shared/file-drag-upload/image-drag-upload.component';
-import { CreatedToursComponent } from './components/own-tours-list/created-tours.component';
+import { OwnToursList } from './components/own-tours-list/own-tours-list.component';
 import { UserAccountComponent } from './components/user-account/user-account.component';
 import { OwnTourComponent } from './components/own-tour/own-tour.component';
 import { OwnStepComponent } from './components/own-tour/own-step/own-step.component';
@@ -55,7 +55,7 @@ import {ModalWindowComponent} from './components/shared/modal-window/modal-windo
     OnlyNumberDirective,
     DragAndDropFilesDirective,
     ImageDragUploadComponent,
-    CreatedToursComponent,
+    OwnToursList,
     UserAccountComponent,
     OwnTourComponent,
     OwnStepComponent

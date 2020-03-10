@@ -7,5 +7,6 @@ export interface TourForm   {
   peopleNumber: number;
   tourTags: Array<Tag>;
   tourRestrictions: Array<Restriction>;
-  steps: Array<StepForm>
+  steps: Array<StepForm>;
+  creatorId: number;
 }
