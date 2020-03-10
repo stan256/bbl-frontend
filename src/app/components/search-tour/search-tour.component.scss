@@ -1,0 +1,19 @@
+@import "mixins/vars";
+
+ul {
+  display: flex;
+  justify-content: space-between;
+
+  [data-content="tour"] {
+    font-size: $font-XL;
+    margin-bottom: $L;
+    width: 33%;
+
+    [data-content="tag"],
+    [data-content="restriction"] {
+      > ul, > ul > li {
+        display: inline-block;
+      }
+    }
+  }
+}

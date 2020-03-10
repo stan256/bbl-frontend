@@ -24,16 +24,17 @@ import { AgmCoreModule } from '@agm/core';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AutoCompleteModule, CarouselModule, SliderModule, SpinnerModule, TabViewModule, TooltipModule} from 'primeng/primeng';
-import {ModalWindowComponent} from "./components/shared/modal-window/modal-window.component";
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
 import {AgmDirectionModule} from 'agm-direction';
 import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive';
 import { ImageDragUploadComponent } from './components/shared/file-drag-upload/image-drag-upload.component';
-import { CreatedToursComponent } from './components/created-tours/created-tours.component';
+import { CreatedToursComponent } from './components/own-tours-list/created-tours.component';
 import { UserAccountComponent } from './components/user-account/user-account.component';
 import { OwnTourComponent } from './components/own-tour/own-tour.component';
 import { OwnStepComponent } from './components/own-tour/own-step/own-step.component';
+import { SearchTourComponent } from './components/search-tour/search-tour.component';
+import {ModalWindowComponent} from './components/shared/modal-window/modal-window.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { OwnStepComponent } from './components/own-tour/own-step/own-step.compon
     NavbarComponent,
     FooterComponent,
     ModalWindowComponent,
+    SearchTourComponent,
     EntryComponent,
     AlertComponent,
     HomeComponent,

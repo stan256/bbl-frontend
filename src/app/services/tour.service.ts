@@ -147,4 +147,91 @@ export class TourService {
     this.router.navigate(['/']);
     return true;
   }
+
+  searchTour(query: string): Observable<Array<TourForm>> {
+    return of([{
+      id: 1,
+      tourName: "Magical Spain",
+      peopleNumber: 5,
+      tourTags: [wrapTag("hiking")],
+      tourRestrictions: [wrapRestriction("rain")],
+      steps: [
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "First step",
+          date: new Date(222222222),
+          showRouteToNext: true,
+          travelModeToNext: "WALKING",
+          locationLat: 48.15,
+          locationLng: 11.33
+        },
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "Second step",
+          date: new Date(222622222),
+          showRouteToNext: false,
+          travelModeToNext: "WALKING",
+          locationLat: 48.24,
+          locationLng: 11.55
+        }
+      ]
+    },{
+      id: 1,
+      tourName: "Magical Spain",
+      peopleNumber: 5,
+      tourTags: [wrapTag("hiking")],
+      tourRestrictions: [wrapRestriction("rain")],
+      steps: [
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "First step",
+          date: new Date(222222222),
+          showRouteToNext: true,
+          travelModeToNext: "WALKING",
+          locationLat: 48.15,
+          locationLng: 11.33
+        },
+        {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "Second step",
+          date: new Date(222622222),
+          showRouteToNext: false,
+          travelModeToNext: "WALKING",
+          locationLat: 48.24,
+          locationLng: 11.55
+        }
+      ]
+    }, {
+      id: 2,
+      tourName: "Cold and beautiful bavarian Alps",
+      peopleNumber: 5,
+      tourTags: [wrapTag("hiking")],
+      tourRestrictions: [wrapRestriction("rain")],
+      steps: [
+        {
+          id: 12,
+          location: "Wilh elmshof 14, 85764 Oberschleißheim, Germany",
+          description: "First step",
+          date: new Date(222222222),
+          showRouteToNext: true,
+          travelModeToNext: "WALKING",
+          locationLat: 48.15,
+          locationLng: 11.33
+        }, {
+          id: 12,
+          location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
+          description: "Second step",
+          date: new Date(222622222),
+          showRouteToNext: false,
+          travelModeToNext: "WALKING",
+          locationLat: 48.24,
+          locationLng: 11.55
+        }
+      ]
+    }]);
+  }
 }
