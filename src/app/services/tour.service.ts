@@ -51,7 +51,8 @@ export class TourService {
           locationLat: 48.24,
           locationLng: 11.55
         }
-      ]
+      ],
+      creatorId: 3
     },{
       id: 1,
       tourName: "Magical Spain",
@@ -79,7 +80,8 @@ export class TourService {
           locationLat: 48.24,
           locationLng: 11.55
         }
-      ]
+      ],
+      creatorId: 3
     }, {
       id: 2,
       tourName: "Cold and beautiful bavarian Alps",
@@ -106,7 +108,8 @@ export class TourService {
           locationLat: 48.24,
           locationLng: 11.55
         }
-      ]
+      ],
+      creatorId: 3
     }]);
   }
 
@@ -138,7 +141,8 @@ export class TourService {
           locationLat: 48.24,
           locationLng: 11.55
         }
-      ]
+      ],
+      creatorId: 3
     });
   }
 
@@ -176,7 +180,8 @@ export class TourService {
           locationLat: 48.24,
           locationLng: 11.55
         }
-      ]
+      ],
+      creatorId: 3
     },{
       id: 1,
       tourName: "Magical Spain",
@@ -204,7 +209,8 @@ export class TourService {
           locationLat: 48.24,
           locationLng: 11.55
         }
-      ]
+      ],
+      creatorId: 3
     }, {
       id: 2,
       tourName: "Cold and beautiful bavarian Alps",
@@ -231,7 +237,8 @@ export class TourService {
           locationLat: 48.24,
           locationLng: 11.55
         }
-      ]
+      ],
+      creatorId: 3
     }]);
   }
 }

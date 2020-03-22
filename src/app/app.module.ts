@@ -35,6 +35,7 @@ import { OwnTourComponent } from './components/own-tour/own-tour.component';
 import { OwnStepComponent } from './components/own-tour/own-step/own-step.component';
 import { SearchTourComponent } from './components/search-tour/search-tour.component';
 import {ModalWindowComponent} from './components/shared/modal-window/modal-window.component';
+import { ToursListComponent } from './components/tours-list/tours-list.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {ModalWindowComponent} from './components/shared/modal-window/modal-windo
     OwnToursList,
     UserAccountComponent,
     OwnTourComponent,
-    OwnStepComponent
+    OwnStepComponent,
+    ToursListComponent
   ],
   imports: [
     BrowserModule,

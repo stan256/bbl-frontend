@@ -151,7 +151,7 @@ export class CreateTourComponent implements OnInit {
       MarkFormDirtyUtils.markGroupDirty(this.form);
     else {
       let tourForm = this.form.value as TourForm;
-      tourForm.creatorId = this.userService.getUserId();
+      tourForm.creatorId = this.userService.getCurrentUserId();
       this.tourService.createTour(tourForm);
     }
   }
