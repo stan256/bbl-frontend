@@ -6,25 +6,8 @@
          id="search-input"
          (keyup)="search(searchInput.value)">
 
-  <app-tours-list
-    [tours$]="tours$">
-
+  <app-tours-list [tours$]="tours$">
   </app-tours-list>
 
-<!--  <ng-container *ngIf="tours$ | async as tours">-->
-<!--    <ul data-content="tour" class="search-result">-->
-<!--      <li *ngFor="let tour of tours">-->
-<!--        <p>{{tour.tourName}}</p>-->
-<!--        <p>{{tour.peopleNumber}} people</p>-->
-<!--        <div data-content="tag" *ngIf="tour.tourTags.length > 0">-->
-<!--          Tags: <ul><li *ngFor="let tag of tour.tourTags">{{ tag }}</li></ul>-->
-<!--        </div>-->
-<!--        <div data-content="restriction" *ngIf="tour.tourRestrictions.length > 0">-->
-<!--        Restrictions: <ul><li *ngFor="let restr of tour.tourRestrictions">{{ restr }}</li></ul>-->
-<!--      </div>-->
-<!--        <p>Creator: {{tour.creatorId}}</p>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </ng-container>-->
 </div>
 
