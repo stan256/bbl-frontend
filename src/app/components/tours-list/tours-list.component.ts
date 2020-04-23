@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StepForm} from "../../model/step";
+import {TourForm} from '../../model/tour';
+import {UserService} from '../../services/user.service';
+import {User} from '../../model/User';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-tours-list',
@@ -8,11 +11,18 @@ import {StepForm} from "../../model/step";
 })
 export class ToursListComponent implements OnInit {
 
-  @Input() tours$: StepForm[];
+  @Input() tours$: Observable<TourForm[]>;
 
-  constructor() { }
+  constructor(
+    private userService: UserService
+  ) {
+  }
 
   ngOnInit() {
+  }
+
+  getUser(userId: number): Observable<User> {
+    return this.userService.getUserById(userId);
   }
 
 }
