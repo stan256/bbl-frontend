@@ -1,7 +1,6 @@
-/// <reference types="@types/googlemaps" />
-
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import { GoogleMapsModule } from "@angular/google-maps";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -71,6 +70,7 @@ import { ToursListComponent } from './components/tours-list/tours-list.component
       apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU',
       libraries: ['places']
     }),
+    GoogleMapsModule,
     AgmDirectionModule,
     CalendarModule,
     FormsModule,
