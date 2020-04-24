@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {StepForm} from '../../model/step';
 import {Subject} from 'rxjs';
@@ -43,7 +43,8 @@ export class CreateTourComponent implements OnInit {
     private formBuilder: FormBuilder,
     private changeDetector: ChangeDetectorRef,
     private userService: UserService
-  ) {}
+  ) {
+  }
 
   searchRestrictions(event) {
     this.restrictionService.getResults(event.query).then(data => {
@@ -63,7 +64,7 @@ export class CreateTourComponent implements OnInit {
         this.userLng = g.lng;
         this.userLat = g.lat;
         this.addStep();
-      }, () => this.addStep())
+      }, () => this.addStep());
     });
 
     this.form = this.formBuilder.group({
@@ -83,43 +84,44 @@ export class CreateTourComponent implements OnInit {
     return this.steps.length != 0 ? this.steps[this.steps.length - 1].locationLat : this.userLng;
   }
 
-  private addStep() {
+  addStep() {
     if (!this.steps.length) {
       // setting the geo of user as first step
       this.steps.push(<StepForm> {
         locationLat: this.userLat,
         locationLng: this.userLng,
-        travelModeToNext: "BICYCLING"
+        travelModeToNext: 'BICYCLING'
       });
     } else {
       let firstInvalidStepId: number = this.firstInvalidStep();
 
       if (firstInvalidStepId >= 0) {
         MarkFormDirtyUtils.markGroupDirty(this.form);
-        document.getElementById("step-" + firstInvalidStepId).scrollIntoView();
-      }  else {
+        document.getElementById('step-' + firstInvalidStepId).scrollIntoView();
+      } else {
         // creating a new step with geo location in the same place as previous
         const lastStep = this.steps[this.steps.length - 1];
         let step = <StepForm> {
           locationLat: lastStep.locationLat,
           locationLng: lastStep.locationLng,
-          travelModeToNext: "BICYCLING"
+          travelModeToNext: 'BICYCLING'
         };
         this.steps.push(step);
         this.changeDetector.detectChanges();
-        document.getElementById("step-" + (this.steps.length - 1)).scrollIntoView();
+        document.getElementById('step-' + (this.steps.length - 1)).scrollIntoView();
       }
     }
   }
 
   removeStep(i: number) {
-    this.modalService.open("stepRemovePopup");
+    this.modalService.open('stepRemovePopup');
     this.removeStepConfirmation$.pipe(
       take(1),
       tap(confirmed => {
         this.closeModal();
-        if (confirmed)
+        if (confirmed) {
           this.steps.splice(i, 1);
+        }
       })
     ).subscribe();
   }
@@ -147,9 +149,9 @@ export class CreateTourComponent implements OnInit {
   }
 
   createTour() {
-    if (this.form.invalid)
+    if (this.form.invalid) {
       MarkFormDirtyUtils.markGroupDirty(this.form);
-    else {
+    } else {
       let tourForm = this.form.value as TourForm;
       tourForm.creatorId = this.userService.getCurrentUserId();
       this.tourService.createTour(tourForm);
@@ -157,10 +159,10 @@ export class CreateTourComponent implements OnInit {
   }
 
   iconUrl(step: StepForm) {
-    if (this.steps.indexOf(step) === this.steps.length - 1){
-      return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+    if (this.steps.indexOf(step) === this.steps.length - 1) {
+      return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
     } else {
-      return "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+      return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
     }
   }
 
@@ -183,5 +185,27 @@ export class CreateTourComponent implements OnInit {
     return steps.controls.findIndex((step) => {
       return Object.keys(step.controls).some(c => step.controls[c].invalid);
     });
+  }
+
+  markerOptions(step: StepForm): google.maps.MarkerOptions {
+    return {
+      draggable: true,
+      position: {lat: step.locationLat, lng: step.locationLng},
+      icon: {
+        url: this.iconUrl(step)
+      }
+    };
+  }
+
+  polylineOptions(stepNumber: number): google.maps.PolylineOptions {
+    let step = this.steps[stepNumber];
+    let nextStep = this.steps[stepNumber + 1];
+    return {
+
+      path: [
+        {lat: step.locationLat, lng: step.locationLat},
+        {lat: nextStep.locationLat, lng: nextStep.locationLat}
+      ]
+    }
   }
 }
