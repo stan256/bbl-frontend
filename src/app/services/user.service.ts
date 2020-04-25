@@ -4,6 +4,8 @@ import {User} from '../model/User';
 import {environment} from '../../environments/environment';
 import {Observable, of} from 'rxjs';
 
+const API_URL = 'http://localhost:8080/api/test/';
+
 @Injectable({ providedIn: 'root' })
 export class UserService implements OnInit{
   private currentUser$: Observable<User>;
@@ -44,4 +46,22 @@ export class UserService implements OnInit{
       }
     )
   }
+
+
+  etPublicContent(): Observable<any> {
+    return this.http.get(API_URL + 'all', { responseType: 'text' });
+  }
+
+  getUserBoard(): Observable<any> {
+    return this.http.get(API_URL + 'user', { responseType: 'text' });
+  }
+
+  getModeratorBoard(): Observable<any> {
+    return this.http.get(API_URL + 'mod', { responseType: 'text' });
+  }
+
+  getAdminBoard(): Observable<any> {
+    return this.http.get(API_URL + 'admin', { responseType: 'text' });
+  }
+   
 }

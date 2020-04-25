@@ -35,7 +35,8 @@ import { OwnTourComponent } from './components/own-tour/own-tour.component';
 import { OwnStepComponent } from './components/own-tour/own-step/own-step.component';
 import { SearchTourComponent } from './components/search-tour/search-tour.component';
 import {ModalWindowComponent} from './components/shared/modal-window/modal-window.component';
-import { ToursListComponent } from './components/tours-list/tours-list.component';
+import {ToursListComponent} from './components/tours-list/tours-list.component';
+import { authInterceptorProviders } from './helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { ToursListComponent } from './components/tours-list/tours-list.component
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider
+    fakeBackendProvider,
+    authInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })
