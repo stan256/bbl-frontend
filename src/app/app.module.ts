@@ -19,13 +19,11 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import { DummyRowsComponent } from './components/dummy-rows/dummy-rows.component';
 import {TagSelectComponent} from './components/tagselect/tag-select.component';
 import {CreateTourComponent} from './components/create-tour/create-tour.component';
-import { AgmCoreModule } from '@agm/core';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AutoCompleteModule, CarouselModule, SliderModule, SpinnerModule, TabViewModule, TooltipModule} from 'primeng/primeng';
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
-import {AgmDirectionModule} from 'agm-direction';
 import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive';
 import { ImageDragUploadComponent } from './components/shared/file-drag-upload/image-drag-upload.component';
 import { OwnToursList } from './components/own-tours-list/own-tours-list.component';
@@ -66,12 +64,7 @@ import { ToursListComponent } from './components/tours-list/tours-list.component
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU',
-      libraries: ['places']
-    }),
     GoogleMapsModule,
-    AgmDirectionModule,
     CalendarModule,
     FormsModule,
     BrowserAnimationsModule,
