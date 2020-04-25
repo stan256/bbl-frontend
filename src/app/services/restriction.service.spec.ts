@@ -6,7 +6,7 @@ describe('RestrictionService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: RestrictionService = TestBed.get(RestrictionService);
+    const service: RestrictionService = TestBed.inject(RestrictionService);
     expect(service).toBeTruthy();
   });
 });

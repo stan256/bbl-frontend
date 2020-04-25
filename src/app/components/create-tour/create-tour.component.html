@@ -41,26 +41,34 @@
       </ul>
 
       <div data-content="map">
-<!--              <agm-map [latitude]="lastLat"-->
-<!--                       [longitude]="lastLng"-->
-<!--                       [clickableIcons]="true"-->
-<!--                       [zoom]="16">-->
+        <google-map
+          [center]="{lat: lastLat, lng: lastLng}"
+          [zoom]="16">
 
-<!--                <ng-container *ngFor="let step of steps; let i = index;">-->
-<!--                  <agm-marker-->
-<!--                    [latitude]="step.locationLat"-->
-<!--                    [longitude]="step.locationLng"-->
-<!--                    [markerDraggable]="true"-->
-<!--                    [iconUrl]="iconUrl(step)"-->
-<!--                    (dragEnd)="markerDragEnd($event, step)"></agm-marker>-->
+          <ng-container *ngFor="let step of steps; let i = index;">
+            <map-marker
+              (dragend)="markerDragEnd($event, step)"
+              [options]="markerOptions(step)">
+            </map-marker>
 
-<!--                  &lt;!&ndash; taking the next point as destination &ndash;&gt;-->
-<!--                  <agm-direction *ngIf="possibleToBuildRoute(i)"-->
-<!--                                 [travelMode]="getTravelMode(i)"-->
-<!--                                 [origin]="{ lat: step.locationLat, lng: step.locationLng }"-->
-<!--                                 [destination]="{ lat: steps[i + 1].locationLat, lng: steps[i + 1].locationLng }"></agm-direction>-->
-<!--                </ng-container>-->
-<!--                </agm-map>-->
+            <map-polyline
+              *ngIf="possibleToBuildRoute(i)"
+              [options]="polylineOptions(i)"></map-polyline>
+          </ng-container>
+        </google-map>
+
+
+<!--        <agm-map [clickableIcons]="true">-->
+<!--          <ng-container *ngFor="let step of steps; let i = index;">-->
+<!--            <agm-marker [iconUrl]="iconUrl(step)"></agm-marker>-->
+
+<!--            &lt;!&ndash; taking the next point as destination &ndash;&gt;-->
+<!--            <agm-direction *ngIf="possibleToBuildRoute(i)"-->
+<!--                           [travelMode]="getTravelMode(i)"-->
+<!--                           [origin]="{ lat: step.locationLat, lng: step.locationLng }"-->
+<!--                           [destination]="{ lat: steps[i + 1].locationLat, lng: steps[i + 1].locationLng }"></agm-direction>-->
+<!--          </ng-container>-->
+<!--        </agm-map>-->
       </div>
     </div>
   </div>
@@ -70,20 +78,20 @@
       <div class="pipe-column">
         <label [for]="'tourTags'">Set tags which fits to theme of the route</label>
         <p-autoComplete
-                        [inputId]="'tourTags'"
-                        [suggestions]="tagsResults"
-                        formControlName="tourTags"
-                        [multiple]="true"
-                        (completeMethod)="searchTags($event)"></p-autoComplete>
+          [inputId]="'tourTags'"
+          [suggestions]="tagsResults"
+          formControlName="tourTags"
+          [multiple]="true"
+          (completeMethod)="searchTags($event)"></p-autoComplete>
       </div>
       <div class="pipe-column">
         <label [for]="'tourRestrictions'">Restrictions for the tour:</label>
         <p-autoComplete
-                        [suggestions]="restrictionsResults"
-                        [inputId]="'tourRestrictions'"
-                        formControlName="tourRestrictions"
-                        [multiple]="true"
-                        (completeMethod)="searchRestrictions($event)"></p-autoComplete>
+          [suggestions]="restrictionsResults"
+          [inputId]="'tourRestrictions'"
+          formControlName="tourRestrictions"
+          [multiple]="true"
+          (completeMethod)="searchRestrictions($event)"></p-autoComplete>
       </div>
     </div>
   </div>
@@ -91,7 +99,8 @@
   <p data-content="create-tour">
     <button class="btn-L confirmation"
             [disabled]="this.form.invalid"
-            (click)="createTour()">Create tour</button>
+            (click)="createTour()">Create tour
+    </button>
   </p>
 </form>
 

@@ -21,7 +21,6 @@
   "include": [
     "src/**/*.ts",
     "node_modules/@types",
-    "@types/googlemaps",
     "typings/*.d.ts"
   ],
   "angularCompilerOptions": {

@@ -21,9 +21,9 @@ export class OwnTourComponent implements OnInit {
   userLng: number = 11.582579;
   userLat: number = 50.924845;
 
-  private tour$: Observable<TourForm>;
-  private form: FormGroup;
-  private steps: Array<StepForm> = [];
+  tour$: Observable<TourForm>;
+  form: FormGroup;
+  steps: Array<StepForm> = [];
 
   tagsResults: string[];
   restrictionsResults: string[];
@@ -72,7 +72,7 @@ export class OwnTourComponent implements OnInit {
     return this.steps.length != 0 ? this.steps[this.steps.length - 1].locationLat : this.userLng;
   }
 
-  private addStep() {
+  addStep() {
     if (!this.steps.length) {
       // setting the geo of user as first step
       this.steps.push(<StepForm> {

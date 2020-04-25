@@ -1,5 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {ImageSelection} from '../../../model/files';
+import {Component, Input, OnInit} from '@angular/core';
 import {ModalService} from '../modal-window/modal.service';
 
 @Component({

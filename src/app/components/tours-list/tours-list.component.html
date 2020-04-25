@@ -1,6 +1,6 @@
-<ng-container *ngIf="tours$">
+<ng-container *ngIf="tours$ | async as tours">
   <ul data-content="tour" class="search-result">
-    <li *ngFor="let tour of tours$">
+    <li *ngFor="let tour of tours">
       <p>{{tour.tourName}}</p>
       <p>{{tour.peopleNumber}} people</p>
       <div data-content="tag" *ngIf="tour.tourTags.length > 0">
@@ -9,6 +9,7 @@
       <div data-content="restriction" *ngIf="tour.tourRestrictions.length > 0">
         Restrictions: <ul><li *ngFor="let restr of tour.tourRestrictions">{{ restr }}</li></ul>
       </div>
+      <p *ngIf="getUser(tour.creatorId) | async as user">Creator: {{user.firstName}}</p>
     </li>
   </ul>
 </ng-container>
