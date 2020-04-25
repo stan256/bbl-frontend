@@ -21,7 +21,6 @@ import {TagSelectComponent} from './components/tagselect/tag-select.component';
 import {CreateTourComponent} from './components/create-tour/create-tour.component';
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AutoCompleteModule, CarouselModule, SliderModule, SpinnerModule, TabViewModule, TooltipModule} from 'primeng/primeng';
 import {TourStepComponent} from './components/create-tour/tour-step/tour-step.component';
 import { OnlyNumberDirective } from './shared/only-number.directive';
 import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive';
@@ -34,6 +33,12 @@ import { SearchTourComponent } from './components/search-tour/search-tour.compon
 import {ModalWindowComponent} from './components/shared/modal-window/modal-window.component';
 import {ToursListComponent} from './components/tours-list/tours-list.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {CarouselModule} from 'primeng/carousel';
+import {SliderModule} from 'primeng/slider';
+import {SpinnerModule} from 'primeng/spinner';
+import {TabViewModule} from 'primeng/tabview';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
