@@ -22,10 +22,10 @@ export class UserService implements OnInit{
   }
 
   registration(user: User) {
-    return this.http.post(`${environment.apiUrl}/users/registration`, user);
+    return this.http.post(`${environment.apiUrl}/auth/registration`, user);
   }
 
-  delete(id: number) {
+   delete(id: number) {
     return this.http.delete(`${environment.apiUrl}/users/${id}`);
   }
 
@@ -63,5 +63,5 @@ export class UserService implements OnInit{
   getAdminBoard(): Observable<any> {
     return this.http.get(API_URL + 'admin', { responseType: 'text' });
   }
-   
+
 }

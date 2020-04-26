@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    console.log(this.returnUrl)
   }
 
   get f() { return this.loginForm.controls; }

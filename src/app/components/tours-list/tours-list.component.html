@@ -9,7 +9,7 @@
       <div data-content="restriction" *ngIf="tour.tourRestrictions.length > 0">
         Restrictions: <ul><li *ngFor="let restr of tour.tourRestrictions">{{ restr }}</li></ul>
       </div>
-      <p *ngIf="getUser(tour.creatorId) | async as user">Creator: {{user.firstName}}</p>
+      <p *ngIf="getUser(tour.creatorId) | async as user">Creator: {{user.email}}</p>
     </li>
   </ul>
 </ng-container>
