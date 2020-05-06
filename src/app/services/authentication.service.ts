@@ -25,11 +25,12 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username, password): Observable<any> {
+  login(username: string, password: string): Observable<any> {
     console.log({
       email: username,
       password: password
-    })
+    });
+
     return this.http.post<any>(`${environment.apiUrl}/login`,
       {
         email: username,
@@ -42,15 +43,19 @@ export class AuthenticationService {
       }));
   }
 
-  register(user): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/signup`, {
-      email: user.email,
-      password: user.password
-    }, httpOptions);
+  registration(user: User): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/auth/registration`, user);
   }
+
+
 
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+
+  getCurrentUserId(): number {
+    // todo read from cookie
+    return 5;
   }
 }

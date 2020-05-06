@@ -3,34 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import {User} from '../model/User';
 import {environment} from '../../environments/environment';
 import {Observable, of} from 'rxjs';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService implements OnInit{
   private currentUser$: Observable<User>;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private authService: AuthenticationService) {}
 
 
   ngOnInit() {
-    this.currentUser$ = this.getUserById(this.getCurrentUserId());
+    this.currentUser$ = this.getUserById(this.authService.getCurrentUserId());
   }
 
   getAll() {
     return this.http.get<User[]>(`${environment.apiUrl}/users`);
-  }
-
-  registration(user: User) {
-    console.log(`${environment.apiUrl}/auth/registration`)
-    return this.http.post(`${environment.apiUrl}/auth/registration`, user);
-  }
-
-   delete(id: number) {
-    return this.http.delete(`${environment.apiUrl}/users/${id}`);
-  }
-
-  getCurrentUserId(): number {
-    // todo read from cookie
-    return 5;
   }
 
   getUserById(userId: number): Observable<User> {

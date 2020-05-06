@@ -12,6 +12,7 @@ import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
 import {TourStepComponent} from './tour-step/tour-step.component';
 import {UserService} from '../../services/user.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 
 @Component({
@@ -42,8 +43,7 @@ export class CreateTourComponent implements OnInit {
     private restrictionService: RestrictionService,
     private formBuilder: FormBuilder,
     private changeDetector: ChangeDetectorRef,
-    private userService: UserService
-  ) {
+    private authService: AuthenticationService) {
   }
 
   searchRestrictions(event) {
@@ -153,7 +153,7 @@ export class CreateTourComponent implements OnInit {
       MarkFormDirtyUtils.markGroupDirty(this.form);
     } else {
       let tourForm = this.form.value as TourForm;
-      tourForm.creatorId = this.userService.getCurrentUserId();
+      tourForm.creatorId = this.authService.getCurrentUserId();
       this.tourService.createTour(tourForm);
     }
   }
