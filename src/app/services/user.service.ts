@@ -4,20 +4,18 @@ import {User} from '../model/User';
 import {environment} from '../../environments/environment';
 import {Observable, of} from 'rxjs';
 import {AuthenticationService} from './authentication.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({ providedIn: 'root' })
 export class UserService implements OnInit{
-  private currentUser$: Observable<User>;
 
   constructor(private http: HttpClient,
               private authService: AuthenticationService) {}
 
 
-  ngOnInit() {
-    this.currentUser$ = this.getUserById(this.authService.getCurrentUserId());
-  }
+  ngOnInit() {}
 
-  getAll() {
+  getAllUsers() {
     return this.http.get<User[]>(`${environment.apiUrl}/users`);
   }
 
@@ -32,5 +30,21 @@ export class UserService implements OnInit{
         token: "token"
       }
     )
+  }
+
+  getCurrentUserId(): number {
+    const accessToken = localStorage.getItem('access_token');
+    const helper = new JwtHelperService();
+
+    const decodedToken = helper.decodeToken(accessToken);
+    const expirationDate = helper.getTokenExpirationDate(accessToken);
+    const isExpired = helper.isTokenExpired(accessToken);
+
+    return 5;
+
+  }
+
+  getCurrentUser(): Observable<User> {
+    return this.getUserById(this.getCurrentUserId());
   }
 }

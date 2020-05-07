@@ -39,6 +39,11 @@ import {SliderModule} from 'primeng/slider';
 import {SpinnerModule} from 'primeng/spinner';
 import {TabViewModule} from 'primeng/tabview';
 import {TooltipModule} from 'primeng/tooltip';
+import {JwtModule} from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -79,7 +84,12 @@ import {TooltipModule} from 'primeng/tooltip';
     SliderModule,
     SpinnerModule,
     AutoCompleteModule,
-    TabViewModule
+    TabViewModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    })
   ],
   exports: [
   ],

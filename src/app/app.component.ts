@@ -4,6 +4,7 @@ import './app.component.scss';
 import {User} from './model/User';
 import {AuthenticationService} from './services/authentication.service';
 import {AlertService} from './alert/alert.service';
+import {UserService} from './services/user.service';
 
 @Component({
     selector: 'app',
@@ -16,9 +17,10 @@ export class AppComponent {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
+    private userService: UserService,
     private alertService: AlertService
   ) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.userService.getCurrentUser().subscribe(x => this.currentUser = x);
   }
 
   logout() {
