@@ -5,6 +5,7 @@ import {User} from '../model/User';
 import {environment} from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {first, tap} from 'rxjs/operators';
+import {tokenGetter} from '../app.module';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -34,11 +35,11 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('currentUser');
   }
 
   isAuthenticated(): boolean {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = tokenGetter();
     return !this.jwtHelper.isTokenExpired(accessToken);
   }
 }

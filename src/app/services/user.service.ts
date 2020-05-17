@@ -26,7 +26,8 @@ export class UserService implements OnInit{
         email: "salimova.nellia@gmail",
         firstName: "Nellia",
         lastName: "Salimova",
-        token: "token"
+        accessToken: "token",
+        refreshToken: "token"
       }
     )
   }

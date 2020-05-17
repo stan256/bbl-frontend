@@ -39,9 +39,11 @@ import {SpinnerModule} from 'primeng/spinner';
 import {TabViewModule} from 'primeng/tabview';
 import {TooltipModule} from 'primeng/tooltip';
 import {JwtModule} from '@auth0/angular-jwt';
+import {User} from './model/User';
 
 export function tokenGetter() {
-  return localStorage.getItem("access_token");
+  let user: User = JSON.parse(localStorage.getItem("currentUser"));
+  return user.accessToken;
 }
 
 @NgModule({
