@@ -12,16 +12,13 @@ import {UserService} from './services/user.service';
     templateUrl: 'app.component.html'
   })
 export class AppComponent {
-  currentUser: User;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private alertService: AlertService
-  ) {
-    this.userService.getCurrentUser().subscribe(x => this.currentUser = x);
-  }
+  ) {}
 
   logout() {
     this.authenticationService.logout();
@@ -29,10 +26,10 @@ export class AppComponent {
   }
 
   successAlert() {
-    this.alertService.success('Success authentication')
+    this.alertService.success('Success authentication');
   }
 
   errorAlert() {
-    this.alertService.error('Error authentication')
+    this.alertService.error('Error authentication');
   }
 }
