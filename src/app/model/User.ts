@@ -5,4 +5,5 @@ export class User {
   lastName: string;
   accessToken: string;
   refreshToken: string;
+  // todo to check what suits better here: class or interface
 }
