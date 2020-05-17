@@ -8,7 +8,6 @@ import {Observable} from 'rxjs';
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
   currentUser: User;
-  users: User[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -18,12 +17,5 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAllUsers();
-  }
-
-  private loadAllUsers() {
-    this.userService.getAllUsers()
-      .pipe(first())
-      .subscribe(users => this.users = users);
   }
 }

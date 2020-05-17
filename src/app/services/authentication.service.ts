@@ -5,7 +5,6 @@ import {User} from '../model/User';
 import {environment} from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {first, tap} from 'rxjs/operators';
-import {tokenGetter} from '../app.module';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -42,4 +41,9 @@ export class AuthenticationService {
     const accessToken = tokenGetter();
     return !this.jwtHelper.isTokenExpired(accessToken);
   }
+}
+
+export function tokenGetter() {
+  let user: User = JSON.parse(localStorage.getItem("currentUser"));
+  return user.accessToken;
 }

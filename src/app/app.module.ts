@@ -6,7 +6,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AlertComponent} from './alert/alert.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {ErrorInterceptor} from './interceptor/ErrorInterceptor';
 import {JwtInterceptor} from './interceptor/JwtInterceptor';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RegistrationComponent} from './components/registration/registration.component';
@@ -31,7 +30,6 @@ import { OwnStepComponent } from './components/own-tour/own-step/own-step.compon
 import { SearchTourComponent } from './components/search-tour/search-tour.component';
 import {ModalWindowComponent} from './components/shared/modal-window/modal-window.component';
 import {ToursListComponent} from './components/tours-list/tours-list.component';
-import { authInterceptorProviders } from './helpers/auth.interceptor';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {CarouselModule} from 'primeng/carousel';
 import {SliderModule} from 'primeng/slider';
@@ -39,12 +37,7 @@ import {SpinnerModule} from 'primeng/spinner';
 import {TabViewModule} from 'primeng/tabview';
 import {TooltipModule} from 'primeng/tooltip';
 import {JwtModule} from '@auth0/angular-jwt';
-import {User} from './model/User';
-
-export function tokenGetter() {
-  let user: User = JSON.parse(localStorage.getItem("currentUser"));
-  return user.accessToken;
-}
+import {tokenGetter} from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -95,9 +88,7 @@ export function tokenGetter() {
   exports: [
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    authInterceptorProviders
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
