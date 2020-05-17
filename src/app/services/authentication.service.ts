@@ -44,6 +44,9 @@ export class AuthenticationService {
 }
 
 export function tokenGetter() {
-  let user: User = JSON.parse(localStorage.getItem("currentUser"));
-  return user.accessToken;
+  let currentUser = localStorage.getItem("currentUser");
+  if (currentUser) {
+    let user: User = JSON.parse(currentUser);
+    return user.accessToken;
+  }
 }
