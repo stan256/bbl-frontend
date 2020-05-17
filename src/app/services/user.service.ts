@@ -32,18 +32,10 @@ export class UserService implements OnInit{
   }
 
   getCurrentUserId(): number {
-    const accessToken = localStorage.getItem('access_token');
-    const helper = new JwtHelperService();
-
-    const decodedToken = helper.decodeToken(accessToken);
-    const expirationDate = helper.getTokenExpirationDate(accessToken);
-    const isExpired = helper.isTokenExpired(accessToken);
-
-    return 5;
-
+    return this.getCurrentUser()?.id;
   }
 
-  getCurrentUser(): User {
+  getCurrentUser(): User | null {
     let currentUser = localStorage.getItem('currentUser');
 
     if (currentUser)

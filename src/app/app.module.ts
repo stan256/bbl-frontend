@@ -6,7 +6,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AlertComponent} from './alert/alert.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {fakeBackendProvider} from './interceptor/FakeBackendInterceptor';
 import {ErrorInterceptor} from './interceptor/ErrorInterceptor';
 import {JwtInterceptor} from './interceptor/JwtInterceptor';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -96,7 +95,6 @@ export function tokenGetter() {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider,
     authInterceptorProviders
   ],
   bootstrap: [AppComponent]

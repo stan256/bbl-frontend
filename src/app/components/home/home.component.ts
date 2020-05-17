@@ -7,14 +7,14 @@ import {Observable} from 'rxjs';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
-  currentUser$: Observable<User>;
+  currentUser: User;
   users: User[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService
   ) {
-    this.currentUser$ = this.userService.getCurrentUser();
+    this.currentUser = this.userService.getCurrentUser();
   }
 
   ngOnInit() {
