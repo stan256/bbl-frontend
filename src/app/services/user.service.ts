@@ -24,7 +24,6 @@ export class UserService implements OnInit{
       {
         id: 1,
         email: "salimova.nellia@gmail",
-        password: "12345asd",
         firstName: "Nellia",
         lastName: "Salimova",
         token: "token"
@@ -44,7 +43,12 @@ export class UserService implements OnInit{
 
   }
 
-  getCurrentUser(): Observable<User> {
-    return this.getUserById(this.getCurrentUserId());
+  getCurrentUser(): User {
+    let currentUser = localStorage.getItem('currentUser');
+
+    if (currentUser)
+      return JSON.parse(currentUser);
+    else
+      return null;
   }
 }

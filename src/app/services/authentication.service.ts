@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../model/User';
 import {environment} from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {first, tap} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,17 +19,14 @@ export class AuthenticationService {
               public jwtHelper: JwtHelperService,
   ) {}
 
-  login(username: string, password: string): Observable<any> {
-    console.log({
-      email: username,
-      password: password
-    });
-
-    return this.http.post<any>(`${environment.apiUrl}/login`,
+  login(username: string, password: string): Observable<User> {
+    return this.http.post<User>(`${environment.apiUrl}/login`,
       {
         email: username,
         password: password
-      }, httpOptions)
+      }, httpOptions).pipe(
+        tap(user => localStorage.setItem('currentUser', JSON.stringify(user)))
+    );
   }
 
   registration(user: User): Observable<any> {
