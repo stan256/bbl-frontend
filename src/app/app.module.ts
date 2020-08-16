@@ -37,7 +37,7 @@ import {SpinnerModule} from 'primeng/spinner';
 import {TabViewModule} from 'primeng/tabview';
 import {TooltipModule} from 'primeng/tooltip';
 import {JwtModule} from '@auth0/angular-jwt';
-import {tokenGetter} from './services/authentication.service';
+import {getAccessToken} from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -81,7 +81,7 @@ import {tokenGetter} from './services/authentication.service';
     TabViewModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter
+        tokenGetter: getAccessToken
       }
     })
   ],

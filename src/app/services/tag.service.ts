@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import {RestService} from './rest.service';
 import {Tag, wrapTag} from '../shared/common.types';
-import {delay} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 @Injectable({
@@ -14,14 +12,11 @@ export class TagService {
     wrapTag('chess')
   ];
 
-  constructor(
-    private restService: RestService
-  ) {}
+  constructor() {
+  }
 
   getTags(pattern: string): Observable<Array<Tag>> {
     // todo Real regex matching
-    // return this.restService.get<ReadonlyArray<Tag>>("localhost:9004/bbl-agent", {});
-
     return of(this.tags);
   }
 

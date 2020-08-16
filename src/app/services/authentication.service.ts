@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {v4 as uuid} from 'uuid';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject, from, Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {User} from '../model/User';
 import {environment} from '../../environments/environment';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {first, flatMap, mergeMap, tap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 import * as Fingerprint2 from 'fingerprintjs2';
+import {JwtRefreshResponse} from "../model/response";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,41 +18,40 @@ const httpOptions = {
 export class AuthenticationService {
 
   constructor(private http: HttpClient,
-              public jwtHelper: JwtHelperService,
-  ) {
+              public jwtHelper: JwtHelperService) {
+
   }
 
   login(username: string, password: string): Observable<User> {
-    let payload = {
-      email: username,
-      password: password,
-      deviceInfo: {
-        deviceId: null,
-        deviceType: "WEB"
-      }
-    }
 
-    let fingerprint2Promise = Fingerprint2.getPromise({}, (fingerprint, components) => {
-      payload.deviceInfo.deviceId = fingerprint;
-    });
-
-    return from(fingerprint2Promise).pipe(
-      flatMap(c => {
-        console.log("components", c)
-        return this.http.post<User>(`${environment.apiUrl}/auth/login`, payload, httpOptions).pipe(
-          tap(user => {
-            localStorage.setItem('deviceId', payload.deviceInfo.deviceId);
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('accessToken', user.accessToken)
-            localStorage.setItem('refreshToken', user.refreshToken)
-          })
-        );
-      })
-    )
+    return from(Fingerprint2.getPromise({}))
+      .pipe(
+        switchMap((value: Array<{ value: string }>) => {
+            const values = value.map(component => component.value);
+            const hash = Fingerprint2.x64hash128(values.join(''), 31)
+            let payload = {
+              email: username,
+              password: password,
+              deviceInfo: {
+                deviceId: hash,
+                deviceType: 'WEB'
+              }
+            };
+            return this.http.post<User>(`${environment.apiUrl}/auth/login`, payload, httpOptions).pipe(
+              tap(user => {
+                localStorage.setItem('deviceId', payload.deviceInfo.deviceId);
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('accessToken', user.accessToken)
+                localStorage.setItem('refreshToken', user.refreshToken)
+              })
+            )
+          }
+        )
+      )
   }
 
-  registration(user: User): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/registration`, user);
+  registration(user: User): Observable<User> {
+    return this.http.post<User>(`${environment.apiUrl}/auth/registration`, user);
   }
 
   logout() {
@@ -62,7 +61,7 @@ export class AuthenticationService {
   }
 
   isAuthenticated(): boolean {
-    const accessToken = tokenGetter();
+    const accessToken = getAccessToken();
     return !this.jwtHelper.isTokenExpired(accessToken);
   }
 
@@ -70,21 +69,34 @@ export class AuthenticationService {
     localStorage.setItem("refreshToken", token);
   }
 
+  public getRefreshToken(): string {
+    return localStorage.getItem("refreshToken");
+  }
+
   public setAccessToken(token: string) {
     localStorage.setItem("accessToken", token);
   }
 
-  public isRefreshTokenExpired(): boolean {
-    let refreshToken = localStorage.getItem("refreshToken");
-    return this.jwtHelper.isTokenExpired(refreshToken);
+  public isAccessTokenExpired(): boolean {
+    let accessToken = getAccessToken();
+    return this.jwtHelper.isTokenExpired(accessToken);
   }
 
-  public isAccessTokenExpired(): boolean {
-    let accessToken = localStorage.getItem("accessToken");
-    return this.jwtHelper.isTokenExpired(accessToken);
+  refreshAccessToken(): Observable<JwtRefreshResponse> {
+    return this.http.post<User>(`${environment.apiUrl}/auth/refresh`,
+      {
+        refreshToken: this.getRefreshToken()
+      },
+      httpOptions).pipe(
+      tap(jwtRefreshResponse => {
+        this.setAccessToken(jwtRefreshResponse.accessToken);
+        this.setRefreshToken(jwtRefreshResponse.refreshToken);
+      })
+    )
   }
 }
 
-export function tokenGetter() {
+// Used in JwtModule.forRoot()
+export function getAccessToken() {
   return localStorage.getItem("accessToken");
 }

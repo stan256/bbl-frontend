@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {RestService} from './rest.service';
+import {Injectable} from '@angular/core';
+import {of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -10,7 +9,8 @@ export class RestrictionService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   getResults(query: string): Promise<Array<string>> {
     // return this.http
