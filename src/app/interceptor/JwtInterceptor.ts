@@ -3,9 +3,12 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable} from 'rxjs';
 import {AuthenticationService, getAccessToken} from '../services/authentication.service';
 import {UserService} from '../services/user.service';
+import {tryCatch} from "rxjs/internal-compatibility";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
+  isRefreshing: boolean = false;
+
   constructor(private userService: UserService,
               private authService: AuthenticationService) {
   }
@@ -14,16 +17,16 @@ export class JwtInterceptor implements HttpInterceptor {
     let accessToken = getAccessToken();
 
     if (accessToken) {
-      let isRefreshing = false;
 
-      if (this.authService.isAccessTokenExpired()) {
+      if (this.authService.isAccessTokenExpired() && !this.isRefreshing) {
         const refreshToken = this.authService.getRefreshToken();
 
         if (refreshToken) {
-          isRefreshing = true;
-
+          this.isRefreshing = true;
           this.authService.refreshAccessToken()
-            .subscribe(r => isRefreshing = false);
+            .subscribe(
+              r => this.isRefreshing = false,
+                error => this.isRefreshing = false);
         } else {
           this.authService.logout();
           return next.handle(request);
