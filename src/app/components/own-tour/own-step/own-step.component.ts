@@ -3,6 +3,7 @@ import {StepForm} from '../../../model/step';
 import {Calendar} from 'primeng';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {debounceTime} from 'rxjs/operators';
+import {MapsAPILoader} from "@agm/core";
 
 @Component({
   selector: 'app-own-step',
@@ -19,10 +20,11 @@ export class OwnStepComponent implements OnInit {
 
   @Output() stepRemoved = new EventEmitter<void>();
 
-  @ViewChild('searchLocation', {static: false}) private locationRef: ElementRef;
+  @ViewChild('searchLocation', {static: true}) private locationRef: ElementRef;
 
   constructor(
     private fb: FormBuilder,
+    private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
   ) {
   }
@@ -30,18 +32,20 @@ export class OwnStepComponent implements OnInit {
   ngOnInit() {
     this.addFormControls();
 
-    let autocomplete = new google.maps.places.Autocomplete(this.locationRef.nativeElement);
-    autocomplete.addListener('place_changed', () => {
-      this.ngZone.run(() => {
-        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.locationRef.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-        if (place.geometry === undefined || place.geometry === null) {
-          return;
-        }
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
 
-        this.stepForm.get('location').setValue(place.formatted_address);
-        this.stepForm.get('locationLat').setValue(place.geometry.location.lat());
-        this.stepForm.get('locationLng').setValue(place.geometry.location.lng());
+          this.stepForm.get('location').setValue(place.formatted_address);
+          this.stepForm.get('locationLat').setValue(place.geometry.location.lat());
+          this.stepForm.get('locationLng').setValue(place.geometry.location.lng());
+        });
       });
     });
   }

@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, QueryList, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, QueryList, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {StepForm} from '../../../model/step';
 import {dateValidator} from '../../../shared/validators/date-validator';
+import {MapsAPILoader} from "@agm/core";
 
 @Component({
   selector: 'app-tour-step',
@@ -21,34 +21,32 @@ export class TourStepComponent implements OnInit {
 
   @Output() stepRemoved = new EventEmitter<void>();
 
-  @ViewChild("searchLocation", {static: false}) private locationRef: ElementRef;
+  @ViewChild("searchLocation", {static: true}) private locationRef: ElementRef;
 
   constructor(
     private fb: FormBuilder,
+    private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.addFormControls();
 
-    let autocomplete = new google.maps.places.Autocomplete(this.locationRef.nativeElement);
-    autocomplete.addListener("place_changed", () => {
-      this.ngZone.run(() => {
-        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.locationRef.nativeElement);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-        if (place.geometry === undefined || place.geometry === null)
-          return;
+          if (place.geometry === undefined || place.geometry === null)
+            return;
 
-        // this.step.location = place.formatted_address;
-        // this.step.locationLat = place.geometry.location.lat();
-        // this.step.locationLng = place.geometry.location.lng();
-
-        this.stepForm.get('location').setValue(place.formatted_address);
-        this.stepForm.get('locationLat').setValue(place.geometry.location.lat());
-        this.stepForm.get('locationLng').setValue(place.geometry.location.lng());
-      });
-    });
+          this.stepForm.get('location').setValue(place.formatted_address);
+          this.stepForm.get('locationLat').setValue(place.geometry.location.lat());
+          this.stepForm.get('locationLng').setValue(place.geometry.location.lng());
+        });
+      })
+    })
   }
 
   private addFormControls() {

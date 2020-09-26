@@ -38,6 +38,8 @@ import {TabViewModule} from 'primeng/tabview';
 import {TooltipModule} from 'primeng/tooltip';
 import {JwtModule} from '@auth0/angular-jwt';
 import {getAccessToken} from './services/authentication.service';
+import {AgmCoreModule} from "@agm/core";
+import {AgmDirectionModule} from "agm-direction";
 
 @NgModule({
   declarations: [
@@ -83,7 +85,12 @@ import {getAccessToken} from './services/authentication.service';
       config: {
         tokenGetter: getAccessToken
       }
-    })
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDS6R0fyfgoBku5iI9IeA3sLuWrNRDD9XU',
+      libraries: ['places']
+    }),
+    AgmDirectionModule
   ],
   exports: [
   ],

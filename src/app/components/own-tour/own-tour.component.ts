@@ -149,8 +149,8 @@ export class OwnTourComponent implements OnInit {
       this.steps[stepIndex + 1].locationLng !== this.steps[stepIndex].locationLng;
   }
 
-  getTravelMode(i: number) {
-    return this.steps[i].travelModeToNext.toString();
+  getTravelMode(i: number): google.maps.TravelMode {
+    return this.steps[i].travelModeToNext.toString() as google.maps.TravelMode;
   }
 
   searchRestrictions(event) {

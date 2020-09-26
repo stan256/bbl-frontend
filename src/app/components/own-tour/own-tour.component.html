@@ -36,8 +36,26 @@
         </ul>
 
         <div data-content="map">
-          // todo new map here
+          <agm-map [latitude]="lastLat"
+                   [longitude]="lastLng"
+                   [clickableIcons]="true"
+                   [zoom]="16">
 
+            <ng-container *ngFor="let step of steps; let i = index;">
+              <agm-marker
+                [latitude]="step.locationLat"
+                [longitude]="step.locationLng"
+                [markerDraggable]="true"
+                [iconUrl]="iconUrl(step)"
+                (dragEnd)="markerDragEnd($event, step)"></agm-marker>
+
+              <!-- taking the next point as destination -->
+              <agm-direction *ngIf="possibleToBuildRoute(i)"
+                             [travelMode]="getTravelMode(i)"
+                             [origin]="{ lat: step.locationLat, lng: step.locationLng }"
+                             [destination]="{ lat: steps[i + 1].locationLat, lng: steps[i + 1].locationLng }"></agm-direction>
+            </ng-container>
+          </agm-map>
         </div>
       </div>
     </div>

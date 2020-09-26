@@ -41,34 +41,26 @@
       </ul>
 
       <div data-content="map">
-        <google-map
-          [center]="{lat: lastLat, lng: lastLng}"
-          [zoom]="16">
+        <agm-map [latitude]="lastLat"
+                 [longitude]="lastLng"
+                 [clickableIcons]="true"
+                 [zoom]="16">
 
           <ng-container *ngFor="let step of steps; let i = index;">
-            <map-marker
-              (dragend)="markerDragEnd($event, step)"
-              [options]="markerOptions(step)">
-            </map-marker>
+            <agm-marker
+              [latitude]="step.locationLat"
+              [longitude]="step.locationLng"
+              [markerDraggable]="true"
+              [iconUrl]="iconUrl(step)"
+              (dragEnd)="markerDragEnd($event, step)"></agm-marker>
 
-            <map-polyline
-              *ngIf="possibleToBuildRoute(i)"
-              [options]="polylineOptions(i)"></map-polyline>
+            <!-- taking the next point as destination -->
+            <agm-direction *ngIf="possibleToBuildRoute(i)"
+                           [travelMode]="getTravelMode(i)"
+                           [origin]="{ lat: step.locationLat, lng: step.locationLng }"
+                           [destination]="{ lat: steps[i + 1].locationLat, lng: steps[i + 1].locationLng }"></agm-direction>
           </ng-container>
-        </google-map>
-
-
-<!--        <agm-map [clickableIcons]="true">-->
-<!--          <ng-container *ngFor="let step of steps; let i = index;">-->
-<!--            <agm-marker [iconUrl]="iconUrl(step)"></agm-marker>-->
-
-<!--            &lt;!&ndash; taking the next point as destination &ndash;&gt;-->
-<!--            <agm-direction *ngIf="possibleToBuildRoute(i)"-->
-<!--                           [travelMode]="getTravelMode(i)"-->
-<!--                           [origin]="{ lat: step.locationLat, lng: step.locationLng }"-->
-<!--                           [destination]="{ lat: steps[i + 1].locationLat, lng: steps[i + 1].locationLng }"></agm-direction>-->
-<!--          </ng-container>-->
-<!--        </agm-map>-->
+        </agm-map>
       </div>
     </div>
   </div>

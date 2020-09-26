@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {StepForm} from '../../model/step';
 import {Subject} from 'rxjs';
@@ -12,7 +12,6 @@ import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
 import {TourStepComponent} from './tour-step/tour-step.component';
 import {UserService} from '../../services/user.service';
-import {AuthenticationService} from '../../services/authentication.service';
 
 
 @Component({
@@ -22,6 +21,8 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class CreateTourComponent implements OnInit {
   @ViewChildren(TourStepComponent) stepsRefs: QueryList<TourStepComponent>;
+  @ViewChildren(google.maps.Marker) markers: QueryList<google.maps.Marker>;
+  @ViewChild(google.maps.Map) map: google.maps.Map;
 
   userLng: number = 11.582579;
   userLat: number = 50.924845;
@@ -60,11 +61,13 @@ export class CreateTourComponent implements OnInit {
 
   ngOnInit() {
     this.locationService.getPosition().subscribe(func => {
-      func(g => {
-        this.userLng = g.lng;
-        this.userLat = g.lat;
-        this.addStep();
-      }, () => this.addStep());
+      func(
+        g => {
+          this.userLng = g.lng;
+          this.userLat = g.lat;
+          this.addStep();
+        },
+        () => this.addStep());
     });
 
     this.form = this.formBuilder.group({
@@ -87,7 +90,7 @@ export class CreateTourComponent implements OnInit {
   addStep() {
     if (!this.steps.length) {
       // setting the geo of user as first step
-      this.steps.push(<StepForm> {
+      this.steps.push(<StepForm>{
         locationLat: this.userLat,
         locationLng: this.userLng,
         travelModeToNext: 'BICYCLING'
@@ -136,12 +139,15 @@ export class CreateTourComponent implements OnInit {
   }
 
   markerDragEnd($event: any, step: StepForm) {
-    this.locationService.geoCode(new google.maps.LatLng($event.coords.lat, $event.coords.lng))
+    let latLng = new google.maps.LatLng($event.latLng.lat(), $event.latLng.lng());
+
+    step.locationLat = latLng.lat();
+    step.locationLng = latLng.lng();
+
+    this.locationService.geoCode(latLng)
       .pipe(
         tap(addresses => {
           step.location = addresses[0].formatted_address;
-          step.locationLat = addresses[0].geometry.location.lat();
-          step.locationLng = addresses[0].geometry.location.lng();
         }),
         tap(() => this.changeDetector.detectChanges())
       )
@@ -158,6 +164,7 @@ export class CreateTourComponent implements OnInit {
     }
   }
 
+  // todo to replace with own images
   iconUrl(step: StepForm) {
     if (this.steps.indexOf(step) === this.steps.length - 1) {
       return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
@@ -166,7 +173,8 @@ export class CreateTourComponent implements OnInit {
     }
   }
 
-  // check that step is not last & has initialized coordinates (but not same as origin) and showRouteToNext is true
+  // check that step is not last & has initialized coordinates (but not same as origin)
+  // and showRouteToNext is true
   possibleToBuildRoute(stepIndex: number): boolean {
     return stepIndex != this.steps.length - 1 &&
       this.steps[stepIndex].showRouteToNext &&
@@ -176,8 +184,8 @@ export class CreateTourComponent implements OnInit {
       this.steps[stepIndex + 1].locationLng !== this.steps[stepIndex].locationLng;
   }
 
-  getTravelMode(i: number) {
-    return this.steps[i].travelModeToNext.toString();
+  getTravelMode(i: number): google.maps.TravelMode {
+    return this.steps[i].travelModeToNext.toString() as google.maps.TravelMode;
   }
 
   private firstInvalidStep(): number {
@@ -190,7 +198,10 @@ export class CreateTourComponent implements OnInit {
   markerOptions(step: StepForm): google.maps.MarkerOptions {
     return {
       draggable: true,
-      position: {lat: step.locationLat, lng: step.locationLng},
+      position: {
+        lat: step.locationLat,
+        lng: step.locationLng
+      },
       icon: {
         url: this.iconUrl(step)
       }
@@ -200,11 +211,11 @@ export class CreateTourComponent implements OnInit {
   polylineOptions(stepNumber: number): google.maps.PolylineOptions {
     let step = this.steps[stepNumber];
     let nextStep = this.steps[stepNumber + 1];
-    return {
 
+    return {
       path: [
-        {lat: step.locationLat, lng: step.locationLat},
-        {lat: nextStep.locationLat, lng: nextStep.locationLat}
+        { lat: step.locationLat, lng: step.locationLat },
+        { lat: nextStep.locationLat, lng: nextStep.locationLat }
       ]
     }
   }
