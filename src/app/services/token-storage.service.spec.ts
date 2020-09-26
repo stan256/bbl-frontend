@@ -6,7 +6,7 @@ describe('TokenStorageService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: TokenStorageService = TestBed.get(TokenStorageService);
+    const service: TokenStorageService = TestBed.inject(TokenStorageService);
     expect(service).toBeTruthy();
   });
 });
