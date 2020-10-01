@@ -6,7 +6,7 @@ button {
   @include button;
 }
 
-[data-content="location-block"] {
+[data-content="location"] {
   > p {
     display: flex;
     margin-bottom: 0;

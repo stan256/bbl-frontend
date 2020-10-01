@@ -1,19 +1,25 @@
 <ng-container *ngIf="tour$ | async as tour">
   <form [formGroup]="form">
-    <div class="pipe-step" data-content="tourNameGroup">
-      <label for="tourName">Name of the tour</label>
-      <input id="tourName"
-             type="text"
-             formControlName="tourName"/>
+    <div class="pipe-step">
+      <div class="pipe-columns">
+        <div class="pipe-column" data-content="tour-name">
+          <label for="tourName">Name of the tour</label>
+          <input id="tourName"
+                 type="text"
+                 formControlName="tourName"/>
+        </div>
+      </div>
     </div>
 
     <div class="pipe-step">
       <div class="pipe-columns">
         <div class="pipe-column" data-content="people-range">
-          <h2>Number of people on the tour</h2>
-          <p-spinner formControlName="peopleNumber"
-                     [min]="1"
-                     [max]="100"></p-spinner>
+          <label>Number of people on the tour: {{ peopleNumber[0] + ' - ' + peopleNumber[1] }}</label>
+          <p-slider [(ngModel)]="peopleNumber"
+                    [min]="1"
+                    [max]="50"
+                    formControlName="peopleNumber"
+                    [range]="true"></p-slider>
         </div>
       </div>
     </div>

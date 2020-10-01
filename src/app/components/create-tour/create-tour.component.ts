@@ -5,7 +5,7 @@ import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
 import {take, tap} from 'rxjs/operators';
 import {TourService} from '../../services/tour.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RestrictionService} from '../../services/restriction.service';
 import {TagService} from '../../services/tag.service';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
@@ -24,17 +24,15 @@ export class CreateTourComponent implements OnInit {
   @ViewChildren(google.maps.Marker) markers: QueryList<google.maps.Marker>;
   @ViewChild(google.maps.Map) map: google.maps.Map;
 
-  userLng: number = 11.582579;
-  userLat: number = 50.924845;
+  private userLng: number = 11.582579;
+  private userLat: number = 50.924845;
+  private removeStepConfirmation$ = new Subject<boolean>();
 
-  steps: Array<StepForm> = [];
-  peopleNumber: number = 5;
   form: FormGroup;
-
-  tagsResults: string[];
-  restrictionsResults: string[];
-
-  removeStepConfirmation$ = new Subject<boolean>();
+  steps: Array<StepForm> = [];
+  peopleNumber: number[] = [1,50];
+  tagsResults: string[]; // todo to replace with enum or type
+  restrictionsResults: string[]; // todo to replace with enum or type
 
   constructor(
     private locationService: LocationService,
@@ -73,8 +71,8 @@ export class CreateTourComponent implements OnInit {
     this.form = this.formBuilder.group({
       tourName: ['', Validators.required],
       peopleNumber: ['', Validators.required],
-      tourTags: ['', Validators.required],
-      tourRestrictions: ['', Validators.required],
+      tourTags: [''],
+      tourRestrictions: [''],
       steps: new FormArray([])
     });
   }

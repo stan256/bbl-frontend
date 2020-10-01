@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TourService} from '../../services/tour.service';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
@@ -17,18 +17,19 @@ import {RestrictionService} from '../../services/restriction.service';
   templateUrl: './own-tour.component.html',
   styleUrls: ['./own-tour.component.scss']
 })
-export class OwnTourComponent implements OnInit {
-  userLng: number = 11.582579;
-  userLat: number = 50.924845;
+export class OwnTourComponent implements OnInit, OnDestroy {
+  private userLng: number = 11.582579; // todo do we need this ?
+  private userLat: number = 50.924845; // and lat
 
+  private removeStepConfirmation$ = new Subject<boolean>();
+  private tourSubscription: Subscription;
   tour$: Observable<TourForm>;
+
   form: FormGroup;
   steps: Array<StepForm> = [];
-
-  tagsResults: string[];
-  restrictionsResults: string[];
-
-  removeStepConfirmation$ = new Subject<boolean>();
+  peopleNumber: number[] = [1,50];
+  tagsResults: string[]; // todo to replace with enum or type
+  restrictionsResults: string[]; // todo to replace with enum or type
 
   constructor(
     private locationService: LocationService,
@@ -41,17 +42,23 @@ export class OwnTourComponent implements OnInit {
     private modalService: ModalService
   ) { }
 
+  ngOnDestroy() {
+    if (this.tourSubscription) {
+      this.tourSubscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
     // todo to fetch from cookies
     let id: number = 0;
 
     this.tour$ = this.tourService.getTour(id);
-    this.tour$.subscribe(tour => {
+    this.tourSubscription = this.tour$.subscribe(tour => {
       this.form = this.formBuilder.group({
         tourName: [tour.tourName, Validators.required],
         peopleNumber: [tour.peopleNumber, Validators.required],
-        tourTags: [tour.tourTags, Validators.required],
-        tourRestrictions: [tour.tourRestrictions, Validators.required],
+        tourTags: [tour.tourTags],
+        tourRestrictions: [tour.tourRestrictions],
         steps: new FormArray([])
       });
     });

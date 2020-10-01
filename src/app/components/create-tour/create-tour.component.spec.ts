@@ -6,19 +6,4 @@ describe('CreateTourComponent', () => {
   let component: CreateTourComponent;
   let fixture: ComponentFixture<CreateTourComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CreateTourComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CreateTourComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-  });
 });

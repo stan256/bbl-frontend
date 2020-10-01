@@ -10,6 +10,23 @@
   }
 }
 
+[data-content="people-range"] {
+  width: calc(25% - 18px);
+
+  label {
+    margin-bottom: calc(#{$M} + 6px);
+  }
+
+  p-slider {
+    position: relative;
+    left: 9px;
+  }
+}
+
+[data-content="tour-name"] {
+  width: 25%;
+}
+
 [data-content="steps-map-pipe"] {
   display: flex;
 
