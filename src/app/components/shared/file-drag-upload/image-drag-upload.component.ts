@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalService} from '../modal-window/modal.service';
+import {ImageSelection} from "../../../model/files";
 
 @Component({
   selector: 'app-image-drag-upload',
   templateUrl: './image-drag-upload.component.html',
   styleUrls: ['./image-drag-upload.component.scss']
 })
-// todo animation does not work when element is removed from DOM
 export class ImageDragUploadComponent implements OnInit {
   @Input() stepTitle: string;
   @Input() stepIndex: number;
@@ -27,7 +27,6 @@ export class ImageDragUploadComponent implements OnInit {
   }
 
   onFilesSelected(event: Event) {
-    // TODO test what does it do
     this.addNewFiles((event.target as HTMLInputElement).files);
     // if we do not null and select the same file again the browser will not fire selected event
     (event as any).target.value = null;
@@ -38,11 +37,19 @@ export class ImageDragUploadComponent implements OnInit {
       let reader = new FileReader();
       reader.readAsDataURL(f);
 
-      reader.onload = (event) => this.imageSelections.push({
-        file: f,
-        src: reader.result as string
-      })
+      reader.onload = (event) => {
+        if (!this.alreadyContainsImage(f)) {
+          this.imageSelections.push({
+            file: f,
+            src: reader.result as string
+          })
+        }
+      }
     });
+  }
+
+  private alreadyContainsImage(f: File) {
+    return this.imageSelections.some(selection => selection.file.name == f.name);
   }
 
   private convertFileList(list: FileList): ReadonlyArray<File> {
@@ -72,7 +79,7 @@ export class ImageDragUploadComponent implements OnInit {
       this.imageSelections.splice(this.modalImage, 1);
     }
 
-    // bug of primeNG -> when we dynamically change length of array to 1, transoform does not work properly
+    // bug of primeNG -> when we dynamically change length of array to 1, transform does not work properly
     if (this.imageSelections.length === 1){
       (document.querySelector('#imageView .ui-carousel-items-container') as HTMLElement)
         .style.transform = "translate3d(0px, 0px, 0px)";
@@ -88,9 +95,4 @@ export class ImageDragUploadComponent implements OnInit {
   setSelectedImage($event: any) {
     this.modalImage = $event.page;
   }
-}
-
-export interface ImageSelection {
-  file: File;
-  src: string;
 }

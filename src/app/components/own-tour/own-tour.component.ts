@@ -85,7 +85,7 @@ export class OwnTourComponent implements OnInit, OnDestroy {
       this.steps.push(<StepForm> {
         locationLat: this.userLat,
         locationLng: this.userLng,
-        travelModeToNext: "BICYCLING"
+        travelModeToNext: "WALKING"
       });
     } else {
       let firstInvalidStepId: number = this.firstInvalidStep();
@@ -99,7 +99,7 @@ export class OwnTourComponent implements OnInit, OnDestroy {
         let step = <StepForm> {
           locationLat: lastStep.locationLat,
           locationLng: lastStep.locationLng,
-          travelModeToNext: "BICYCLING"
+          travelModeToNext: "WALKING"
         };
         this.steps.push(step);
         this.changeDetector.detectChanges();

@@ -5,14 +5,13 @@ import {Subject} from 'rxjs';
 import {ModalService} from '../shared/modal-window/modal.service';
 import {take, tap} from 'rxjs/operators';
 import {TourService} from '../../services/tour.service';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RestrictionService} from '../../services/restriction.service';
 import {TagService} from '../../services/tag.service';
 import MarkFormDirtyUtils from '../../shared/utils/markFormDirty';
 import {TourForm} from '../../model/tour';
 import {TourStepComponent} from './tour-step/tour-step.component';
 import {UserService} from '../../services/user.service';
-
 
 @Component({
   selector: 'app-create-tour',
@@ -78,20 +77,24 @@ export class CreateTourComponent implements OnInit {
   }
 
   get lastLng(): number {
-    return this.steps.length != 0 ? this.steps[this.steps.length - 1].locationLng : this.userLng;
+    return this.steps.length != 0 ?
+      this.steps[this.steps.length - 1].locationLng :
+      this.userLng;
   }
 
   get lastLat(): number {
-    return this.steps.length != 0 ? this.steps[this.steps.length - 1].locationLat : this.userLng;
+    return this.steps.length != 0 ?
+      this.steps[this.steps.length - 1].locationLat :
+      this.userLng;
   }
 
   addStep() {
     if (!this.steps.length) {
       // setting the geo of user as first step
-      this.steps.push(<StepForm>{
+      this.steps.push(<StepForm> {
         locationLat: this.userLat,
         locationLng: this.userLng,
-        travelModeToNext: 'BICYCLING'
+        travelModeToNext: 'WALKING'
       });
     } else {
       let firstInvalidStepId: number = this.firstInvalidStep();
@@ -103,9 +106,9 @@ export class CreateTourComponent implements OnInit {
         // creating a new step with geo location in the same place as previous
         const lastStep = this.steps[this.steps.length - 1];
         let step = <StepForm> {
-          locationLat: lastStep.locationLat,
-          locationLng: lastStep.locationLng,
-          travelModeToNext: 'BICYCLING'
+          locationLat: lastStep.locationLat + 0.001,
+          locationLng: lastStep.locationLng + 0.001,
+          travelModeToNext: 'WALKING'
         };
         this.steps.push(step);
         this.changeDetector.detectChanges();
@@ -171,7 +174,7 @@ export class CreateTourComponent implements OnInit {
     }
   }
 
-  // check that step is not last & has initialized coordinates (but not same as origin)
+  // checks that step is not last & has initialized coordinates (but not same as origin)
   // and showRouteToNext is true
   possibleToBuildRoute(stepIndex: number): boolean {
     return stepIndex != this.steps.length - 1 &&
@@ -191,30 +194,5 @@ export class CreateTourComponent implements OnInit {
     return steps.controls.findIndex((step) => {
       return Object.keys(step.controls).some(c => step.controls[c].invalid);
     });
-  }
-
-  markerOptions(step: StepForm): google.maps.MarkerOptions {
-    return {
-      draggable: true,
-      position: {
-        lat: step.locationLat,
-        lng: step.locationLng
-      },
-      icon: {
-        url: this.iconUrl(step)
-      }
-    };
-  }
-
-  polylineOptions(stepNumber: number): google.maps.PolylineOptions {
-    let step = this.steps[stepNumber];
-    let nextStep = this.steps[stepNumber + 1];
-
-    return {
-      path: [
-        { lat: step.locationLat, lng: step.locationLat },
-        { lat: nextStep.locationLat, lng: nextStep.locationLat }
-      ]
-    }
   }
 }

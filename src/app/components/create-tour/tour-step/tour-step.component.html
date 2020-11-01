@@ -40,7 +40,6 @@
               [maxLength]="400"></textarea>
     <span *ngFor="let error of errorsOf(f.get('description'))" class="validation validation-error">{{error}}</span>
   </div>
-<!--  <div data-content="show-route" *ngIf="notLast()">-->
   <div data-content="show-route">
     <label class="checkbox">
       <input formControlName="showRouteToNext" type="checkbox">
@@ -48,7 +47,7 @@
     </label>
 
     <ng-container *ngIf="stepForm.get('showRouteToNext').value">
-      <label  [for]="'route-type-' + stepIndex">Type of movement:</label>
+      <label [for]="'route-type-' + stepIndex">Type of movement:</label>
       <select [name]="'route-type-' + stepIndex"
               [id]="'route-type-' + stepIndex"
               formControlName="travelModeToNext">

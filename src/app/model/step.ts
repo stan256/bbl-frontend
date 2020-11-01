@@ -1,7 +1,7 @@
 import {TravelMode} from '../shared/common.types';
+import {ImageSelection} from "./files";
 
 export interface StepForm {
-  id: number;
   location: string;
   description?: string;
   date: Date;
@@ -9,4 +9,5 @@ export interface StepForm {
   travelModeToNext: TravelMode;
   locationLat: number;
   locationLng: number;
+  images: Array<ImageSelection>;
 }

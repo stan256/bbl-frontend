@@ -26,9 +26,8 @@ export class TourService {
     // return this.httpClient.get<TourForm>("localhost:5200/api/my-tours", {});
 
     return of([{
-      id: 1,
       tourName: "Magical Spain",
-      peopleNumber: 5,
+      peopleNumber: [5, 6],
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
       steps: [
@@ -40,7 +39,8 @@ export class TourService {
           showRouteToNext: true,
           travelModeToNext: "WALKING",
           locationLat: 48.15,
-          locationLng: 11.33
+          locationLng: 11.33,
+          images: []
         },
         {
           id: 12,
@@ -50,14 +50,14 @@ export class TourService {
           showRouteToNext: false,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         }
       ],
       creatorId: 3
     },{
-      id: 1,
       tourName: "Magical Spain",
-      peopleNumber: 5,
+      peopleNumber: [5, 7],
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
       steps: [
@@ -69,7 +69,8 @@ export class TourService {
           showRouteToNext: true,
           travelModeToNext: "WALKING",
           locationLat: 48.15,
-          locationLng: 11.33
+          locationLng: 11.33,
+          images: []
         },
         {
           id: 12,
@@ -79,14 +80,14 @@ export class TourService {
           showRouteToNext: false,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         }
       ],
       creatorId: 3
     }, {
-      id: 2,
       tourName: "Cold and beautiful bavarian Alps",
-      peopleNumber: 5,
+      peopleNumber: [5, 8],
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
       steps: [
@@ -98,7 +99,8 @@ export class TourService {
           showRouteToNext: true,
           travelModeToNext: "WALKING",
           locationLat: 48.15,
-          locationLng: 11.33
+          locationLng: 11.33,
+          images: []
         }, {
           id: 12,
           location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
@@ -107,7 +109,8 @@ export class TourService {
           showRouteToNext: false,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         }
       ],
       creatorId: 3
@@ -116,9 +119,8 @@ export class TourService {
 
   getTour(id: number): Observable<TourForm> {
     return of({
-      id: 2,
       tourName: "Cold and beautiful bavarian Alps",
-      peopleNumber: 5,
+      peopleNumber: [5, 7],
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
       steps: [
@@ -130,7 +132,8 @@ export class TourService {
           showRouteToNext: true,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         },
         {
           id: 12,
@@ -140,7 +143,8 @@ export class TourService {
           showRouteToNext: false,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         }
       ],
       creatorId: 3
@@ -155,9 +159,8 @@ export class TourService {
 
   searchTour(query: string): Observable<Array<TourForm>> {
     return of([{
-      id: 1,
       tourName: "Magical Spain",
-      peopleNumber: 5,
+      peopleNumber: [5, 8],
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
       steps: [
@@ -169,7 +172,8 @@ export class TourService {
           showRouteToNext: true,
           travelModeToNext: "WALKING",
           locationLat: 48.15,
-          locationLng: 11.33
+          locationLng: 11.33,
+          images: []
         },
         {
           id: 12,
@@ -179,14 +183,14 @@ export class TourService {
           showRouteToNext: false,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         }
       ],
       creatorId: 3
     },{
-      id: 1,
       tourName: "Magical Spain",
-      peopleNumber: 5,
+      peopleNumber: [5, 55],
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
       steps: [
@@ -198,7 +202,8 @@ export class TourService {
           showRouteToNext: true,
           travelModeToNext: "WALKING",
           locationLat: 48.15,
-          locationLng: 11.33
+          locationLng: 11.33,
+          images: []
         },
         {
           id: 12,
@@ -208,14 +213,14 @@ export class TourService {
           showRouteToNext: false,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         }
       ],
       creatorId: 3
     }, {
-      id: 2,
       tourName: "Cold and beautiful bavarian Alps",
-      peopleNumber: 5,
+      peopleNumber: [5, 12],
       tourTags: [wrapTag("hiking")],
       tourRestrictions: [wrapRestriction("rain")],
       steps: [
@@ -227,7 +232,8 @@ export class TourService {
           showRouteToNext: true,
           travelModeToNext: "WALKING",
           locationLat: 48.15,
-          locationLng: 11.33
+          locationLng: 11.33,
+          images: []
         }, {
           id: 12,
           location: "Wilhelmshof 14, 85764 Oberschleißheim, Germany",
@@ -236,7 +242,8 @@ export class TourService {
           showRouteToNext: false,
           travelModeToNext: "WALKING",
           locationLat: 48.24,
-          locationLng: 11.55
+          locationLng: 11.55,
+          images: []
         }
       ],
       creatorId: 3

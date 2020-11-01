@@ -71,7 +71,7 @@
 
   <div class="pipe-step">
     <div class="pipe-columns">
-      <div class="pipe-column">
+      <div class="pipe-column" data-content="tagsAndRestrictions">
         <label [for]="'tourTags'">Set tags which fits to theme of the route</label>
         <p-autoComplete
           [inputId]="'tourTags'"
@@ -79,12 +79,11 @@
           formControlName="tourTags"
           [multiple]="true"
           (completeMethod)="searchTags($event)"></p-autoComplete>
-      </div>
-      <div class="pipe-column">
+
         <label [for]="'tourRestrictions'">Restrictions for the tour:</label>
         <p-autoComplete
-          [suggestions]="restrictionsResults"
           [inputId]="'tourRestrictions'"
+          [suggestions]="restrictionsResults"
           formControlName="tourRestrictions"
           [multiple]="true"
           (completeMethod)="searchRestrictions($event)"></p-autoComplete>

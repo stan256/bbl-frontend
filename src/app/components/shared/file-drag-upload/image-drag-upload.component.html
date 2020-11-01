@@ -1,6 +1,4 @@
 <div data-content="carousel">
-
-<!-- TODO default alt when @input is not provided -->
   <p-carousel *ngIf="imageSelections.length > 0"
               [value]="imageSelections"
               [numVisible]="3"
@@ -12,10 +10,11 @@
   </p-carousel>
 </div>
 
-<div data-content="data-upload-area" app-drag-and-drop (fileDropped)="onFilesDropped($event)">
+<div data-content="data-upload-area"
+     app-drag-and-drop
+     (fileDropped)="onFilesDropped($event)">
   <p>Select or drag your images here!</p>
   <!-- todo only images -->
-<!--  todo step number in id -->
   <input type="file"
          multiple
          [id]="'fileInput-' + this.stepIndex"
@@ -24,7 +23,6 @@
          class="action">Choose</label>
 </div>
 
-<!-- todo to use ng-template ad variable -->
 <app-modal-window id="imageView">
   <div data-content="showImage" *ngIf="imageSelections.length > 0 && modalOpened">
     <p-carousel (onPage)="setSelectedImage($event)"
