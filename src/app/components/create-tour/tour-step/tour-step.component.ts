@@ -12,7 +12,6 @@ import {MapsAPILoader} from "@agm/core";
 })
 export class TourStepComponent implements OnInit {
   @Input() step: StepForm;
-  @Input() stepLength: number;
   @Input() stepIndex: number;
   @Input() parentForm: FormGroup;
   @Input() stepsRefs: QueryList<TourStepComponent>;
@@ -80,7 +79,7 @@ export class TourStepComponent implements OnInit {
         this.stepsRefs.forEach((stepRef, index) => {
           stepRef.f.get('date').updateValueAndValidity();
         });
-    })
+      })
   }
 
   private copyFormToStep(formStep: StepForm) {
@@ -89,7 +88,7 @@ export class TourStepComponent implements OnInit {
       .forEach(key => this.step[key] = formStep[key]);
   }
 
-  get f(): FormGroup{
+  get f(): FormGroup {
     return this.stepForm;
   }
 
@@ -103,6 +102,6 @@ export class TourStepComponent implements OnInit {
   }
 
   notLast() {
-    return this.stepIndex !== this.stepLength - 1;
+    return this.stepIndex !== this.stepsRefs.length - 1;
   }
 }

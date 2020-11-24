@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ModalWindowComponent } from "./modal-window.component";
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class ModalService {
   private modals: any[] = [];
 
-  add(modal: any) {
+  add(modal: ModalWindowComponent) {
     this.modals.push(modal);
   }
 

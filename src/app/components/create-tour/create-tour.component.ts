@@ -94,7 +94,8 @@ export class CreateTourComponent implements OnInit {
       this.steps.push(<StepForm> {
         locationLat: this.userLat,
         locationLng: this.userLng,
-        travelModeToNext: 'WALKING'
+        travelModeToNext: 'WALKING',
+        images: []
       });
     } else {
       let firstInvalidStepId: number = this.firstInvalidStep();

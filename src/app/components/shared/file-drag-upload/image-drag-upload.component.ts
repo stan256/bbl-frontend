@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalService} from '../modal-window/modal.service';
-import {ImageSelection} from "../../../model/files";
+import {StepForm} from "../../../model/step";
 
 @Component({
   selector: 'app-image-drag-upload',
@@ -8,10 +8,9 @@ import {ImageSelection} from "../../../model/files";
   styleUrls: ['./image-drag-upload.component.scss']
 })
 export class ImageDragUploadComponent implements OnInit {
-  @Input() stepTitle: string;
   @Input() stepIndex: number;
+  @Input() step: StepForm;
 
-  imageSelections: Array<ImageSelection> = [];
   modalImage: number;
   modalOpened: boolean = false;
 
@@ -39,7 +38,7 @@ export class ImageDragUploadComponent implements OnInit {
 
       reader.onload = (event) => {
         if (!this.alreadyContainsImage(f)) {
-          this.imageSelections.push({
+          this.step.images.push({
             file: f,
             src: reader.result as string
           })
@@ -49,7 +48,7 @@ export class ImageDragUploadComponent implements OnInit {
   }
 
   private alreadyContainsImage(f: File) {
-    return this.imageSelections.some(selection => selection.file.name == f.name);
+    return this.step.images.some(selection => selection.file.name == f.name);
   }
 
   private convertFileList(list: FileList): ReadonlyArray<File> {
@@ -62,7 +61,7 @@ export class ImageDragUploadComponent implements OnInit {
 
   openImgModal(img) {
     this.modalOpened = true;
-    this.modalImage = this.imageSelections.indexOf(img);
+    this.modalImage = this.step.images.indexOf(img);
     this.modalService.open("imageView")
   }
 
@@ -72,22 +71,22 @@ export class ImageDragUploadComponent implements OnInit {
   }
 
   removeCurrentImage() {
-    if (this.modalImage === this.imageSelections.length - 1) {
-      this.imageSelections.splice(this.modalImage, 1);
+    if (this.modalImage === this.step.images.length - 1) {
+      this.step.images.splice(this.modalImage, 1);
       this.modalImage--;
     } else {
-      this.imageSelections.splice(this.modalImage, 1);
+      this.step.images.splice(this.modalImage, 1);
     }
 
     // bug of primeNG -> when we dynamically change length of array to 1, transform does not work properly
-    if (this.imageSelections.length === 1){
+    if (this.step.images.length === 1){
       (document.querySelector('#imageView .ui-carousel-items-container') as HTMLElement)
         .style.transform = "translate3d(0px, 0px, 0px)";
       (document.querySelector('app-image-drag-upload .ui-carousel-items-container') as HTMLElement)
         .style.transform = "translate3d(0px, 0px, 0px)";
     }
 
-    if (this.imageSelections.length === 0) {
+    if (this.step.images.length === 0) {
       this.closeImgModal();
     }
   }

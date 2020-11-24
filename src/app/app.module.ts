@@ -25,8 +25,6 @@ import {DragAndDropFilesDirective} from './shared/drag-and-drop-files.directive'
 import { ImageDragUploadComponent } from './components/shared/file-drag-upload/image-drag-upload.component';
 import { OwnToursList } from './components/own-tours-list/own-tours-list.component';
 import { UserAccountComponent } from './components/user-account/user-account.component';
-import { OwnTourComponent } from './components/own-tour/own-tour.component';
-import { OwnStepComponent } from './components/own-tour/own-step/own-step.component';
 import { SearchTourComponent } from './components/search-tour/search-tour.component';
 import {ModalWindowComponent} from './components/shared/modal-window/modal-window.component';
 import {ToursListComponent} from './components/tours-list/tours-list.component';
@@ -40,8 +38,6 @@ import {JwtModule} from '@auth0/angular-jwt';
 import {getAccessToken} from './services/authentication.service';
 import {AgmCoreModule} from "@agm/core";
 import {AgmDirectionModule} from "agm-direction";
-import { TourViewComponent } from './components/tour/tour-view/tour-view.component';
-import { StepViewComponent } from './components/tour/tour-view/step-view/step-view/step-view.component';
 
 @NgModule({
   declarations: [
@@ -64,11 +60,7 @@ import { StepViewComponent } from './components/tour/tour-view/step-view/step-vi
     ImageDragUploadComponent,
     OwnToursList,
     UserAccountComponent,
-    OwnTourComponent,
-    OwnStepComponent,
-    ToursListComponent,
-    TourViewComponent,
-    StepViewComponent
+    ToursListComponent
   ],
   imports: [
     BrowserModule,

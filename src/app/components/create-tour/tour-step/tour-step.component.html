@@ -4,7 +4,7 @@
       <label [for]="'location-' + stepIndex">
         Location for step <span data-content="step-index">{{ stepIndex + 1 }}</span>
       </label>
-      <button *ngIf="stepLength > 1" (click)="onStepRemoved()" class="action">
+      <button *ngIf="stepsRefs.length > 1" (click)="onStepRemoved()" class="action">
         <i class="fa fa-minus"></i>
       </button>
     </p>
@@ -58,10 +58,8 @@
     </ng-container>
   </div>
   <div data-content="slider">
-    <app-image-drag-upload
-      [stepIndex]="stepIndex">
-
-    </app-image-drag-upload>
+    <app-image-drag-upload [step]="step"
+                           [stepIndex]="stepIndex"></app-image-drag-upload>
   </div>
 
   <input formControlName="locationLat" type="hidden" [(ngModel)]="step.locationLat">
